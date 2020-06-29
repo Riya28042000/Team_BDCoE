@@ -1,24 +1,22 @@
 import 'package:bdcoe/navigation/navigation.dart';
 import 'package:bdcoe/notifiers/dark.dart';
-import 'package:bdcoe/views/faculty.dart';
-import 'package:bdcoe/views/fourth.dart';
-import 'package:bdcoe/views/second.dart';
-import 'package:bdcoe/views/third.dart';
+import 'package:bdcoe/views/details.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
 
-class Details extends StatefulWidget {
+class Third extends StatefulWidget {
   @override
-  _DetailsState createState() => _DetailsState();
+  _ThirdState createState() => _ThirdState();
 }
 
-class _DetailsState extends State<Details> with TickerProviderStateMixin {
-  AnimationController animationController;
+class _ThirdState extends State<Third> with TickerProviderStateMixin{
+   AnimationController animationController;
 
   Animation<double> animation;
   bool cirAn = false;
@@ -72,13 +70,14 @@ class _DetailsState extends State<Details> with TickerProviderStateMixin {
           )
         : homeBody(themeProvider);
   }
-Future <bool> MoveToLastScreen(){
-   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                            BottomNavBar()), (Route<dynamic> route) => false);
-}
+  void MoveToLastScreen(){
+ Navigator.of(context).pop();
+  }
   Widget homeBody(DarkThemeProvider themeProvider) {
     return WillPopScope(
-      onWillPop: MoveToLastScreen,
+      onWillPop: () {
+        MoveToLastScreen();
+      },
           child: Container(
         color: Theme.of(context).primaryColor,
         child: SafeArea(
@@ -238,14 +237,14 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
       child: themeChangeProvider.darkTheme
           ? Align(
               child: Text(
-                'TEAM BDCoE',
+                'THIRD YEAR',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
-                'TEAM BDCoE',
+                'THIRD YEAR',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
@@ -257,7 +256,7 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
 Widget _description(context, DarkThemeProvider themeProvider) {
 Future gettoDo() async{
        var firestore= Firestore.instance;
-       QuerySnapshot qn=  await firestore.collection("domains").getDocuments();
+       QuerySnapshot qn=  await firestore.collection("thirdyr").getDocuments();
        return qn.documents;
     }
   var size = MediaQuery.of(context).size;
@@ -309,7 +308,88 @@ Future gettoDo() async{
                                child: Padding(
                                  padding: const EdgeInsets.all(15.0),
                                  child: Container(
-                                   child: Card(
+                                   child:  FlipCard(front: 
+                                   Card(
+                                       clipBehavior: Clip.antiAlias,
+                                       elevation: 20,
+                                       // color: themeProvider.darkTheme
+                                       //   ? Colors.black
+                                       // : Colors.white,
+                                       child: Padding(
+                                         padding: const EdgeInsets.all(20.0),
+                                         child: Container(
+                                           child: Column(
+                       children: <Widget>[
+                         AspectRatio(
+                           aspectRatio: 65 / 70,
+                           child:  CachedNetworkImage(
+        imageUrl: snapshot.data[index].data['image'],
+        progressIndicatorBuilder: (context, url, downloadProgress) => 
+                CircularProgressIndicator(value: downloadProgress.progress),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+        fit: BoxFit.fill,
+     ),
+                         ),
+                         SizedBox(
+                           height: 10,
+                         ),
+                         Padding(
+                           padding: const EdgeInsets.only(top:8),
+                           child: Align(
+                             child: Text(
+                              snapshot.data[index].data['name'],
+                               style: TextStyle(
+                                   color: themeProvider.darkTheme
+                                       ? Color(0xff3972CF)
+                                       : Color(0xff3972CF),
+                                   fontSize: 15,
+                                   fontWeight: FontWeight.w500),
+                             ),
+                             alignment: Alignment.center,
+                           ),
+                         ),
+                         SizedBox(
+                           height: 10,
+                         ),
+                         Padding(
+                           padding: const EdgeInsets.only(top:8),
+                           child: Align(
+                             child: Text(
+                             snapshot.data[index].data['domain'],
+                               style: TextStyle(
+                                   
+                                   fontSize: 15,
+                                   fontWeight: FontWeight.w500),
+                             ),
+                             alignment: Alignment.center,
+                           ),
+                         ),
+                       SizedBox(
+                           height: 20,
+                         ),
+                      
+                         Padding(
+                           padding: const EdgeInsets.only(top:8),
+                           child: Align(
+                             child: Text(
+                          'Tap to know more',
+                               style: TextStyle(
+            
+                                   fontSize: 13,
+                                   fontWeight: FontWeight.w500),
+                             ),
+                             alignment: Alignment.center,
+                           ),
+                         ),
+                         SizedBox(
+                           height: 10,
+                         ),
+                       ],
+                                           ),
+                                         ),
+                                       )),
+                                   
+                                    back: Card(
                                        clipBehavior: Clip.antiAlias,
                                        elevation: 20,
                                        // color: themeProvider.darkTheme
@@ -337,7 +417,7 @@ Future gettoDo() async{
                            padding: const EdgeInsets.only(top:8),
                            child: Align(
                              child: Text(
-                              snapshot.data[index].data['staff'],
+                              snapshot.data[index].data['name'],
                                style: TextStyle(
                                    color: themeProvider.darkTheme
                                        ? Color(0xff3972CF)
@@ -351,77 +431,43 @@ Future gettoDo() async{
                          SizedBox(
                            height: 10,
                          ),
-                      
-                         Center(
-                           child: Row(
-                             children: <Widget>[
-                               Padding(
-                                 padding:
-                                     const EdgeInsets.only(
-                                         top: 20,
-                                         bottom: 10,
-                                         left: 50),
-                                 child: Align(
-                                   child: Text(
-                                     'To know more',
-                                     style: TextStyle(
-                                         fontSize: 13,
-                                         fontWeight:
-                                             FontWeight.w500),
-                                   ),
-                                   alignment: Alignment.center,
-                                 ),
-                               ),
-                               Padding(
-                                 padding:
-                                     const EdgeInsets.only(
-                                         top: 20, bottom: 10),
-                                 child: GestureDetector(
-                                   onTap: ()  {
-                                    if(index==0){
-Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => Faculty()));
-       
-                                    }
-                                    else 
-                                    if(index==1){
-Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => Fourth()));
-                                    }
-                                     else 
-                                    if(index==2){
-Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => Third()));
-                                    }
-                                     else 
-                                    if(index==3){
-Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => Second()));
-                                    }
-                                   },
-                                   child: Align(
-                                     child: Text(
-                                       ' Click Here',
-                                       style: TextStyle(
-                                           color: Color(
-                                               0xff3972CF),
-                                           fontSize: 13,
-                                           fontWeight:
-                                               FontWeight
-                                                   .w500),
-                                     ),
-                                     alignment:
-                                         Alignment.center,
-                                   ),
-                                 ),
-                               ),
-                             ],
+                         Padding(
+                           padding: const EdgeInsets.only(top:8),
+                           child: Align(
+                             child: Text(
+                         snapshot.data[index].data['branch'],
+                               style: TextStyle(
+            
+                                   fontSize: 15,
+                                   fontWeight: FontWeight.w500),
+                             ),
+                             alignment: Alignment.center,
                            ),
-                         )
+                         ),
+                         SizedBox(
+                           height: 20,
+                         ),
+                      
+                         Padding(
+                           padding: const EdgeInsets.only(top:8),
+                           child: Align(
+                             child: Text(
+                          'Tap to know more',
+                               style: TextStyle(
+            
+                                   fontSize: 13,
+                                   fontWeight: FontWeight.w500),
+                             ),
+                             alignment: Alignment.center,
+                           ),
+                         ),
+                         SizedBox(
+                           height: 10,
+                         ),
                        ],
                                            ),
                                          ),
-                                       )),
+                                       )),)
                                  ),
                                ),
                              ),

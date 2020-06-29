@@ -49,194 +49,207 @@ dispose() {
           )
         : homeBody(themeProvider);
          }
-
+Future <bool> _SaveAndBack(){
+           return showDialog(context: context,
+           builder: (context)=> AlertDialog(title: Text('Do you want to exit?'),
+           actions: <Widget>[
+             FlatButton(onPressed:()=>Navigator.pop(context,false), child: Text('No')
+             ),
+              FlatButton(onPressed:()=>Navigator.pop(context,true), child: Text('Yes'))
+           ],
+           ));
+          
+  }
   Widget homeBody(DarkThemeProvider themeProvider) {
-    return Container(
-      color:Theme.of(context).primaryColor,
-      child: SafeArea(child: Scaffold(
-           body: Stack(
-            children: <Widget>[
-              new Positioned(
-                left: MediaQuery.of(context).size.width / 1.15, //230.0,
-                bottom: MediaQuery.of(context).size.width / 1,
+    return WillPopScope(
+      onWillPop: _SaveAndBack,
+          child: Container(
+        color:Theme.of(context).primaryColor,
+        child: SafeArea(child: Scaffold(
+             body: Stack(
+              children: <Widget>[
+                new Positioned(
+                  left: MediaQuery.of(context).size.width / 1.15, //230.0,
+                  bottom: MediaQuery.of(context).size.width / 1,
 
-                child: new Container(
-                  height: MediaQuery.of(context).size.height / 8,
-                  width: MediaQuery.of(context).size.height / 5,
-                  decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).indicatorColor,
-                  ),
-                ),
-              ),
-              new Positioned(
-                right: MediaQuery.of(context).size.width / 1.2, //230.0,
-                bottom: MediaQuery.of(context).size.width / 0.69, //40
-                child: new Container(
-                  height: MediaQuery.of(context).size.height / 8,
-                  width: MediaQuery.of(context).size.height / 5,
-                  decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).hintColor,
-                  ),
-                ),
-              ),
-              new Positioned(
-                left: MediaQuery.of(context).size.width / 1.1, //230.0,
-                top: MediaQuery.of(context).size.width / 0.8, //40.0,
-                child: new Container(
-                  height: MediaQuery.of(context).size.height / 4,
-                  width: MediaQuery.of(context).size.height / 4,
-                  decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).highlightColor,
-                  ),
-                ),
-              ),
-              new Positioned(
-                right: MediaQuery.of(context).size.width / 1.05, //230.0,
-                bottom: MediaQuery.of(context).size.width / 1.3, //40.0,
-                child: new Container(
-                  height: MediaQuery.of(context).size.height / 8,
-                  width: MediaQuery.of(context).size.height / 8,
-                  decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).focusColor,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Container(
-                      decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(context).backgroundColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              new Positioned(
-                left: MediaQuery.of(context).size.width / 1.1, //230.0,
-                bottom: MediaQuery.of(context).size.width / 0.7, //40.0,
-                child: new Container(
-                  height: MediaQuery.of(context).size.height / 8,
-                  width: MediaQuery.of(context).size.height / 8,
-                  decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).hintColor,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Container(
-                      decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(context).backgroundColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              new Positioned(
-                right: MediaQuery.of(context).size.width / 1.2, //230.0,
-                top: MediaQuery.of(context).size.width / 2.5, //40.0,
-                child: new Container(
-                  height: MediaQuery.of(context).size.height / 12,
-                  width: MediaQuery.of(context).size.height / 12,
-                  decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).indicatorColor,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Container(
-                      decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(context).backgroundColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              new Positioned(
-                right: MediaQuery.of(context).size.width / 1.18, //230.0,
-//              bottom: MediaQuery.of(context).size.width / 0.68, //40.0,
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      cirAn = true;
-                    });
-                    themeProvider.darkTheme = !themeProvider.darkTheme;
-
-                    if (animationController.status == AnimationStatus.forward ||
-                        animationController.status ==
-                            AnimationStatus.completed) {
-                      animationController.reset();
-                      animationController.forward();
-                    } else {
-                      animationController.forward();
-                    }
-                  },
                   child: new Container(
-                    height: MediaQuery.of(context).size.height / 5.5,
-                    width: MediaQuery.of(context).size.height / 15,
+                    height: MediaQuery.of(context).size.height / 8,
+                    width: MediaQuery.of(context).size.height / 5,
                     decoration: new BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(30),
-                          bottomRight: Radius.circular(30)),
-                      shape: BoxShape.rectangle,
-                      color: Theme.of(context).hoverColor,
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).indicatorColor,
+                    ),
+                  ),
+                ),
+                new Positioned(
+                  right: MediaQuery.of(context).size.width / 1.2, //230.0,
+                  bottom: MediaQuery.of(context).size.width / 0.69, //40
+                  child: new Container(
+                    height: MediaQuery.of(context).size.height / 8,
+                    width: MediaQuery.of(context).size.height / 5,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).hintColor,
+                    ),
+                  ),
+                ),
+                new Positioned(
+                  left: MediaQuery.of(context).size.width / 1.1, //230.0,
+                  top: MediaQuery.of(context).size.width / 0.8, //40.0,
+                  child: new Container(
+                    height: MediaQuery.of(context).size.height / 4,
+                    width: MediaQuery.of(context).size.height / 4,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).highlightColor,
+                    ),
+                  ),
+                ),
+                new Positioned(
+                  right: MediaQuery.of(context).size.width / 1.05, //230.0,
+                  bottom: MediaQuery.of(context).size.width / 1.3, //40.0,
+                  child: new Container(
+                    height: MediaQuery.of(context).size.height / 8,
+                    width: MediaQuery.of(context).size.height / 8,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).focusColor,
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 14, right: 14, bottom: 28),
-                      child: themeProvider.darkTheme
-                          ? Image.asset(
-                              "assets/bulb_off.png",
-                              fit: BoxFit.fitHeight,
-                            )
-                          : Image.asset(
-                              "assets/bulb_on.png",
-                              fit: BoxFit.fitHeight,
-                            ),
-                    ),
-                  ),
-                ),
-              ),
-              new Positioned(
-                right: MediaQuery.of(context).size.width / 1.2, //230.0,
-                top: MediaQuery.of(context).size.width / 0.69, //40
-                child: new Container(
-                  height: MediaQuery.of(context).size.height / 8,
-                  width: MediaQuery.of(context).size.height / 5,
-                  decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).indicatorColor,
-                  ),
-                ),
-              ),
-              new Column(
-                children: <Widget>[
-                  Flexible(
-                    child: new Container(
-                      margin: EdgeInsets.only(bottom: 25.0),
-                      child: Stack(
-                        children: <Widget>[
-                          _logo(themeProvider, context),
-                        ],
+                      padding: const EdgeInsets.all(2.0),
+                      child: Container(
+                        decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).backgroundColor,
+                        ),
                       ),
                     ),
-                    flex: 3,
                   ),
-                  Flexible(
-                      flex: 6,
-                      child: _description(
-                        context,
-                      )),
-                  
-                ],
-              ),
-            ],
+                ),
+                new Positioned(
+                  left: MediaQuery.of(context).size.width / 1.1, //230.0,
+                  bottom: MediaQuery.of(context).size.width / 0.7, //40.0,
+                  child: new Container(
+                    height: MediaQuery.of(context).size.height / 8,
+                    width: MediaQuery.of(context).size.height / 8,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).hintColor,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Container(
+                        decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).backgroundColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                new Positioned(
+                  right: MediaQuery.of(context).size.width / 1.2, //230.0,
+                  top: MediaQuery.of(context).size.width / 2.5, //40.0,
+                  child: new Container(
+                    height: MediaQuery.of(context).size.height / 12,
+                    width: MediaQuery.of(context).size.height / 12,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).indicatorColor,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Container(
+                        decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).backgroundColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                new Positioned(
+                  right: MediaQuery.of(context).size.width / 1.18, //230.0,
+//              bottom: MediaQuery.of(context).size.width / 0.68, //40.0,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        cirAn = true;
+                      });
+                      themeProvider.darkTheme = !themeProvider.darkTheme;
+
+                      if (animationController.status == AnimationStatus.forward ||
+                          animationController.status ==
+                              AnimationStatus.completed) {
+                        animationController.reset();
+                        animationController.forward();
+                      } else {
+                        animationController.forward();
+                      }
+                    },
+                    child: new Container(
+                      height: MediaQuery.of(context).size.height / 5.5,
+                      width: MediaQuery.of(context).size.height / 15,
+                      decoration: new BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(30),
+                            bottomRight: Radius.circular(30)),
+                        shape: BoxShape.rectangle,
+                        color: Theme.of(context).hoverColor,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 14, right: 14, bottom: 28),
+                        child: themeProvider.darkTheme
+                            ? Image.asset(
+                                "assets/bulb_off.png",
+                                fit: BoxFit.fitHeight,
+                              )
+                            : Image.asset(
+                                "assets/bulb_on.png",
+                                fit: BoxFit.fitHeight,
+                              ),
+                      ),
+                    ),
+                  ),
+                ),
+                new Positioned(
+                  right: MediaQuery.of(context).size.width / 1.2, //230.0,
+                  top: MediaQuery.of(context).size.width / 0.69, //40
+                  child: new Container(
+                    height: MediaQuery.of(context).size.height / 8,
+                    width: MediaQuery.of(context).size.height / 5,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).indicatorColor,
+                    ),
+                  ),
+                ),
+                new Column(
+                  children: <Widget>[
+                    Flexible(
+                      child: new Container(
+                        margin: EdgeInsets.only(bottom: 25.0),
+                        child: Stack(
+                          children: <Widget>[
+                            _logo(themeProvider, context),
+                          ],
+                        ),
+                      ),
+                      flex: 3,
+                    ),
+                    Flexible(
+                        flex: 7,
+                        child: _description(
+                          context,
+                        )),
+                    
+                  ],
+                ),
+              ],
+            ),
+            backgroundColor: Theme.of(context).backgroundColor,
           ),
-          backgroundColor: Theme.of(context).backgroundColor,
         ),
       ),
     );
@@ -245,16 +258,27 @@ dispose() {
 
 Widget _logo(DarkThemeProvider themeChangeProvider, context) {
   var size = MediaQuery.of(context).size;
-
   return Container(
-    margin: EdgeInsets.only(top: 40, bottom: 0.0, left: 25.0, right: 25.0),
-    height: size.height / 6,
-    width: size.width / 2,
-    child: themeChangeProvider.darkTheme
-            ? Text('WELCOME',style: TextStyle(fontSize:20,fontWeight: FontWeight.bold),)
-            : Text('WELCOME',style: TextStyle(fontSize:20,fontWeight: FontWeight.bold),)
-            
-           
+    child: Container(
+      margin: EdgeInsets.only(top: 25, bottom: 0.0, left: 25.0, right: 25.0),
+      height: size.height / 8,
+      width: size.width / 2,
+      child: themeChangeProvider.darkTheme
+          ? Align(
+              child: Text(
+                'WELCOME',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              alignment: Alignment.center,
+            )
+          : Align(
+              child: Text(
+                'WELCOME',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              alignment: Alignment.center,
+            ),
+    ),
   );
 }
 
@@ -267,7 +291,7 @@ Widget _description(
   var size = MediaQuery.of(context).size;
   return Container(
     child: Padding(
-      padding: const EdgeInsets.only(left:15,right:15),
+      padding: const EdgeInsets.only(left:15,right:15,top:20),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         elevation: 2,
@@ -296,7 +320,7 @@ Widget _description(
                     width: size.width / 12 / 15,
                   ),
                   Text(
-                    "Center Of Excellence",
+                    "Centre Of Excellence",
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,

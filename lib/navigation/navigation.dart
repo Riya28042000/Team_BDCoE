@@ -12,13 +12,16 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int _currentIndex = 0;
+  int _currentIndex = 2;
   final List<Widget> _children = [
-    Contact(),
     Details(),
-    Home(),
-    Events(),
-    Services()
+  
+    Services(),
+     Home(),
+     Events(),
+    
+     Contact(),
+   
   ];
   GlobalKey _bottomNavigationKey = GlobalKey();
 
@@ -30,11 +33,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
           index: 2,
           height: 50.0,
           items: <Widget>[
-            Icon(Icons.call, size: 30,color:Colors.black ,),
             Icon(Icons.person, size: 30,color:Colors.black ),
-            Icon(Icons.home ,size: 30,color:Colors.black ,),
-            Icon(Icons.calendar_today, size: 30,color:Colors.black ),
             Icon(Icons.question_answer, size:30 ,color:Colors.black ),
+             Icon(Icons.home ,size: 30,color:Colors.black ,),
+             Icon(Icons.calendar_today, size: 30,color:Colors.black ),
+             
+            Icon(Icons.call, size: 30,color:Colors.black ,),
+            
+           
+            
           ],
           color: Colors.white ,
           buttonBackgroundColor: Colors.white,
