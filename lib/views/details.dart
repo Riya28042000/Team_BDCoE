@@ -352,71 +352,70 @@ Future gettoDo() async{
                            height: 10,
                          ),
                       
-                         Center(
-                           child: Row(
-                             children: <Widget>[
-                               Padding(
-                                 padding:
-                                     const EdgeInsets.only(
-                                         top: 20,
-                                         bottom: 10,
-                                         left: 50),
-                                 child: Align(
-                                   child: Text(
-                                     'To know more',
-                                     style: TextStyle(
-                                         fontSize: 13,
-                                         fontWeight:
-                                             FontWeight.w500),
-                                   ),
-                                   alignment: Alignment.center,
+                         Row(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                           children: <Widget>[
+                             Padding(
+                               padding:
+                                   const EdgeInsets.only(
+                                       top: 20,
+                                       bottom: 10,
+                                      ),
+                               child: Align(
+                                 child: Text(
+                                   'To know more',
+                                   style: TextStyle(
+                                       fontSize: 13,
+                                       fontWeight:
+                                           FontWeight.w500),
                                  ),
+                                 alignment: Alignment.center,
                                ),
-                               Padding(
-                                 padding:
-                                     const EdgeInsets.only(
-                                         top: 20, bottom: 10),
-                                 child: GestureDetector(
-                                   onTap: ()  {
-                                    if(index==0){
+                             ),
+                             Padding(
+                               padding:
+                                   const EdgeInsets.only(
+                                       top: 20, bottom: 10),
+                               child: GestureDetector(
+                                 onTap: ()  {
+                                  if(index==0){
 Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => Faculty()));
        
-                                    }
-                                    else 
-                                    if(index==1){
+                                  }
+                                  else 
+                                  if(index==1){
 Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => Fourth()));
-                                    }
-                                     else 
-                                    if(index==2){
+                                  }
+                                   else 
+                                  if(index==2){
 Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => Third()));
-                                    }
-                                     else 
-                                    if(index==3){
+                                  }
+                                   else 
+                                  if(index==3){
 Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => Second()));
-                                    }
-                                   },
-                                   child: Align(
-                                     child: Text(
-                                       ' Click Here',
-                                       style: TextStyle(
-                                           color: Color(
-                                               0xff3972CF),
-                                           fontSize: 13,
-                                           fontWeight:
-                                               FontWeight
-                                                   .w500),
-                                     ),
-                                     alignment:
-                                         Alignment.center,
+                                  }
+                                 },
+                                 child: Align(
+                                   child: Text(
+                                     ' Click Here',
+                                     style: TextStyle(
+                                         color: Color(
+                                             0xff3972CF),
+                                         fontSize: 13,
+                                         fontWeight:
+                                             FontWeight
+                                                 .w500),
                                    ),
+                                   alignment:
+                                       Alignment.center,
                                  ),
                                ),
-                             ],
-                           ),
+                             ),
+                           ],
                          )
                        ],
                                            ),

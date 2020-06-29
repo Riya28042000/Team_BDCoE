@@ -393,11 +393,12 @@ Widget _description(
                         ),
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Align(
                             child: Padding(
                                 padding:
-                                    EdgeInsets.only(top: 9, left: 10, right: 3),
+                                    EdgeInsets.only(top: 9,right: 3),
                                 child: CircleAvatar(
                                   backgroundColor:
                                       Theme.of(context).primaryColor,
@@ -406,7 +407,7 @@ Widget _description(
                             alignment: Alignment.center,
                           ),
                           Padding(
-                              padding: EdgeInsets.only(top: 9, right: 15),
+                              padding: EdgeInsets.only(top: 9),
                               child: Text(
                                 'Powered by Big Data Centre of Excellence',
                                 style: TextStyle(

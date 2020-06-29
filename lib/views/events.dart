@@ -357,57 +357,56 @@ Future gettoDo() async{
                            ),
                            alignment: Alignment.center,
                          ),
-                         Center(
-                           child: Row(
-                             children: <Widget>[
-                               Padding(
-                                 padding:
-                                     const EdgeInsets.only(
-                                         top: 20,
-                                         bottom: 10,
-                                         left: 30),
+                         Row(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                           children: <Widget>[
+                             Padding(
+                               padding:
+                                   const EdgeInsets.only(
+                                       top: 20,
+                                       bottom: 10,
+                                       ),
+                               child: Align(
+                                 child: Text(
+                                   'To register yourself',
+                                   style: TextStyle(
+                                       fontSize: 13,
+                                       fontWeight:
+                                           FontWeight.w500),
+                                 ),
+                                 alignment: Alignment.center,
+                               ),
+                             ),
+                             Padding(
+                               padding:
+                                   const EdgeInsets.only(
+                                       top: 20, bottom: 10),
+                               child: GestureDetector(
+                                 onTap: () async {
+                                   const url =
+                                       'http://www.bdcoe.co.in/register';
+                                   if (await canLaunch(
+                                       url)) {
+                                     await launch(url);
+                                   }
+                                 },
                                  child: Align(
                                    child: Text(
-                                     'To register yourself',
+                                     ' Click Here',
                                      style: TextStyle(
+                                         color: Color(
+                                             0xff3972CF),
                                          fontSize: 13,
                                          fontWeight:
-                                             FontWeight.w500),
+                                             FontWeight
+                                                 .w500),
                                    ),
-                                   alignment: Alignment.center,
+                                   alignment:
+                                       Alignment.center,
                                  ),
                                ),
-                               Padding(
-                                 padding:
-                                     const EdgeInsets.only(
-                                         top: 20, bottom: 10),
-                                 child: GestureDetector(
-                                   onTap: () async {
-                                     const url =
-                                         'http://www.bdcoe.co.in/register';
-                                     if (await canLaunch(
-                                         url)) {
-                                       await launch(url);
-                                     }
-                                   },
-                                   child: Align(
-                                     child: Text(
-                                       ' Click Here',
-                                       style: TextStyle(
-                                           color: Color(
-                                               0xff3972CF),
-                                           fontSize: 13,
-                                           fontWeight:
-                                               FontWeight
-                                                   .w500),
-                                     ),
-                                     alignment:
-                                         Alignment.center,
-                                   ),
-                                 ),
-                               ),
-                             ],
-                           ),
+                             ),
+                           ],
                          )
                        ],
                                            ),
