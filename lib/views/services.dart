@@ -1,45 +1,15 @@
 import 'package:bdcoe/navigation/navigation.dart';
 import 'package:bdcoe/notifiers/dark.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
+import 'package:slimy_card/slimy_card.dart';
 
-class Items {
-  String title;
-  String desc;
 
-  Items({this.title, this.desc});
-}
-
-List items = [
-  Items(
-      title: 'BIG DATA',
-      desc:
-          "Big Data analysis means fetching data from a particular source, storing it in cluster and processing the data stored to gain meaningful insight. We can turn any useless data into usefull one by analysing it, using different Big Data Technologies. Our team is fully devoted in the field of Big Data analytics."),
-  Items(
-      title: 'DATA SCIENCE',
-      desc:
-          "Data science uses the data analysed through Big data tools to predict things. A great example of it is, The suggestions we get on youtube are based on the videos what we see. Companies these days use data science to predict the preferences of their customers and the problems faced by their customers."),
-  Items(
-      title: 'MACHINE LEARNING',
-      desc:
-          "Machine learning is an application of Artificial Intelligence (AI) that provides systems the ability to automatically learn and improve from experience without being explicitly programmed. Machine learning focuses on the development of computer programs that can access data and use it to learn for themselves."),
-  Items(
-      title: 'WEB DEVELOPMENT',
-      desc:
-          "Despite being a centre for data analytics we don't just restrict our domain to big data analytics. We try to excel in every domain and thus we have members who are excellent web developers. We build websites and web applications based on the latest technologies in the market and using minimum resources."),
-  Items(
-      title: 'COMPETITIVE CODING',
-      desc:
-          "Competitive programming is a mind sport usually held over the Internet or a local network, involving participants trying to program according to provided specifications. Competitive programming is recognized and supported by several multinational companies such as Google and Facebook."),
-  Items(
-      title: 'APP DEVELOPMENT',
-      desc:
-          "A phone without good apps is like a bird without wing. Mobile apps reduce our work and help us in many different ways whether it is education, entertainment or paying grocery bills and in many more things. We at Big Data Centre of Excellence have experts who can develop apps for both android and Ios devices."),
-];
 
 class Services extends StatefulWidget {
   @override
@@ -101,14 +71,17 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin {
           )
         : homeBody(themeProvider);
   }
-Future <bool> MoveToLastScreen(){
-   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                            BottomNavBar()), (Route<dynamic> route) => false);
-}
+
+  Future<bool> MoveToLastScreen() {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => BottomNavBar()),
+        (Route<dynamic> route) => false);
+  }
+
   Widget homeBody(DarkThemeProvider themeProvider) {
     return WillPopScope(
       onWillPop: MoveToLastScreen,
-          child: Container(
+      child: Container(
         color: Theme.of(context).primaryColor,
         child: SafeArea(
           child: Scaffold(
@@ -240,7 +213,7 @@ Future <bool> MoveToLastScreen(){
                       flex: 3,
                     ),
                     Flexible(
-                        flex: 6,
+                        flex: 11,
                         child: _description(
                           themeProvider,
                           context,
@@ -283,16 +256,16 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
   );
 }
 
+Future what() async {
+  var firestore = Firestore.instance;
+  QuerySnapshot qn = await firestore.collection("whatwedo").getDocuments();
+  return qn.documents;
+}
+
 Widget _description(
   DarkThemeProvider themeProvider,
   context,
 ) {
-  Future what() async {
-    var firestore = Firestore.instance;
-    QuerySnapshot qn = await firestore.collection("whatwedo").getDocuments();
-    return qn.documents;
-  }
-
   var size = MediaQuery.of(context).size;
 
   return Container(
@@ -329,94 +302,79 @@ Widget _description(
                             itemBuilder: (BuildContext context, int index) {
                               return Padding(
                                 padding: const EdgeInsets.all(10.0),
-                                child: new Container(
-                                  decoration: BoxDecoration(
-                                    color: themeProvider.darkTheme
-                                        ? Color(0xFF151515)
-                                        : Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(25.0),
-                                      topLeft: Radius.circular(25.0),
-                                      bottomRight: Radius.circular(0.0),
-                                      bottomLeft: Radius.circular(25.0),
-                                    ),
-                                  ),
-                                  child: Column(
+                                child: SlimyCard(
+                                  color: themeProvider.darkTheme?Color(0xFF151515):Color(0xff3972CF),
+                                  topCardHeight: 200,
+                                  bottomCardHeight: 200,
+                                  slimeEnabled: true,
+                                  
+                                  topCardWidget: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Padding(
-                                        padding: EdgeInsets.all(30),
-                                        child: themeProvider.darkTheme
-                                            ? Text(
-                                                snapshot.data[index].data['title'],
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 18,
-                                                    color: Colors.white),
-                                              )
-                                            : Text(
-                                                 snapshot.data[index].data['title'],
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 18,
-                                                    color: Colors.black),
-                                              ),
+                                      Container(
+                                        height: 70,
+                                        width: 70,
+                                        decoration: BoxDecoration(
+                                        
+                                          borderRadius:
+                                      BorderRadius.circular(15),
+
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.black.withOpacity(0.1),
+                                              blurRadius: 20,
+                                              spreadRadius: 1,
+                                            ),
+                                          ],
+                                        ),
+                                        child: CachedNetworkImage(
+                                          imageUrl: snapshot
+                                              .data[index].data['image'],
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              CircularProgressIndicator(
+                                                  value: downloadProgress
+                                                      .progress),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error),
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.all(25),
-                                        child: themeProvider.darkTheme
-                                            ? Text(
-                                                 snapshot.data[index].data['desc'],
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.white),
-                                                textAlign: TextAlign.justify,
-                                              )
-                                            : Text(
-                                                snapshot.data[index].data['desc'],
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 15),
-                                                textAlign: TextAlign.justify,
-                                              ),
-                                      )
+                                      SizedBox(height: 15),
+                                      Text(
+                                        snapshot.data[index].data['title'],
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                            fontSize: 15,fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(height: 15),
                                     ],
+                                  ),
+                                  
+                                  bottomCardWidget: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      snapshot.data[index].data['desc'],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
                                 ),
                               );
                             },
                             autoplay: true,
-                            itemCount: items.length,
+                            itemCount: snapshot.data.length,
                             scrollDirection: Axis.horizontal,
                             //  pagination: new SwiperPagination(alignment: Alignment.centerRight),
                             // control: new SwiperControl(),
                           ),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Align(
-                            child: Padding(
-                                padding:
-                                    EdgeInsets.only(top: 9,right: 3),
-                                child: CircleAvatar(
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
-                                  child: Image.asset('assets/logo.png'),
-                                )),
-                            alignment: Alignment.center,
-                          ),
-                          Padding(
-                              padding: EdgeInsets.only(top: 9),
-                              child: Text(
-                                'Powered by Big Data Centre of Excellence',
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ))
-                        ],
-                      )
                     ],
                   );
                 }

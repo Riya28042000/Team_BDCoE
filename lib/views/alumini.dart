@@ -1,22 +1,22 @@
 import 'package:bdcoe/navigation/navigation.dart';
 import 'package:bdcoe/notifiers/dark.dart';
+import 'package:bdcoe/views/details.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-class Events extends StatefulWidget {
+class Alumini extends StatefulWidget {
   @override
-  _EventsState createState() => _EventsState();
+  _Alumini createState() => _Alumini();
 }
 
-class _EventsState extends State<Events> with TickerProviderStateMixin {
-  AnimationController animationController;
+class _Alumini extends State<Alumini> with TickerProviderStateMixin{
+   AnimationController animationController;
 
   Animation<double> animation;
   bool cirAn = false;
@@ -70,16 +70,14 @@ class _EventsState extends State<Events> with TickerProviderStateMixin {
           )
         : homeBody(themeProvider);
   }
-  Future <bool> MoveToLastScreen(){
-   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                            BottomNavBar()), (Route<dynamic> route) => false);
+void MoveToLastScreen(){
+  Navigator.of(context).pop();
 }
-
   Widget homeBody(DarkThemeProvider themeProvider) {
-
-    
     return WillPopScope(
-      onWillPop: MoveToLastScreen,
+      onWillPop: () {
+        MoveToLastScreen();
+      },
           child: Container(
         color: Theme.of(context).primaryColor,
         child: SafeArea(
@@ -209,10 +207,14 @@ class _EventsState extends State<Events> with TickerProviderStateMixin {
                           ],
                         ),
                       ),
-                      flex: 2,
+                      flex: 3,
                     ),
                     Flexible(
-                        flex: 6, child: _description(context, themeProvider)),
+                        flex: 8,
+                        child: _description(
+                          context,themeProvider,
+                          
+                        )),
                   ],
                 ),
               ],
@@ -235,14 +237,14 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
       child: themeChangeProvider.darkTheme
           ? Align(
               child: Text(
-                'OUR EVENTS',
+                'ALUMINI',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
-                'OUR EVENTS',
+                'ALUMINI',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
@@ -254,7 +256,7 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
 Widget _description(context, DarkThemeProvider themeProvider) {
 Future gettoDo() async{
        var firestore= Firestore.instance;
-       QuerySnapshot qn=  await firestore.collection("activity").getDocuments();
+       QuerySnapshot qn=  await firestore.collection("fourthyr").getDocuments();
        return qn.documents;
     }
   var size = MediaQuery.of(context).size;
@@ -306,16 +308,8 @@ Future gettoDo() async{
                                child: Padding(
                                  padding: const EdgeInsets.all(15.0),
                                  child: Container(
-                                   child: GestureDetector(
-                                       onTap: () async {
-                                   const url =
-                                       'http://www.bdcoe.co.in/register';
-                                   if (await canLaunch(
-                                       url)) {
-                                     await launch(url);
-                                   }
-                                 },
-                                   child: Card(
+                                   child:  FlipCard(front: 
+                                   Card(
                                        clipBehavior: Clip.antiAlias,
                                        elevation: 20,
                                        // color: themeProvider.darkTheme
@@ -328,22 +322,22 @@ Future gettoDo() async{
                        children: <Widget>[
                          AspectRatio(
                            aspectRatio: 65 / 70,
-                           child:CachedNetworkImage(
-        imageUrl: snapshot.data[index].data['img'],
+                           child:  CachedNetworkImage(
+        imageUrl: snapshot.data[index].data['image'],
         progressIndicatorBuilder: (context, url, downloadProgress) => 
                 CircularProgressIndicator(value: downloadProgress.progress),
-        errorWidget: (context, url, error) => Icon(Icons.error,size: 30,),
+        errorWidget: (context, url, error) => Icon(Icons.error),
         fit: BoxFit.fill,
      ),
                          ),
                          SizedBox(
-                           height: 20,
+                           height: 10,
                          ),
                          Padding(
                            padding: const EdgeInsets.only(top:8),
                            child: Align(
                              child: Text(
-                              snapshot.data[index].data['head'],
+                              snapshot.data[index].data['name'],
                                style: TextStyle(
                                    color: themeProvider.darkTheme
                                        ? Color(0xff3972CF)
@@ -357,42 +351,123 @@ Future gettoDo() async{
                          SizedBox(
                            height: 10,
                          ),
-                         Align(
-                           child: Text(
-                            snapshot.data[index].data['value'],
-                             style: TextStyle(
-                                 fontSize: 13,
-                                 fontWeight: FontWeight.w500),
-                           ),
-                           alignment: Alignment.center,
-                         ),
-                         SizedBox(height:10),
-
-                          Padding(
-                               padding:
-                                   const EdgeInsets.only(
-                                       top: 20,
-                                       bottom: 10,
-                                       ),
-                               child: Align(
-                                 child: Text(
-                                   'Tap to register yourself',
-                                   style: TextStyle(
-                                       fontSize: 13,
-                                       fontWeight:
-                                           FontWeight.w500,
-                                           color:  Color(0xff3972CF)
-                                           ),
-                                 ),
-                                 alignment: Alignment.center,
-                               ),
+                         Padding(
+                           padding: const EdgeInsets.only(top:8),
+                           child: Align(
+                             child: Text(
+                             snapshot.data[index].data['domain'],
+                               style: TextStyle(
+                                   
+                                   fontSize: 15,
+                                   fontWeight: FontWeight.w500),
                              ),
-                       
+                             alignment: Alignment.center,
+                           ),
+                         ),
+                       SizedBox(
+                           height: 20,
+                         ),
+                      
+                         Padding(
+                           padding: const EdgeInsets.only(top:8),
+                           child: Align(
+                             child: Text(
+                          'Tap to know more',
+                               style: TextStyle(
+            
+                                   fontSize: 13,
+                                   fontWeight: FontWeight.w500),
+                             ),
+                             alignment: Alignment.center,
+                           ),
+                         ),
+                         SizedBox(
+                           height: 10,
+                         ),
                        ],
                                            ),
                                          ),
                                        )),
-                                 ),
+                                   
+                                    back: Card(
+                                       clipBehavior: Clip.antiAlias,
+                                       elevation: 20,
+                                       // color: themeProvider.darkTheme
+                                       //   ? Colors.black
+                                       // : Colors.white,
+                                       child: Padding(
+                                         padding: const EdgeInsets.all(20.0),
+                                         child: Container(
+                                           child: Column(
+                       children: <Widget>[
+                         AspectRatio(
+                           aspectRatio: 65 / 70,
+                           child: CachedNetworkImage(
+        imageUrl: snapshot.data[index].data['image'],
+        progressIndicatorBuilder: (context, url, downloadProgress) => 
+                CircularProgressIndicator(value: downloadProgress.progress),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+        fit: BoxFit.fill,
+     ),
+                         ),
+                         SizedBox(
+                           height: 10,
+                         ),
+                         Padding(
+                           padding: const EdgeInsets.only(top:8),
+                           child: Align(
+                             child: Text(
+                              snapshot.data[index].data['name'],
+                               style: TextStyle(
+                                   color: themeProvider.darkTheme
+                                       ? Color(0xff3972CF)
+                                       : Color(0xff3972CF),
+                                   fontSize: 15,
+                                   fontWeight: FontWeight.w500),
+                             ),
+                             alignment: Alignment.center,
+                           ),
+                         ),
+                         SizedBox(
+                           height: 10,
+                         ),
+                         Padding(
+                           padding: const EdgeInsets.only(top:8),
+                           child: Align(
+                             child: Text(
+                         snapshot.data[index].data['branch'],
+                               style: TextStyle(
+            
+                                   fontSize: 15,
+                                   fontWeight: FontWeight.w500),
+                             ),
+                             alignment: Alignment.center,
+                           ),
+                         ),
+                         SizedBox(
+                           height: 20,
+                         ),
+                      
+                         Padding(
+                           padding: const EdgeInsets.only(top:8),
+                           child: Align(
+                             child: Text(
+                          'Tap to know more',
+                               style: TextStyle(
+            
+                                   fontSize: 13,
+                                   fontWeight: FontWeight.w500),
+                             ),
+                             alignment: Alignment.center,
+                           ),
+                         ),
+                         SizedBox(
+                           height: 10,
+                         ),
+                       ],
+                                           ),
+                                         ),
+                                       )),)
                                  ),
                                ),
                              ),

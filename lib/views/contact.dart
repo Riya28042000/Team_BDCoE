@@ -1,7 +1,9 @@
 import 'package:bdcoe/navigation/navigation.dart';
 import 'package:bdcoe/notifiers/dark.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -248,6 +250,7 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
 }
 
 Widget _description(
+ 
   DarkThemeProvider themeChangeProvider,
   context,
 ) {
@@ -255,6 +258,11 @@ Widget _description(
 // //  var upcomingEventsData = upcomingEvent.data.attributes;
 // //  print(upcomingEventsData.name);
   void call(String number) => launch("tel:$number");
+    Future gettoDo() async {
+    var firestore = Firestore.instance;
+    QuerySnapshot qn = await firestore.collection("phone").getDocuments();
+    return qn.documents;
+  }
 
   return Container(
     child: Padding(
@@ -262,7 +270,27 @@ Widget _description(
       child: Container(
         height: size.height / 1,
         width: size.width / 1.1,
-        child: Column(
+        child: FutureBuilder(
+          future: gettoDo(),
+          builder: (_ ,snapshot){
+          if(snapshot.connectionState==ConnectionState.waiting){
+                    return Center(
+                        child: SpinKitChasingDots(
+                          itemBuilder: (BuildContext context, int index) {
+                            return DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: themeChangeProvider.darkTheme
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                            );
+                          },
+                        ),
+                      );
+          }
+          else
+          {
+            return Column(
             //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Padding(
@@ -343,10 +371,10 @@ Widget _description(
                   child: Align(
                     child: GestureDetector(
                       onTap: () {
-                        call("7007769241");
+                        call(snapshot.data[0].data['phone1']);
                       },
                       child: Text(
-                        '7007769241',
+                        snapshot.data[0].data['phone1'],
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w500),
                       ),
@@ -360,10 +388,10 @@ Widget _description(
                   child: Align(
                     child: GestureDetector(
                       onTap: () {
-                        call("9984508400");
+                        call(snapshot.data[0].data['phone2']);
                       },
                       child: Text(
-                        '9984508400',
+                        snapshot.data[0].data['phone2'],
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w500),
                       ),
@@ -406,7 +434,10 @@ Widget _description(
               ),
             ),
           ],
-        ),
+        );
+          }
+        }
+        )
       ),
     ),
   );

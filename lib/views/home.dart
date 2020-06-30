@@ -28,6 +28,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       // reverseCurve: Curves.easeInOut
     );
     animationController.forward();
+    
+    setState(() {
+      cirAn = true;
+    });
+    // themeProvider.darkTheme = !themeProvider.darkTheme;
+
+    if (animationController.status == AnimationStatus.forward ||
+        animationController.status == AnimationStatus.completed) {
+      animationController.reset();
+      animationController.forward();
+    } else {
+      animationController.forward();
+    }
+  
   }
 @override
 dispose() {

@@ -1,5 +1,6 @@
 import 'package:bdcoe/navigation/navigation.dart';
 import 'package:bdcoe/notifiers/dark.dart';
+import 'package:bdcoe/views/alumini.dart';
 import 'package:bdcoe/views/faculty.dart';
 import 'package:bdcoe/views/fourth.dart';
 import 'package:bdcoe/views/second.dart';
@@ -25,7 +26,7 @@ class _DetailsState extends State<Details> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-//    upcomingEventBloc.loadScreenScreen();
+
 
     animationController = AnimationController(
       vsync: this,
@@ -34,13 +35,13 @@ class _DetailsState extends State<Details> with TickerProviderStateMixin {
     animation = CurvedAnimation(
       parent: animationController,
       curve: Curves.easeIn,
-      // reverseCurve: Curves.easeInOut
+
     );
     animationController.forward();
     setState(() {
       cirAn = true;
     });
-    // themeProvider.darkTheme = !themeProvider.darkTheme;
+
 
     if (animationController.status == AnimationStatus.forward ||
         animationController.status == AnimationStatus.completed) {
@@ -72,14 +73,17 @@ class _DetailsState extends State<Details> with TickerProviderStateMixin {
           )
         : homeBody(themeProvider);
   }
-Future <bool> MoveToLastScreen(){
-   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                            BottomNavBar()), (Route<dynamic> route) => false);
-}
+
+  Future<bool> MoveToLastScreen() {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => BottomNavBar()),
+        (Route<dynamic> route) => false);
+  }
+
   Widget homeBody(DarkThemeProvider themeProvider) {
     return WillPopScope(
       onWillPop: MoveToLastScreen,
-          child: Container(
+      child: Container(
         color: Theme.of(context).primaryColor,
         child: SafeArea(
           child: Scaffold(
@@ -213,8 +217,8 @@ Future <bool> MoveToLastScreen(){
                     Flexible(
                         flex: 8,
                         child: _description(
-                          context,themeProvider,
-                          
+                          context,
+                          themeProvider,
                         )),
                   ],
                 ),
@@ -255,11 +259,12 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
 }
 
 Widget _description(context, DarkThemeProvider themeProvider) {
-Future gettoDo() async{
-       var firestore= Firestore.instance;
-       QuerySnapshot qn=  await firestore.collection("domains").getDocuments();
-       return qn.documents;
-    }
+  Future gettoDo() async {
+    var firestore = Firestore.instance;
+    QuerySnapshot qn = await firestore.collection("domains").getDocuments();
+    return qn.documents;
+  }
+
   var size = MediaQuery.of(context).size;
 
   return Container(
@@ -269,172 +274,168 @@ Future gettoDo() async{
               height: size.height / 1,
               width: size.width / 1.1,
               child: FutureBuilder(
-                future: gettoDo(),
-                builder:( _, snapshot){
-                if(snapshot.connectionState== ConnectionState.waiting){
-                  return  Center(child: SpinKitChasingDots(
-  itemBuilder: (BuildContext context, int index) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: themeProvider.darkTheme ? Colors.white : Colors.black,
-      ),
-    );
-  },
-),);
-                   }
-                else{
-                return
-                   Column(
-                     children: <Widget>[
-                       Flexible(
-                       
-                 child: new Swiper(
-                         
-                         itemBuilder: (BuildContext context, int index) {
-                           return Padding(
-                             padding: const EdgeInsets.only(left: 10, right: 10),
-                             child: new Container(
-                               decoration: BoxDecoration(
-                                 // color: themeProvider.darkTheme
-                                 //   ? Color(0xff3972CF)
-                                 // : Color(0xff3972CF),
-//                        border: Border(bottom: BorderSide(width: 1.0)),
-                                 borderRadius: BorderRadius.only(
-                                   topRight: Radius.circular(25.0),
-                                   topLeft: Radius.circular(25.0),
-                                   bottomRight: Radius.circular(0.0),
-                                   bottomLeft: Radius.circular(25.0),
-                                 ),
-                               ),
-                               child: Padding(
-                                 padding: const EdgeInsets.all(15.0),
-                                 child: Container(
-                                   child: Card(
-                                       clipBehavior: Clip.antiAlias,
-                                       elevation: 20,
-                                       // color: themeProvider.darkTheme
-                                       //   ? Colors.black
-                                       // : Colors.white,
-                                       child: Padding(
-                                         padding: const EdgeInsets.all(20.0),
-                                         child: Container(
-                                           child: Column(
-                       children: <Widget>[
-                         AspectRatio(
-                           aspectRatio: 65 / 70,
-                           child: CachedNetworkImage(
-        imageUrl: snapshot.data[index].data['image'],
-        progressIndicatorBuilder: (context, url, downloadProgress) => 
-                CircularProgressIndicator(value: downloadProgress.progress),
-        errorWidget: (context, url, error) => Icon(Icons.error),
-        fit: BoxFit.fill,
-     ),
-                         ),
-                         SizedBox(
-                           height: 10,
-                         ),
-                         Padding(
-                           padding: const EdgeInsets.only(top:8),
-                           child: Align(
-                             child: Text(
-                              snapshot.data[index].data['staff'],
-                               style: TextStyle(
-                                   color: themeProvider.darkTheme
-                                       ? Color(0xff3972CF)
-                                       : Color(0xff3972CF),
-                                   fontSize: 15,
-                                   fontWeight: FontWeight.w500),
-                             ),
-                             alignment: Alignment.center,
-                           ),
-                         ),
-                         SizedBox(
-                           height: 10,
-                         ),
-                      
-                         Row(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                           children: <Widget>[
-                             Padding(
-                               padding:
-                                   const EdgeInsets.only(
-                                       top: 20,
-                                       bottom: 10,
+                  future: gettoDo(),
+                  builder: (_, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: SpinKitChasingDots(
+                          itemBuilder: (BuildContext context, int index) {
+                            return DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: themeProvider.darkTheme
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    } else {
+                      return Column(
+                        children: <Widget>[
+                          Flexible(
+                            child: new Swiper(
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: new Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(25.0),
+                                        topLeft: Radius.circular(25.0),
+                                        bottomRight: Radius.circular(0.0),
+                                        bottomLeft: Radius.circular(25.0),
                                       ),
-                               child: Align(
-                                 child: Text(
-                                   'To know more',
-                                   style: TextStyle(
-                                       fontSize: 13,
-                                       fontWeight:
-                                           FontWeight.w500),
-                                 ),
-                                 alignment: Alignment.center,
-                               ),
-                             ),
-                             Padding(
-                               padding:
-                                   const EdgeInsets.only(
-                                       top: 20, bottom: 10),
-                               child: GestureDetector(
-                                 onTap: ()  {
-                                  if(index==0){
-Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => Faculty()));
-       
-                                  }
-                                  else 
-                                  if(index==1){
-Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => Fourth()));
-                                  }
-                                   else 
-                                  if(index==2){
-Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => Third()));
-                                  }
-                                   else 
-                                  if(index==3){
-Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => Second()));
-                                  }
-                                 },
-                                 child: Align(
-                                   child: Text(
-                                     ' Click Here',
-                                     style: TextStyle(
-                                         color: Color(
-                                             0xff3972CF),
-                                         fontSize: 13,
-                                         fontWeight:
-                                             FontWeight
-                                                 .w500),
-                                   ),
-                                   alignment:
-                                       Alignment.center,
-                                 ),
-                               ),
-                             ),
-                           ],
-                         )
-                       ],
-                                           ),
-                                         ),
-                                       )),
-                                 ),
-                               ),
-                             ),
-                           );
-                         },
-                         autoplay: true,
-                         itemCount: snapshot.data.length,
-                         scrollDirection: Axis.horizontal,
-                         //  pagination: new SwiperPagination(alignment: Alignment.centerRight),
-                         // control: new SwiperControl(),
-                 ),
-               ),
-                     ],
-                   );
-                }
-              }))));
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Container(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            if (index == 0) {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Faculty()));
+                                            } else if (index == 1) {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Fourth()));
+                                            } else if (index == 2) {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Third()));
+                                            } else if (index == 3) {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Second()));
+                                            }
+                                            else if (index == 4) {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Alumini()));
+                                            }
+                                          },
+                                          child: Card(
+                                              clipBehavior: Clip.antiAlias,
+                                              elevation: 20,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(20.0),
+                                                child: Container(
+                                                  child: Column(
+                                                    children: <Widget>[
+                                                      AspectRatio(
+                                                        aspectRatio: 65 / 70,
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl: snapshot
+                                                              .data[index]
+                                                              .data['image'],
+                                                          progressIndicatorBuilder: (context,
+                                                                  url,
+                                                                  downloadProgress) =>
+                                                              CircularProgressIndicator(
+                                                                  value: downloadProgress
+                                                                      .progress),
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              Icon(Icons.error),
+                                                          fit: BoxFit.fill,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 20,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 8),
+                                                        child: Align(
+                                                          child: Text(
+                                                            snapshot.data[index]
+                                                                .data['staff'],
+                                                            style: TextStyle(
+                                                                color: themeProvider
+                                                                        .darkTheme
+                                                                    ? Color(
+                                                                        0xff3972CF)
+                                                                    : Color(
+                                                                        0xff3972CF),
+                                                                fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+                                                          alignment:
+                                                              Alignment.center,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                          top: 20,
+                                                          bottom: 10,
+                                                        ),
+                                                        child: Align(
+                                                          child: Text(
+                                                            'Tap to know more',
+                                                            style: TextStyle(
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+                                                          alignment:
+                                                              Alignment.center,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              autoplay: true,
+                              itemCount: snapshot.data.length,
+                              scrollDirection: Axis.horizontal,
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                  }))));
 }
