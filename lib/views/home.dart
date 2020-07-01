@@ -1,7 +1,9 @@
+import 'package:bdcoe/chat/login.dart';
 import 'package:bdcoe/notifiers/dark.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 class Home extends StatefulWidget {
   @override
@@ -64,14 +66,49 @@ dispose() {
         : homeBody(themeProvider);
          }
 Future <bool> _SaveAndBack(){
-           return showDialog(context: context,
-           builder: (context)=> AlertDialog(title: Text('Do you want to exit?'),
-           actions: <Widget>[
-             FlatButton(onPressed:()=>Navigator.pop(context,false), child: Text('No')
-             ),
-              FlatButton(onPressed:()=>Navigator.pop(context,true), child: Text('Yes'))
-           ],
-           ));
+           return         Alert(
+            context: context,
+            
+            type: AlertType.warning,
+            title: "ALERT",
+            style:AlertStyle(
+      animationType: AnimationType.fromTop,
+      isCloseButton: false,
+      backgroundColor: Theme.of(context).cardColor,
+      isOverlayTapDismiss: false,
+      descStyle: TextStyle(fontSize: 18),
+      animationDuration: Duration(milliseconds: 400),
+      alertBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0.0),
+        side: BorderSide(
+         // color: Colors.grey,
+        ),
+      ),
+      titleStyle: TextStyle(
+        fontWeight: FontWeight.bold,
+       color: Theme.of(context).textSelectionColor
+      ),
+    ),
+            desc: "Do you want to exit?",
+            buttons: [
+              DialogButton(
+                color: Color(0xff3972CF),
+                child: Text(
+                  "NO",
+                  style: TextStyle(fontSize: 20,color: Colors.white),
+                ),
+                onPressed: () => Navigator.pop(context,false)
+              ),
+              DialogButton(
+                color: Color(0xff3972CF),
+                child: Text(
+                  "YES",
+                  style: TextStyle(fontSize: 20,color: Colors.white),
+                ),
+                onPressed: () => Navigator.pop(context,true)
+              )
+            ],
+          ).show();
           
   }
   Widget homeBody(DarkThemeProvider themeProvider) {
@@ -182,7 +219,7 @@ Future <bool> _SaveAndBack(){
                     ),
                   ),
                 ),
-                new Positioned(
+                  new Positioned(
                   right: MediaQuery.of(context).size.width / 1.18, //230.0,
 //              bottom: MediaQuery.of(context).size.width / 0.68, //40.0,
                   child: GestureDetector(

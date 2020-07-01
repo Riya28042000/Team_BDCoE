@@ -331,7 +331,7 @@ Future gettoDo() async{
      ),
                          ),
                          SizedBox(
-                           height: 10,
+                           height: 15,
                          ),
                          Padding(
                            padding: const EdgeInsets.only(top:8),
@@ -342,7 +342,7 @@ Future gettoDo() async{
                                    color: themeProvider.darkTheme
                                        ? Color(0xff3972CF)
                                        : Color(0xff3972CF),
-                                   fontSize: 15,
+                                   fontSize: 18,
                                    fontWeight: FontWeight.w500),
                              ),
                              alignment: Alignment.center,
@@ -365,7 +365,7 @@ Future gettoDo() async{
                            ),
                          ),
                        SizedBox(
-                           height: 20,
+                           height: 25,
                          ),
                       
                          Padding(
@@ -375,7 +375,7 @@ Future gettoDo() async{
                           'Tap to know more',
                                style: TextStyle(
             
-                                   fontSize: 13,
+                                   fontSize: 15,
                                    fontWeight: FontWeight.w500),
                              ),
                              alignment: Alignment.center,
@@ -411,7 +411,7 @@ Future gettoDo() async{
      ),
                          ),
                          SizedBox(
-                           height: 10,
+                           height: 15,
                          ),
                          Padding(
                            padding: const EdgeInsets.only(top:8),
@@ -422,7 +422,7 @@ Future gettoDo() async{
                                    color: themeProvider.darkTheme
                                        ? Color(0xff3972CF)
                                        : Color(0xff3972CF),
-                                   fontSize: 15,
+                                   fontSize: 18,
                                    fontWeight: FontWeight.w500),
                              ),
                              alignment: Alignment.center,
@@ -445,7 +445,7 @@ Future gettoDo() async{
                            ),
                          ),
                          SizedBox(
-                           height: 20,
+                           height: 25,
                          ),
                       
                          Padding(
@@ -455,7 +455,7 @@ Future gettoDo() async{
                           'Tap to know more',
                                style: TextStyle(
             
-                                   fontSize: 13,
+                                   fontSize: 15,
                                    fontWeight: FontWeight.w500),
                              ),
                              alignment: Alignment.center,

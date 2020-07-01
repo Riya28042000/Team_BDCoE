@@ -387,7 +387,7 @@ Widget _description(context, DarkThemeProvider themeProvider) {
                                                                         0xff3972CF)
                                                                     : Color(
                                                                         0xff3972CF),
-                                                                fontSize: 15,
+                                                                fontSize: 17,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500),
@@ -410,7 +410,7 @@ Widget _description(context, DarkThemeProvider themeProvider) {
                                                           child: Text(
                                                             'Tap to know more',
                                                             style: TextStyle(
-                                                                fontSize: 13,
+                                                                fontSize: 15,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500),

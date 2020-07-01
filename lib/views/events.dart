@@ -348,7 +348,7 @@ Future gettoDo() async{
                                    color: themeProvider.darkTheme
                                        ? Color(0xff3972CF)
                                        : Color(0xff3972CF),
-                                   fontSize: 15,
+                                   fontSize: 16,
                                    fontWeight: FontWeight.w500),
                              ),
                              alignment: Alignment.center,
@@ -378,7 +378,7 @@ Future gettoDo() async{
                                  child: Text(
                                    'Tap to register yourself',
                                    style: TextStyle(
-                                       fontSize: 13,
+                                       fontSize: 15,
                                        fontWeight:
                                            FontWeight.w500,
                                            color:  Color(0xff3972CF)

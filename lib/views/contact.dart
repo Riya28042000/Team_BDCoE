@@ -1,3 +1,6 @@
+import 'package:bdcoe/chat/chat.dart';
+import 'package:bdcoe/chat/login.dart';
+import 'package:bdcoe/chat/preference.dart';
 import 'package:bdcoe/navigation/navigation.dart';
 import 'package:bdcoe/notifiers/dark.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
@@ -13,12 +16,15 @@ class Contact extends StatefulWidget {
 }
 
 class _ContactState extends State<Contact> with TickerProviderStateMixin {
+  bool userIsLoggedIn;
+
   AnimationController animationController;
 
   Animation<double> animation;
   bool cirAn = false;
   @override
   void initState() {
+    getLoggedInState();
     super.initState();
 //    upcomingEventBloc.loadScreenScreen();
 
@@ -46,10 +52,14 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
     }
   }
 
-  @override
-  dispose() {
-    animationController.dispose(); // you need this
-    super.dispose();
+  getLoggedInState() async {
+    await HelperFunctions.getUserLoggedInSharedPreference().then((value) {
+      setState(() {
+        userIsLoggedIn = value;
+        print(value);
+      });
+    });
+    //   HelperFunctions.saveAdminLoggedInSharedPreference(false);
   }
 
   @override
@@ -67,14 +77,17 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
           )
         : homeBody(themeProvider);
   }
-Future <bool> MoveToLastScreen(){
-   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                            BottomNavBar()), (Route<dynamic> route) => false);
-}
+
+  Future<bool> MoveToLastScreen() {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => BottomNavBar()),
+        (Route<dynamic> route) => false);
+  }
+
   Widget homeBody(DarkThemeProvider themeProvider) {
     return WillPopScope(
       onWillPop: MoveToLastScreen,
-          child: Container(
+      child: Container(
         color: Theme.of(context).primaryColor,
         child: SafeArea(
           child: Scaffold(
@@ -206,7 +219,7 @@ Future <bool> MoveToLastScreen(){
                       flex: 3,
                     ),
                     Flexible(
-                        flex: 10,
+                        flex: 12,
                         child: _description(
                           themeProvider,
                           context,
@@ -216,6 +229,36 @@ Future <bool> MoveToLastScreen(){
               ],
             ),
             backgroundColor: Theme.of(context).backgroundColor,
+            floatingActionButton: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FloatingActionButton.extended(
+                backgroundColor: themeProvider.darkTheme
+                    ? Color(0xFF151515)
+                    : Color(0xff3972CF),
+                onPressed: () {
+                  userIsLoggedIn != null
+                      ? userIsLoggedIn
+                          ? Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => Chatting()),
+                              (Route<dynamic> route) => false)
+                          : Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(builder: (context) => Login()),
+                              (Route<dynamic> route) => false)
+                      : Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => Login()),
+                          (Route<dynamic> route) => false);
+                },
+                icon: Icon(
+                  Icons.chat,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  "Talk Now",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -250,7 +293,6 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
 }
 
 Widget _description(
- 
   DarkThemeProvider themeChangeProvider,
   context,
 ) {
@@ -258,7 +300,7 @@ Widget _description(
 // //  var upcomingEventsData = upcomingEvent.data.attributes;
 // //  print(upcomingEventsData.name);
   void call(String number) => launch("tel:$number");
-    Future gettoDo() async {
+  Future gettoDo() async {
     var firestore = Firestore.instance;
     QuerySnapshot qn = await firestore.collection("phone").getDocuments();
     return qn.documents;
@@ -268,294 +310,184 @@ Widget _description(
     child: Padding(
       padding: const EdgeInsets.only(left: 15, right: 15),
       child: Container(
-        height: size.height / 1,
-        width: size.width / 1.1,
-        child: FutureBuilder(
-          future: gettoDo(),
-          builder: (_ ,snapshot){
-          if(snapshot.connectionState==ConnectionState.waiting){
-                    return Center(
-                        child: SpinKitChasingDots(
-                          itemBuilder: (BuildContext context, int index) {
-                            return DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: themeChangeProvider.darkTheme
-                                    ? Colors.white
-                                    : Colors.black,
-                              ),
-                            );
-                          },
+          height: size.height / 1,
+          width: size.width / 1.1,
+          child: FutureBuilder(
+              future: gettoDo(),
+              builder: (_, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: SpinKitChasingDots(
+                      itemBuilder: (BuildContext context, int index) {
+                        return DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: themeChangeProvider.darkTheme
+                                ? Colors.white
+                                : Colors.black,
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                } else {
+                  return Column(
+                    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 30, left: 10, right: 10, bottom: 10),
+                        child: Align(
+                          child: Text(
+                            'ADDRESS',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xff3972CF)),
+                          ),
+                          alignment: Alignment.topLeft,
                         ),
-                      );
-          }
-          else
-          {
-            return Column(
-            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 30, left: 10, right: 10, bottom: 10),
-              child: Align(
-                child: Text(
-                  'ADDRESS',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xff3972CF)),
-                ),
-                alignment: Alignment.topLeft,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Align(
-                child: Text(
-                  'Research & Development Department, Ajay Kumar Garg Engineering College, Delhi Hapur Bypass, Adhyatmik Nagar, Ghaziabad, Uttar Pradesh 201009',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                ),
-                alignment: Alignment.topLeft,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 30, left: 10, right: 10, bottom: 10),
-              child: Align(
-                child: Text(
-                  'EMAIL',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xff3972CF)),
-                ),
-                alignment: Alignment.topLeft,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Align(
-                child: GestureDetector(
-                  onTap: () {
-                    Uri _emailLaunchUri = Uri(
-                      scheme: 'mailto',
-                      path: 'contact@bdcoe.co.in',
-                    );
-                    launch(_emailLaunchUri.toString());
-                  },
-                  child: Text(
-                    'contact@bdcoe.co.in',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                  ),
-                ),
-                alignment: Alignment.topLeft,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 30, left: 10, right: 10, bottom: 10),
-              child: Align(
-                child: Text(
-                  'CALL US ON',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xff3972CF)),
-                ),
-                alignment: Alignment.topLeft,
-              ),
-            ),
-            Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-                  child: Align(
-                    child: GestureDetector(
-                      onTap: () {
-                        call(snapshot.data[0].data['phone1']);
-                      },
-                      child: Text(
-                        snapshot.data[0].data['phone1'],
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w500),
                       ),
-                    ),
-                    alignment: Alignment.topLeft,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 8, left: 10, right: 10, bottom: 10),
-                  child: Align(
-                    child: GestureDetector(
-                      onTap: () {
-                        call(snapshot.data[0].data['phone2']);
-                      },
-                      child: Text(
-                        snapshot.data[0].data['phone2'],
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w500),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Align(
+                          child: Text(
+                            'Research & Development Department, Ajay Kumar Garg Engineering College, Delhi Hapur Bypass, Adhyatmik Nagar, Ghaziabad, Uttar Pradesh 201009',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w500),
+                          ),
+                          alignment: Alignment.topLeft,
+                        ),
                       ),
-                    ),
-                    alignment: Alignment.topLeft,
-                  ),
-                ),
-              ],
-            ),
-              Padding(
-              padding: const EdgeInsets.only(
-                  top: 30, left: 10, right: 10, bottom: 10),
-              child: Align(
-                child: Text(
-                  'WEBSITE',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xff3972CF)),
-                ),
-                alignment: Alignment.topLeft,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Align(
-                child: GestureDetector(
-                   onTap: ()  async{
-                    const url = 'http://www.bdcoe.co.in/';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } 
-                    },
-                  child: Text(
-                    'bdcoe.co.in',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                  ),
-                ),
-                alignment: Alignment.topLeft,
-              ),
-            ),
-          ],
-        );
-          }
-        }
-        )
-      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 30, left: 10, right: 10, bottom: 10),
+                        child: Align(
+                          child: Text(
+                            'EMAIL',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xff3972CF)),
+                          ),
+                          alignment: Alignment.topLeft,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Align(
+                          child: GestureDetector(
+                            onTap: () {
+                              Uri _emailLaunchUri = Uri(
+                                scheme: 'mailto',
+                                path: 'contact@bdcoe.co.in',
+                              );
+                              launch(_emailLaunchUri.toString());
+                            },
+                            child: Text(
+                              'contact@bdcoe.co.in',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          alignment: Alignment.topLeft,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 30, left: 10, right: 10, bottom: 10),
+                        child: Align(
+                          child: Text(
+                            'CALL US ON',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xff3972CF)),
+                          ),
+                          alignment: Alignment.topLeft,
+                        ),
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 10, right: 10),
+                            child: Align(
+                              child: GestureDetector(
+                                onTap: () {
+                                  call(snapshot.data[0].data['phone1']);
+                                },
+                                child: Text(
+                                  snapshot.data[0].data['phone1'],
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              alignment: Alignment.topLeft,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 8, left: 10, right: 10, bottom: 10),
+                            child: Align(
+                              child: GestureDetector(
+                                onTap: () {
+                                  call(snapshot.data[0].data['phone2']);
+                                },
+                                child: Text(
+                                  snapshot.data[0].data['phone2'],
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              alignment: Alignment.topLeft,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 30, left: 10, right: 10, bottom: 10),
+                        child: Align(
+                          child: Text(
+                            'WEBSITE',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Color(0xff3972CF)),
+                          ),
+                          alignment: Alignment.topLeft,
+                        ),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Align(
+                              child: GestureDetector(
+                                onTap: () async {
+                                  const url = 'http://www.bdcoe.co.in/';
+                                  if (await canLaunch(url)) {
+                                    await launch(url);
+                                  }
+                                },
+                                child: Text(
+                                  'bdcoe.co.in',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              alignment: Alignment.topLeft,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+              })),
     ),
   );
 }
-
-// Widget _optionsScreen(context) {
-//   var size = MediaQuery.of(context).size;
-//   return Container(
-//     margin: EdgeInsets.only(left: 8, right: 8, top: 20),
-//     height: MediaQuery.of(context).size.height / 7,
-//     width: MediaQuery.of(context).size.width,
-//     child: Card(
-//       elevation: 0,
-//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-//       child: Padding(
-//           padding: const EdgeInsets.all(12.0),
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//             children: <Widget>[
-//               InkWell(
-//                 highlightColor: Colors.transparent,
-//                 onTap: () {
-//                   Navigator.push(
-//                     context,
-//                     MaterialPageRoute(
-//                       builder: (context) => AgendaScreen(),
-//                     ),
-//                   );
-//                 },
-//                 child: Container(
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                     children: <Widget>[
-//                       Image.asset(
-//                         "assets/agenda.png",
-//                         height: size.height / 30,
-//                       ),
-//                       Text(
-//                         'Agenda',
-//                         style: TextStyle(fontSize: 11),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               InkWell(
-//                 highlightColor: Colors.transparent,
-//                 onTap: () {
-//                   Navigator.push(
-//                     context,
-//                     MaterialPageRoute(
-//                       builder: (context) => SpeakersScreenList(),
-//                     ),
-//                   );
-//                 },
-//                 child: Container(
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                     children: <Widget>[
-//                       Image.asset(
-//                         "assets/speaker.png",
-//                         height: size.height / 30,
-//                       ),
-//                       Text('Speakers', style: TextStyle(fontSize: 11)),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               InkWell(
-//                 highlightColor: Colors.transparent,
-//                 onTap: () {
-//                   Navigator.push(
-//                     context,
-//                     MaterialPageRoute(
-//                       builder: (context) => Sponsors(),
-//                     ),
-//                   );
-//                 },
-//                 child: Container(
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                     children: <Widget>[
-//                       Image.asset(
-//                         "assets/sponsors.png",
-//                         height: size.height / 30,
-//                       ),
-//                       Text('Sponsors', style: TextStyle(fontSize: 11)),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-// //              InkWell(
-// //                highlightColor: Colors.transparent,
-// //                onTap: () {
-// //                  Navigator.push(
-// //                    context,
-// //                    MaterialPageRoute(
-// //                      builder: (context) => Team(),
-// //                    ),
-// //                  );
-// //                },
-// //                child: Container(
-// //                  child: Column(
-// //                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-// //                    children: <Widget>[
-// //                      Image.asset(
-// //                        "assets/team.png",
-// //                        height: size.height / 30,
-// //                      ),
-// //                      Text('Team', style: TextStyle(fontSize: 11)),
-// //                    ],
-// //                  ),
-// //                ),
-// //              ),
-//             ],
-//           )),
-//     ),
-
-//      );
-
-//   }
