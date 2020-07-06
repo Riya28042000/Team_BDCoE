@@ -7,6 +7,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatefulWidget {
+
+
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
@@ -52,6 +54,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         onTap: (index) {
           setState(() {
             _currentIndex = index;
+            
           });
         },
       ),

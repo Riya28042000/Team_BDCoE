@@ -6,6 +6,7 @@ import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -63,7 +64,7 @@ bool isLoading= false;
       animationType: AnimationType.fromTop,
       isCloseButton: false,
       isOverlayTapDismiss: false,
-      descStyle: TextStyle(fontSize: 18),
+      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -71,7 +72,7 @@ bool isLoading= false;
          // color: Colors.grey,
         ),
       ),
-      titleStyle: TextStyle(
+      titleStyle: GoogleFonts.zillaSlab(
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
@@ -79,10 +80,10 @@ bool isLoading= false;
             desc: "Registered Successfully!",
             buttons: [
               DialogButton(
-                color: Color(0xff3972CF),
+                color: Color(0xff3671a4),
                 child: Text(
                   "OK",
-                  style: TextStyle(fontSize: 20,color: Colors.white),
+                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () => Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => Login()),
@@ -90,6 +91,8 @@ bool isLoading= false;
               )
             ],
           ).show();
+        }).catchError((onError){
+          
         });
     //print(ref.documentID);
       
@@ -107,7 +110,7 @@ bool isLoading= false;
       backgroundColor: Theme.of(context).cardColor,
       isCloseButton: false,
       isOverlayTapDismiss: false,
-      descStyle: TextStyle(fontSize: 18),
+      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -115,18 +118,18 @@ bool isLoading= false;
          // color: Colors.grey,
         ),
       ),
-      titleStyle: TextStyle(
+      titleStyle: GoogleFonts.zillaSlab(
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
     ),
-            desc: "Try Again!",
+            desc: "Already Registered!",
             buttons: [
               DialogButton(
-                color: Color(0xff3972CF),
+                color: Color(0xff3671a4),
                 child: Text(
                   "OK",
-                  style: TextStyle(fontSize: 20,color: Colors.white),
+                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () => Navigator.of(context).pop()
               )
@@ -177,11 +180,7 @@ setState(() {
     }
   }
 
-  @override
-  dispose() {
-    animationController.dispose(); // you need this
-    super.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +223,7 @@ setState(() {
         color: Theme.of(context).primaryColor,
         child: SafeArea(
           child: Scaffold(
-           resizeToAvoidBottomInset:false,
+         //  resizeToAvoidBottomInset:false,
             key: _scaffoldKey,
             body: Stack(
               children: <Widget>[
@@ -365,7 +364,7 @@ setState(() {
 
     _displaySnackBar(BuildContext context, String a) {
       final snackBar = SnackBar(
-        content: Text(a,style: TextStyle(color:themeProvider.darkTheme
+        content: Text(a,style: GoogleFonts.zillaSlab(color:themeProvider.darkTheme
                                     ? Colors.black
                                     : Colors.white,fontWeight: FontWeight.bold) ,textAlign: TextAlign.center),
         backgroundColor: themeProvider.darkTheme
@@ -405,14 +404,14 @@ setState(() {
           ? Align(
               child: Text(
                     'REGISTER',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.zillaSlab(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                     'REGISTER',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.zillaSlab(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),
@@ -422,7 +421,7 @@ setState(() {
                        Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: TextFormField(
-                            style: TextStyle(
+                            style: GoogleFonts.zillaSlab(
                                 //  color: Colors.white,
                                 ),
                             validator: (value) {
@@ -436,19 +435,20 @@ setState(() {
                                 ? Colors.white
                                 : Colors.black,
                             keyboardType: TextInputType.text,
+                            textCapitalization: TextCapitalization.words,
                             decoration: InputDecoration(
                               // fillColor: Color(0xffefb168),
                               hintText: "Name",
                               alignLabelWithHint: true,
                               labelText: "Name",
-                              hintStyle: TextStyle(
+                              hintStyle: GoogleFonts.zillaSlab(
                                   color: themeProvider.darkTheme
                     ? Colors.white
                     : Colors.black,fontWeight: FontWeight.bold),
-                              labelStyle: TextStyle(
+                              labelStyle: GoogleFonts.zillaSlab(
                                   color: themeProvider.darkTheme
-                    ? Color(0xff3972CF)
-                    : Color(0xff3972CF),fontWeight: FontWeight.bold),
+                    ? Color(0xff3671a4)
+                    : Color(0xff3671a4),fontWeight: FontWeight.bold),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                   color: themeProvider.darkTheme
@@ -477,7 +477,7 @@ setState(() {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: TextFormField(
-                            style: TextStyle(
+                            style: GoogleFonts.zillaSlab(
                                 //  color: Colors.white,
                                 ),
                             validator: (value) {
@@ -490,20 +490,20 @@ setState(() {
                             cursorColor: themeProvider.darkTheme
                                 ? Colors.white
                                 : Colors.black,
-                            keyboardType: TextInputType.text,
+                            keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               // fillColor: Color(0xffefb168),
                               hintText: "Email",
                               alignLabelWithHint: true,
                               labelText: "Email",
-                              hintStyle: TextStyle(
+                              hintStyle: GoogleFonts.zillaSlab(
                                   color: themeProvider.darkTheme
                     ? Colors.white
                     : Colors.black,fontWeight: FontWeight.bold),
-                              labelStyle: TextStyle(
+                              labelStyle: GoogleFonts.zillaSlab(
                                   color: themeProvider.darkTheme
-                    ? Color(0xff3972CF)
-                    : Color(0xff3972CF),fontWeight: FontWeight.bold),
+                    ? Color(0xff3671a4)
+                    : Color(0xff3671a4),fontWeight: FontWeight.bold),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                   color: themeProvider.darkTheme
@@ -533,7 +533,7 @@ setState(() {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: TextFormField(
-                            style: TextStyle(
+                            style: GoogleFonts.zillaSlab(
                                 //color: Colors.white,
                                 ),
                             validator: (value) {
@@ -561,14 +561,14 @@ setState(() {
                               hintText: "Password",
                               alignLabelWithHint: true,
                               labelText: "Password",
-                              hintStyle: TextStyle(
+                              hintStyle: GoogleFonts.zillaSlab(
                                   color: themeProvider.darkTheme
                     ? Colors.white
                     : Colors.black,fontWeight: FontWeight.bold),
-                              labelStyle: TextStyle(
+                              labelStyle: GoogleFonts.zillaSlab(
                                   color: themeProvider.darkTheme
-                    ?Color(0xff3972CF)
-                    : Color(0xff3972CF),fontWeight: FontWeight.bold),
+                    ?Color(0xff3671a4)
+                    : Color(0xff3671a4),fontWeight: FontWeight.bold),
                               //     hintStyle: GoogleFonts.aBeeZee(color:Colors.grey),
                               suffixIcon: IconButton(
                                 icon: Icon(
@@ -588,7 +588,7 @@ setState(() {
                                   });
                                 },
                               ),
-                              //labelStyle: TextStyle(color:Colors.white),
+                              //labelStyle: GoogleFonts.zillaSlab(color:Colors.white),
                          
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -610,7 +610,7 @@ setState(() {
                          Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: TextFormField(
-                            style: TextStyle(
+                            style: GoogleFonts.zillaSlab(
                                 //color: Colors.white,
                                 ),
                             validator: (value) {
@@ -638,20 +638,20 @@ setState(() {
                               hintText: "Confirm Password",
                               alignLabelWithHint: true,
                               labelText: "Confirm Password",
-                              hintStyle: TextStyle(
+                              hintStyle: GoogleFonts.zillaSlab(
                                   color: themeProvider.darkTheme
                     ? Colors.white
                     : Colors.black,fontWeight: FontWeight.bold),
-                              labelStyle: TextStyle(
+                              labelStyle: GoogleFonts.zillaSlab(
                                   color: themeProvider.darkTheme
-                    ?Color(0xff3972CF)
-                    : Color(0xff3972CF),fontWeight: FontWeight.bold),
+                    ?Color(0xff3671a4)
+                    : Color(0xff3671a4),fontWeight: FontWeight.bold),
                               //     hintStyle: GoogleFonts.aBeeZee(color:Colors.grey),
                               suffixIcon: IconButton(
                                 icon: Icon(
                                   // Based on passwordVisible state choose the icon
 
-                                  passwordVisible
+                                  pass
                     ? Icons.visibility_off
                     : Icons.visibility,
                                   color: themeProvider.darkTheme
@@ -665,7 +665,7 @@ setState(() {
                                   });
                                 },
                               ),
-                              //labelStyle: TextStyle(color:Colors.white),
+                              //labelStyle: GoogleFonts.zillaSlab(color:Colors.white),
                          
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -682,9 +682,9 @@ setState(() {
                             },
                           ),
                         ),
-           Padding(
-             padding: EdgeInsets.only(
-             bottom: MediaQuery.of(context).viewInsets.bottom)),
+          //  Padding(
+          //    padding: EdgeInsets.only(
+          //    bottom: MediaQuery.of(context).viewInsets.bottom)),
                         SizedBox(
                           height: 10,
                         ),
@@ -711,7 +711,7 @@ setState(() {
                             else
                               if(confirm?.isEmpty??true) 
                               {
-                                 {  _displaySnackBar(context, "Re-Enter password");
+                                 {  _displaySnackBar(context, "Enter Confirm Password");
                               
                                 }
                               }
@@ -728,7 +728,7 @@ setState(() {
                           },
 
                           child: Card(
-                            color: themeProvider.darkTheme?Colors.blue[900]:Colors.blue[900],
+                            color: themeProvider.darkTheme?Color(0xff3671a4):Color(0xff3671a4),
                               clipBehavior: Clip.antiAlias,
                               child: Container(
                                   width: MediaQuery.of(context).size.width / 1.5,
@@ -743,7 +743,7 @@ setState(() {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           "Register",
-                          style: TextStyle(
+                          style: GoogleFonts.zillaSlab(
                             color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
@@ -770,7 +770,7 @@ setState(() {
    
            Padding(
              padding: const EdgeInsets.only(top:8,bottom:8),
-             child: Align(alignment: Alignment.bottomRight,child: Text('Already have an account?',style:TextStyle(fontWeight: FontWeight.bold)),),
+             child: Align(alignment: Alignment.bottomRight,child: Text('Already have an account?',style:GoogleFonts.zillaSlab(fontWeight: FontWeight.bold)),),
            ),
            GestureDetector(
              onTap: (){
@@ -781,7 +781,7 @@ setState(() {
              },
              child:  Padding(
              padding: const EdgeInsets.only(top:8,bottom:8),
-             child: Align(alignment: Alignment.bottomRight,child: Text(' Click Here',style:TextStyle(fontWeight: FontWeight.bold,color: Color(0xff3972CF))),),
+             child: Align(alignment: Alignment.bottomRight,child: Text(' Click Here',style:GoogleFonts.zillaSlab(fontWeight: FontWeight.bold,color: Color(0xff3671a4))),),
            ),
            )
             

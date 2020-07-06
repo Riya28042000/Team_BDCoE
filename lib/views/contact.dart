@@ -1,12 +1,14 @@
 import 'package:bdcoe/chat/chat.dart';
 import 'package:bdcoe/chat/login.dart';
 import 'package:bdcoe/chat/preference.dart';
+import 'package:bdcoe/modals/user.dart';
 import 'package:bdcoe/navigation/navigation.dart';
 import 'package:bdcoe/notifiers/dark.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,6 +19,10 @@ class Contact extends StatefulWidget {
 
 class _ContactState extends State<Contact> with TickerProviderStateMixin {
   bool userIsLoggedIn;
+  String email;
+  String name;
+  String chatroomid;
+  UserInfo userInfo =UserInfo();
 
   AnimationController animationController;
 
@@ -53,13 +59,30 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
   }
 
   getLoggedInState() async {
-    await HelperFunctions.getUserLoggedInSharedPreference().then((value) {
-      setState(() {
-        userIsLoggedIn = value;
-        print(value);
+    // await HelperFunctions.getUserLoggedInSharedPreference().then((value) {
+    //   setState(() {
+    //     userIsLoggedIn = value;
+    //     print(value);
+    //   });
+    // });
+    // //   HelperFunctions.saveAdminLoggedInSharedPreference(false);
+    
+    userIsLoggedIn=await HelperFunctions.getUserLoggedInSharedPreference();
+      print(userIsLoggedIn);
+      name=await HelperFunctions.getUserNameSharedPreference();
+      email=await HelperFunctions.getUserEmailSharedPreference();
+      chatroomid= await HelperFunctions.getchatroomid();
+       if(userIsLoggedIn==true){
+        userInfo.email=email;
+        userInfo.chatroomid=chatroomid;
+        userInfo.name=name;
+       
+      }
+       print(userInfo.name);
+       print(userInfo.chatroomid);
+      setState(() {   
       });
-    });
-    //   HelperFunctions.saveAdminLoggedInSharedPreference(false);
+
   }
 
   @override
@@ -234,13 +257,13 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
               child: FloatingActionButton.extended(
                 backgroundColor: themeProvider.darkTheme
                     ? Color(0xFF151515)
-                    : Color(0xff3972CF),
+                    :Color(0xff3671a4),
                 onPressed: () {
                   userIsLoggedIn != null
                       ? userIsLoggedIn
                           ? Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                  builder: (context) => Chatting()),
+                                  builder: (context) => Chatting(chatroomid: chatroomid,name: name,)),
                               (Route<dynamic> route) => false)
                           : Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(builder: (context) => Login()),
@@ -255,7 +278,7 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
                 ),
                 label: Text(
                   "Talk Now",
-                  style: TextStyle(color: Colors.white),
+                  style: GoogleFonts.zillaSlab(color: Colors.white),
                 ),
               ),
             ),
@@ -277,14 +300,14 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
           ? Align(
               child: Text(
                 'GET IN TOUCH!',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                 'GET IN TOUCH!',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),
@@ -339,10 +362,10 @@ Widget _description(
                         child: Align(
                           child: Text(
                             'ADDRESS',
-                            style: TextStyle(
+                            style: GoogleFonts.zillaSlab(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xff3972CF)),
+                                color: Color(0xff3671a4)),
                           ),
                           alignment: Alignment.topLeft,
                         ),
@@ -352,7 +375,7 @@ Widget _description(
                         child: Align(
                           child: Text(
                             'Research & Development Department, Ajay Kumar Garg Engineering College, Delhi Hapur Bypass, Adhyatmik Nagar, Ghaziabad, Uttar Pradesh 201009',
-                            style: TextStyle(
+                            style: GoogleFonts.zillaSlab(
                                 fontSize: 15, fontWeight: FontWeight.w500),
                           ),
                           alignment: Alignment.topLeft,
@@ -364,10 +387,10 @@ Widget _description(
                         child: Align(
                           child: Text(
                             'EMAIL',
-                            style: TextStyle(
+                            style: GoogleFonts.zillaSlab(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xff3972CF)),
+                                color: Color(0xff3671a4)),
                           ),
                           alignment: Alignment.topLeft,
                         ),
@@ -385,7 +408,7 @@ Widget _description(
                             },
                             child: Text(
                               'contact@bdcoe.co.in',
-                              style: TextStyle(
+                              style: GoogleFonts.zillaSlab(
                                   fontSize: 15, fontWeight: FontWeight.w500),
                             ),
                           ),
@@ -398,10 +421,10 @@ Widget _description(
                         child: Align(
                           child: Text(
                             'CALL US ON',
-                            style: TextStyle(
+                            style: GoogleFonts.zillaSlab(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xff3972CF)),
+                                color: Color(0xff3671a4)),
                           ),
                           alignment: Alignment.topLeft,
                         ),
@@ -418,7 +441,7 @@ Widget _description(
                                 },
                                 child: Text(
                                   snapshot.data[0].data['phone1'],
-                                  style: TextStyle(
+                                  style: GoogleFonts.zillaSlab(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500),
                                 ),
@@ -436,7 +459,7 @@ Widget _description(
                                 },
                                 child: Text(
                                   snapshot.data[0].data['phone2'],
-                                  style: TextStyle(
+                                  style: GoogleFonts.zillaSlab(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500),
                                 ),
@@ -452,10 +475,10 @@ Widget _description(
                         child: Align(
                           child: Text(
                             'WEBSITE',
-                            style: TextStyle(
+                            style: GoogleFonts.zillaSlab(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xff3972CF)),
+                                color: Color(0xff3671a4)),
                           ),
                           alignment: Alignment.topLeft,
                         ),
@@ -474,7 +497,7 @@ Widget _description(
                                 },
                                 child: Text(
                                   'bdcoe.co.in',
-                                  style: TextStyle(
+                                  style: GoogleFonts.zillaSlab(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500),
                                 ),

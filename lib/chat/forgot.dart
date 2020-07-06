@@ -6,6 +6,7 @@ import 'package:bdcoe/views/contact.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -22,12 +23,14 @@ bool isLoading=false;
   AuthMethods authMethods= AuthMethods();
 
 reset(String email) async {
-  setState(() {
+  
+setState(() {
       isLoading=true;
     });
    if (validatekey.currentState.validate()) {
    validatekey.currentState.reset();
       await authMethods.resetPass(email).then((onValue){
+   
          setState(() {
       isLoading=false;
     });
@@ -41,7 +44,7 @@ reset(String email) async {
       animationType: AnimationType.fromTop,
       isCloseButton: false,
       isOverlayTapDismiss: false,
-      descStyle: TextStyle(fontSize: 18),
+      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -49,7 +52,7 @@ reset(String email) async {
          // color: Colors.grey,
         ),
       ),
-      titleStyle: TextStyle(
+      titleStyle: GoogleFonts.zillaSlab(
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
@@ -57,10 +60,10 @@ reset(String email) async {
             desc: "Check your Email to reset Password!",
             buttons: [
               DialogButton(
-                color: Color(0xff3972CF),
+                color: Color(0xff3671a4),
                 child: Text(
                   "OK",
-                  style: TextStyle(fontSize: 20,color: Colors.white),
+                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () => Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => Login()),
@@ -69,20 +72,18 @@ reset(String email) async {
             ],
           ).show();
        print('email sent');
-      });
-   }
-   else{
-     Alert(
+      }).catchError((onError){
+      Alert(
             context: context,
             
             type: AlertType.error,
-            title: "PASSWORD RESET",
+            title: "ERROR",
             style:AlertStyle(
       animationType: AnimationType.fromTop,
       backgroundColor: Theme.of(context).cardColor,
       isCloseButton: false,
       isOverlayTapDismiss: false,
-      descStyle: TextStyle(fontSize: 18),
+      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -90,27 +91,29 @@ reset(String email) async {
          // color: Colors.grey,
         ),
       ),
-      titleStyle: TextStyle(
+      titleStyle: GoogleFonts.zillaSlab(
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
     ),
-            desc: "Try once more!",
+            desc: "Please Register Yourself",
             buttons: [
               DialogButton(
-                color: Color(0xff3972CF),
+                color: Color(0xff3671a4),
                 child: Text(
                   "OK",
-                  style: TextStyle(fontSize: 20,color: Colors.white),
+                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () => Navigator.of(context).pop()
               )
             ],
           ).show();
-           setState(() {
-      isLoading=false;
-    });
+        setState(() {
+          isLoading=false;
+        });
+      });
    }
+   
 }
    String email;
     
@@ -144,11 +147,7 @@ reset(String email) async {
     }
   }
 
-  @override
-  dispose() {
-    animationController.dispose(); // you need this
-    super.dispose();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +189,7 @@ reset(String email) async {
         color: Theme.of(context).primaryColor,
         child: SafeArea(
           child: Scaffold(
-           resizeToAvoidBottomInset:false,
+         //  resizeToAvoidBottomInset:false,
             key: _scaffoldKey,
             body: Stack(
               children: <Widget>[
@@ -331,7 +330,7 @@ reset(String email) async {
 
     _displaySnackBar(BuildContext context, String a) {
       final snackBar = SnackBar(
-        content: Text(a,style: TextStyle(color:themeProvider.darkTheme
+        content: Text(a,style: GoogleFonts.zillaSlab(color:themeProvider.darkTheme
                                     ? Colors.black
                                     : Colors.white,fontWeight: FontWeight.bold) ,textAlign: TextAlign.center),
         backgroundColor: themeProvider.darkTheme
@@ -370,14 +369,14 @@ reset(String email) async {
           ? Align(
               child: Text(
                 'RESET PASSWORD',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                 'RESET PASSWORD',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),
@@ -386,7 +385,7 @@ reset(String email) async {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: TextFormField(
-                        style: TextStyle(
+                        style: GoogleFonts.zillaSlab(
                             //  color: Colors.white,
                             ),
                         validator: (value) {
@@ -399,20 +398,20 @@ reset(String email) async {
                         cursorColor: themeProvider.darkTheme
                             ? Colors.white
                             : Colors.black,
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           // fillColor: Color(0xffefb168),
                           hintText: "Email",
                           alignLabelWithHint: true,
                           labelText: "Email",
-                          hintStyle: TextStyle(
+                          hintStyle: GoogleFonts.zillaSlab(
                               color: themeProvider.darkTheme
                                   ? Colors.white
                                   : Colors.black,fontWeight: FontWeight.bold),
-                          labelStyle: TextStyle(
+                          labelStyle: GoogleFonts.zillaSlab(
                               color: themeProvider.darkTheme
-                                  ? Color(0xff3972CF)
-                                  : Color(0xff3972CF),fontWeight: FontWeight.bold),
+                                  ?Color(0xff3671a4)
+                                  : Color(0xff3671a4),fontWeight: FontWeight.bold),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: themeProvider.darkTheme
@@ -459,7 +458,7 @@ reset(String email) async {
                       },
 
                       child: Card(
-                        color: themeProvider.darkTheme?Colors.blue[900]:Colors.blue[900],
+                        color: themeProvider.darkTheme?Color(0xff3671a4):Color(0xff3671a4),
                           clipBehavior: Clip.antiAlias,
                           child: Container(
                               width: MediaQuery.of(context).size.width / 1.5,
@@ -474,7 +473,7 @@ reset(String email) async {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         "Change Password",
-                                        style: TextStyle(
+                                        style: GoogleFonts.zillaSlab(
                                           color: Colors.white,
                                             fontWeight: FontWeight.bold),
                                       ),

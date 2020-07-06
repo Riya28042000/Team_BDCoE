@@ -1,4 +1,5 @@
-import 'package:bdcoe/chat/user.dart';
+
+import 'package:bdcoe/modals/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
  
 class AuthMethods{
@@ -8,14 +9,12 @@ return user != null ? User(userId: user.uid): null;
 }
 
 Future signInwithEmailAndPassword(String email, String pass) async{
- try{
+
     AuthResult result= await _auth.signInWithEmailAndPassword(email: email, password: pass);
     FirebaseUser firebaseUser= result.user;
     return _userFromFirebaseUser(firebaseUser);
 
- }catch(e){
-  print(e.toString());
- }
+ 
 
 }
 Future signUpwithEmailAndPassword(String email, String pass)async{
@@ -31,11 +30,9 @@ Future signUpwithEmailAndPassword(String email, String pass)async{
 }
 Future resetPass(String email) async{
  
-try{
+
   return await _auth.sendPasswordResetEmail(email: email);
-}catch(e){
-   print(e.toString());
-}
+
 
 
 }

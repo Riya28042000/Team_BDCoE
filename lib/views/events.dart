@@ -3,8 +3,10 @@ import 'package:bdcoe/notifiers/dark.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -49,16 +51,12 @@ class _EventsState extends State<Events> with TickerProviderStateMixin {
     }
   }
 
-  @override
-  dispose() {
-    animationController.dispose(); // you need this
-    super.dispose();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<DarkThemeProvider>(context);
-
+     
     var size = MediaQuery.of(context).size;
     return cirAn
         ? CircularRevealAnimation(
@@ -211,8 +209,8 @@ class _EventsState extends State<Events> with TickerProviderStateMixin {
                       ),
                       flex: 2,
                     ),
-                    Flexible(
-                        flex: 6, child: _description(context, themeProvider)),
+                    Container(
+                        height:501, child: _description(context, themeProvider)),
                   ],
                 ),
               ],
@@ -236,14 +234,14 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
           ? Align(
               child: Text(
                 'OUR EVENTS',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                 'OUR EVENTS',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),
@@ -259,154 +257,155 @@ Future gettoDo() async{
     }
   var size = MediaQuery.of(context).size;
 
-  return Container(
-      child: Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          child: Container(
-              height: size.height / 1,
-              width: size.width / 1.1,
-              child: FutureBuilder(
-                future: gettoDo(),
-                builder:( _, snapshot){
-                if(snapshot.connectionState== ConnectionState.waiting){
-                  return  Center(child: SpinKitChasingDots(
+  return Padding(
+      padding: const EdgeInsets.only(left: 15, right: 15),
+      child: Container(
+            height: 501 ,
+            width: size.width / 1.1,
+            child: FutureBuilder(
+      future: gettoDo(),
+      builder:( _, snapshot){
+      if(snapshot.connectionState== ConnectionState.waiting){
+        return  Center(child: SpinKitChasingDots(
   itemBuilder: (BuildContext context, int index) {
     return DecoratedBox(
-      decoration: BoxDecoration(
-        color: themeProvider.darkTheme ? Colors.white : Colors.black,
-      ),
+  decoration: BoxDecoration(
+    color: themeProvider.darkTheme ? Colors.white : Colors.black,
+  ),
     );
   },
 ),);
-                   }
-                else{
-                return
-                   Column(
-                     children: <Widget>[
-                       Flexible(
-                       
-                 child: new Swiper(
-                         
-                         itemBuilder: (BuildContext context, int index) {
-                           return Padding(
-                             padding: const EdgeInsets.only(left: 10, right: 10),
-                             child: new Container(
-                               decoration: BoxDecoration(
-                                 // color: themeProvider.darkTheme
-                                 //   ? Color(0xff3972CF)
-                                 // : Color(0xff3972CF),
+         }
+      else{
+      return
+         Column(
+           crossAxisAlignment: CrossAxisAlignment.center,
+           children: <Widget>[
+             Flexible(
+             
+       child: new Swiper(
+               
+               itemBuilder: (BuildContext context, int index) {
+                 return Padding(
+                   padding: const EdgeInsets.only(left: 10, right: 10),
+                   child: new Container(
+                     
+                     decoration: BoxDecoration(
+                       // color: themeProvider.darkTheme
+                     color:  themeProvider.darkTheme?Color(0xffc9cbcd):Color(0xff3671a4),
+                       // : Color(0xff3972CF),
 //                        border: Border(bottom: BorderSide(width: 1.0)),
-                                 borderRadius: BorderRadius.only(
-                                   topRight: Radius.circular(25.0),
-                                   topLeft: Radius.circular(25.0),
-                                   bottomRight: Radius.circular(0.0),
-                                   bottomLeft: Radius.circular(25.0),
-                                 ),
-                               ),
-                               child: Padding(
-                                 padding: const EdgeInsets.all(15.0),
-                                 child: Container(
-                                   child: GestureDetector(
-                                       onTap: () async {
-                                   const url =
-                                       'http://www.bdcoe.co.in/register';
-                                   if (await canLaunch(
-                                       url)) {
-                                     await launch(url);
-                                   }
-                                 },
-                                   child: Card(
-                                       clipBehavior: Clip.antiAlias,
-                                       elevation: 20,
-                                       // color: themeProvider.darkTheme
-                                       //   ? Colors.black
-                                       // : Colors.white,
-                                       child: Padding(
-                                         padding: const EdgeInsets.all(20.0),
-                                         child: Container(
-                                           child: Column(
-                       children: <Widget>[
-                         AspectRatio(
-                           aspectRatio: 65 / 70,
-                           child:CachedNetworkImage(
-        imageUrl: snapshot.data[index].data['img'],
-        progressIndicatorBuilder: (context, url, downloadProgress) => 
-                CircularProgressIndicator(value: downloadProgress.progress),
-        errorWidget: (context, url, error) => Icon(Icons.error,size: 30,),
-        fit: BoxFit.fill,
+                       borderRadius: BorderRadius.only(
+                         topRight: Radius.circular(15.0),
+                         topLeft: Radius.circular(15.0),
+                         bottomRight: Radius.circular(15.0),
+                         bottomLeft: Radius.circular(15.0),
+                       ),
+                     ),
+                     child: Padding(
+                       padding: const EdgeInsets.all(5.0),
+                       child: Container(
+                         child: GestureDetector(
+                             onTap: () async {
+                         const url =
+                             'http://www.bdcoe.co.in/register';
+                         if (await canLaunch(
+                             url)) {
+                           await launch(url);
+                         }
+                       },
+                         child: Card(
+                             clipBehavior: Clip.antiAlias,
+                             elevation: 20,
+                             // color: themeProvider.darkTheme
+                             //   ? Colors.black
+                             // : Colors.white,
+                             child: Padding(
+                               padding: const EdgeInsets.all(20.0),
+                               child: Container(
+                                 child: Column(
+             children: <Widget>[
+               AspectRatio(
+                 aspectRatio: 65 / 70,
+                 child:CachedNetworkImage(
+    imageUrl: snapshot.data[index].data['img'],
+    progressIndicatorBuilder: (context, url, downloadProgress) => 
+      CircularProgressIndicator(value: downloadProgress.progress),
+    errorWidget: (context, url, error) => Icon(Icons.error,size: 30,),
+    fit: BoxFit.fill,
      ),
-                         ),
-                         SizedBox(
-                           height: 20,
-                         ),
-                         Padding(
-                           padding: const EdgeInsets.only(top:8),
-                           child: Align(
-                             child: Text(
-                              snapshot.data[index].data['head'],
-                               style: TextStyle(
-                                   color: themeProvider.darkTheme
-                                       ? Color(0xff3972CF)
-                                       : Color(0xff3972CF),
-                                   fontSize: 16,
-                                   fontWeight: FontWeight.w500),
-                             ),
-                             alignment: Alignment.center,
-                           ),
-                         ),
-                         SizedBox(
-                           height: 10,
-                         ),
-                         Align(
-                           child: Text(
-                            snapshot.data[index].data['value'],
-                             style: TextStyle(
-                                 fontSize: 13,
-                                 fontWeight: FontWeight.w500),
-                           ),
-                           alignment: Alignment.center,
-                         ),
-                         SizedBox(height:10),
-
-                          Padding(
-                               padding:
-                                   const EdgeInsets.only(
-                                       top: 20,
-                                       bottom: 10,
-                                       ),
-                               child: Align(
-                                 child: Text(
-                                   'Tap to register yourself',
-                                   style: TextStyle(
-                                       fontSize: 15,
-                                       fontWeight:
-                                           FontWeight.w500,
-                                           color:  Color(0xff3972CF)
-                                           ),
-                                 ),
-                                 alignment: Alignment.center,
-                               ),
-                             ),
-                       
-                       ],
-                                           ),
-                                         ),
-                                       )),
-                                 ),
-                                 ),
-                               ),
-                             ),
-                           );
-                         },
-                         autoplay: true,
-                         itemCount: snapshot.data.length,
-                         scrollDirection: Axis.horizontal,
-                         //  pagination: new SwiperPagination(alignment: Alignment.centerRight),
-                         // control: new SwiperControl(),
+               ),
+               SizedBox(
+                 height: 20,
+               ),
+               Padding(
+                 padding: const EdgeInsets.only(top:8),
+                 child: Align(
+                   child: Text(
+                    snapshot.data[index].data['head'],
+                     style: GoogleFonts.zillaSlab(
+                         color: themeProvider.darkTheme
+                             ? Color(0xff3671a4)
+                             : Color(0xff3671a4),
+                         fontSize: 16,
+                         fontWeight: FontWeight.w500),
+                   ),
+                   alignment: Alignment.center,
                  ),
                ),
-                     ],
-                   );
-                }
-              }))));
+               SizedBox(
+                 height: 10,
+               ),
+               Align(
+                 child: Text(
+                  snapshot.data[index].data['value'],
+                   style: GoogleFonts.zillaSlab(
+                       fontSize: 15,
+                       fontWeight: FontWeight.w500),
+                 ),
+                 alignment: Alignment.center,
+               ),
+               SizedBox(height:10),
+
+                Padding(
+                     padding:
+                         const EdgeInsets.only(
+                             top: 20,
+                             bottom: 10,
+                             ),
+                     child: Align(
+                       child: Text(
+                         'Tap to register yourself',
+                         style: GoogleFonts.zillaSlab(
+                             fontSize: 15,
+                             fontWeight:
+                                 FontWeight.w500,
+                                 color:  Color(0xff3671a4)
+                                 ),
+                       ),
+                       alignment: Alignment.center,
+                     ),
+                   ),
+             
+             ],
+                                 ),
+                               ),
+                             )),
+                       ),
+                       ),
+                     ),
+                   ),
+                 );
+               },
+               autoplay: true,
+               itemCount: snapshot.data.length,
+               scrollDirection: Axis.horizontal,
+               //  pagination: new SwiperPagination(alignment: Alignment.centerRight),
+               // control: new SwiperControl(),
+       ),
+             ),
+           ],
+         );
+      }
+            })));
 }

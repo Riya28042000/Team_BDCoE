@@ -3,12 +3,16 @@ import 'package:bdcoe/chat/chat.dart';
 import 'package:bdcoe/chat/forgot.dart';
 import 'package:bdcoe/chat/preference.dart';
 import 'package:bdcoe/chat/register.dart';
+import 'package:bdcoe/modals/database.dart';
+import 'package:bdcoe/modals/user.dart';
 import 'package:bdcoe/navigation/navigation.dart';
 import 'package:bdcoe/notifiers/dark.dart';
 import 'package:bdcoe/views/contact.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -21,8 +25,41 @@ GlobalKey<FormState> validatekey = GlobalKey<FormState>();
 final _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class _LoginState extends State<Login> with TickerProviderStateMixin {
+  getchatroomid(String a, String b) {
+    if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
+      return "$b\_$a";
+    } else {
+      return "$a\_$b";
+    }
+  }
+  createchatroomforuseradmin(String name,String email) {
+  
+    List<String> users = [
+    name,
+      "AdminName"
+    ];
+    String chatroomid = getchatroomid(
+        email, "admin@gmail.com");
+    print(chatroomid);
+    Map<String, dynamic> chatroommap = {
+      "users": users,
+      "chatroomid": chatroomid
+    };
+  HelperFunctions.setchatroomid(chatroomid);
+    databaseMethods.createchatroom(chatroomid, chatroommap).then((value) {
+       
+        Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => Chatting(chatroomid:chatroomid,name: name,)),
+              (Route<dynamic> route) => false);
+          //        setState(() {
+          //   isLoading = false;
+          // });
+      
+    });
+  }
   AuthMethods authService = new AuthMethods();
-
+ Database databaseMethods=Database();
+ QuerySnapshot usersnapshot;
   bool validateAndSave() {
     final FormState form = validatekey.currentState;
     if (form.validate()) {
@@ -41,21 +78,30 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       await authService
           .signInwithEmailAndPassword(email, pass)
           .then((value) async {
+databaseMethods.getUserByEmail(email).then((uservalue){
+
+           usersnapshot=uservalue;
+      UserInfo user=UserInfo(name: usersnapshot.documents[0].data["name"],email:email );
         if (value != null) {
           setState(() {
             isLoading = true;
           });
-
+                
           HelperFunctions.saveUserLoggedInSharedPreference(true);
-
+             HelperFunctions.saveUserNameSharedPreference(
+             user.name);
+             print(user.name);
+             print(user.email);
           HelperFunctions.saveUserEmailSharedPreference(email);
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => Chatting()),
-              (Route<dynamic> route) => false);
-          setState(() {
-            isLoading = false;
-          });
-        } else{
+          createchatroomforuseradmin(user.name, user.email);
+        
+        } 
+}
+);
+
+
+      }).catchError((onError){
+         print('error');
             Alert(
             context: context,
             
@@ -66,7 +112,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
       animationType: AnimationType.fromTop,
       isCloseButton: false,
       isOverlayTapDismiss: false,
-      descStyle: TextStyle(fontSize: 18),
+      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -74,18 +120,18 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
          // color: Colors.grey,
         ),
       ),
-      titleStyle: TextStyle(
+      titleStyle: GoogleFonts.zillaSlab(
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
     ),
-            desc: "Check your details!",
+            desc: "User Not Found",
             buttons: [
               DialogButton(
-                color: Color(0xff3972CF),
+                color: Color(0xff3671a4),
                 child: Text(
                   "OK",
-                  style: TextStyle(fontSize: 20,color: Colors.white),
+                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () => Navigator.of(context).pop()
               )
@@ -95,7 +141,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         setState(() {
           isLoading = false;
         });
-        }
       });
     }
   }
@@ -134,11 +179,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     }
   }
 
-  @override
-  dispose() {
-    animationController.dispose(); // you need this
-    super.dispose();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +227,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
               color: Theme.of(context).primaryColor,
               child: SafeArea(
                 child: Scaffold(
-                  resizeToAvoidBottomInset:false,
+                  //resizeToAvoidBottomInset:false,
                   key: _scaffoldKey,
                   body: Stack(
                     children: <Widget>[
@@ -326,7 +367,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     _displaySnackBar(BuildContext context, String a) {
       final snackBar = SnackBar(
         content: Text(a,
-            style: TextStyle(
+            style: GoogleFonts.zillaSlab(
                 color: themeProvider.darkTheme ? Colors.black : Colors.white,
                 fontWeight: FontWeight.bold),
             textAlign: TextAlign.center),
@@ -363,7 +404,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                             ? Align(
                                 child: Text(
                                   'LOGIN',
-                                  style: TextStyle(
+                                  style: GoogleFonts.zillaSlab(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -372,7 +413,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                             : Align(
                                 child: Text(
                                   'LOGIN',
-                                  style: TextStyle(
+                                  style: GoogleFonts.zillaSlab(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -383,7 +424,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: TextFormField(
-                        style: TextStyle(
+                        style: GoogleFonts.zillaSlab(
                             //  color: Colors.white,
                             ),
                         validator: (value) {
@@ -396,21 +437,21 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                         cursorColor: themeProvider.darkTheme
                             ? Colors.white
                             : Colors.black,
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           // fillColor: Color(0xffefb168),
                           hintText: "Email",
                           alignLabelWithHint: true,
                           labelText: "Email",
-                          hintStyle: TextStyle(
+                          hintStyle: GoogleFonts.zillaSlab(
                               color: themeProvider.darkTheme
                                   ? Colors.white
                                   : Colors.black,
                               fontWeight: FontWeight.bold),
-                          labelStyle: TextStyle(
+                          labelStyle: GoogleFonts.zillaSlab(
                               color: themeProvider.darkTheme
-                                  ? Color(0xff3972CF)
-                                  : Color(0xff3972CF),
+                                  ? Color(0xff3671a4)
+                                  : Color(0xff3671a4),
                               fontWeight: FontWeight.bold),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -440,7 +481,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: TextFormField(
-                        style: TextStyle(
+                        style: GoogleFonts.zillaSlab(
                             //color: Colors.white,
                             ),
                         validator: (value) {
@@ -468,15 +509,15 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                           hintText: "Password",
                           alignLabelWithHint: true,
                           labelText: "Password",
-                          hintStyle: TextStyle(
+                          hintStyle: GoogleFonts.zillaSlab(
                               color: themeProvider.darkTheme
                                   ? Colors.white
                                   : Colors.black,
                               fontWeight: FontWeight.bold),
-                          labelStyle: TextStyle(
+                          labelStyle: GoogleFonts.zillaSlab(
                               color: themeProvider.darkTheme
-                                  ? Color(0xff3972CF)
-                                  : Color(0xff3972CF),
+                                  ? Color(0xff3671a4)
+                                  : Color(0xff3671a4),
                               fontWeight: FontWeight.bold),
                           //     hintStyle: GoogleFonts.aBeeZee(color:Colors.grey),
                           suffixIcon: IconButton(
@@ -497,7 +538,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                               });
                             },
                           ),
-                          //labelStyle: TextStyle(color:Colors.white),
+                          //labelStyle: GoogleFonts.zillaSlab(color:Colors.white),
 
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -525,7 +566,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child: Text('Forgot Password?',
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: GoogleFonts.zillaSlab(fontWeight: FontWeight.bold)),
                           ),
                         )),
                     SizedBox(
@@ -550,8 +591,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                       },
                       child: Card(
                           color: themeProvider.darkTheme
-                              ? Colors.blue[900]
-                              : Colors.blue[900],
+                              ? Color(0xff3671a4)
+                              : Color(0xff3671a4),
                           clipBehavior: Clip.antiAlias,
                           child: Container(
                               width: MediaQuery.of(context).size.width / 1.5,
@@ -569,7 +610,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         "Login",
-                                        style: TextStyle(
+                                        style: GoogleFonts.zillaSlab(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -598,7 +639,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child: Text('Don\'t have an account?',
-                                style: TextStyle(fontWeight: FontWeight.bold)),
+                                style: GoogleFonts.zillaSlab(fontWeight: FontWeight.bold)),
                           ),
                         ),
                         GestureDetector(
@@ -613,9 +654,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: Text(' Click Here',
-                                  style: TextStyle(
+                                  style: GoogleFonts.zillaSlab(
                                       fontWeight: FontWeight.bold,
-                                      color: Color(0xff3972CF))),
+                                      color: Color(0xff3671a4))),
                             ),
                           ),
                         )

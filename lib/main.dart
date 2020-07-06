@@ -4,6 +4,7 @@ import 'package:bdcoe/notifiers/dark.dart';
 import 'package:bdcoe/notifiers/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 void main() {
 // To display application in potrait mode only
@@ -39,6 +40,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+     
     return MultiProvider(
            providers: [
         ChangeNotifierProvider(
@@ -46,6 +48,7 @@ class _MyAppState extends State<MyApp> {
       ],
       child: Consumer<DarkThemeProvider>(
         builder: (BuildContext context, value, Widget child) {
+        
           return MaterialApp(
             builder: (context, child) {
         //Remove Scroll Glow from our App
@@ -57,6 +60,7 @@ class _MyAppState extends State<MyApp> {
       title: 'BDCoE',
             debugShowCheckedModeBanner: false,
             theme: Styles.themeData(themeChangeProvider.darkTheme, context),
+            
             home: BottomNavBar()
           );
             },

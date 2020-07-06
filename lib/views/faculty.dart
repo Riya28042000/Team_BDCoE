@@ -8,6 +8,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class Faculty extends StatefulWidget {
@@ -49,11 +50,6 @@ class _FacultyState extends State<Faculty> with TickerProviderStateMixin {
     }
   }
 
-  @override
-  dispose() {
-    animationController.dispose(); // you need this
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -209,8 +205,8 @@ void MoveToLastScreen(){
                       ),
                       flex: 3,
                     ),
-                    Flexible(
-                        flex: 8,
+                    Container(
+                        height: 511,
                         child: _description(
                           context,themeProvider,
                           
@@ -238,14 +234,14 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
           ? Align(
               child: Text(
                 'INSTRUCTORS',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                 'INSTRUCTORS',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),
@@ -262,227 +258,207 @@ Future gettoDo() async{
     }
   var size = MediaQuery.of(context).size;
 
-  return Container(
-      child: Padding(
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          child: Container(
-              height: size.height / 1,
-              width: size.width / 1.1,
-              child: FutureBuilder(
-                future: gettoDo(),
-                builder:( _, snapshot){
-                if(snapshot.connectionState== ConnectionState.waiting){
-                  return  Center(child: SpinKitChasingDots(
+  return Padding(
+      padding: const EdgeInsets.only(left: 15, right: 15),
+      child: Container(
+          height: 511,
+          width: size.width / 1.1,
+          child: FutureBuilder(
+            future: gettoDo(),
+            builder:( _, snapshot){
+            if(snapshot.connectionState== ConnectionState.waiting){
+              return  Center(child: SpinKitChasingDots(
   itemBuilder: (BuildContext context, int index) {
     return DecoratedBox(
-      decoration: BoxDecoration(
-        color: themeProvider.darkTheme ? Colors.white : Colors.black,
-      ),
+  decoration: BoxDecoration(
+    color: themeProvider.darkTheme ? Colors.white : Colors.black,
+  ),
     );
   },
 ),);
-                   }
-                else{
-                return
-                   Column(
-                     children: <Widget>[
-                       Flexible(
-                       
-                 child: new Swiper(
+               }
+            else{
+            return
+               Column(
+                 children: <Widget>[
+                   Flexible(
+                   
+             child: new Swiper(
+                     
+                     itemBuilder: (BuildContext context, int index) {
+                       return Padding(
+                         padding: const EdgeInsets.only(left: 10, right: 10),
+                         child: FlipCard(front: 
+                         Card(
+                             clipBehavior: Clip.antiAlias,
+                             elevation: 20,
+                             // color: themeProvider.darkTheme
+                             //   ? Colors.black
+                             // : Colors.white,
+                             child: Padding(
+                               padding: const EdgeInsets.all(20.0),
+                               child: Container(
+                                 child: Column(
+                   children: <Widget>[
+                     AspectRatio(
+                       aspectRatio: 65 / 70,
+                       child:  CachedNetworkImage(
+    imageUrl: snapshot.data[index].data['image'],
+    progressIndicatorBuilder: (context, url, downloadProgress) => 
+            CircularProgressIndicator(value: downloadProgress.progress),
+    errorWidget: (context, url, error) => Icon(Icons.error),
+    fit: BoxFit.fill,
+     ),
+                     ),
+                     SizedBox(
+                       height: 15,
+                     ),
+                     Padding(
+                       padding: const EdgeInsets.only(top:8),
+                       child: Align(
+                         child: Text(
+                          snapshot.data[index].data['name'],
+                         style: GoogleFonts.zillaSlab(
+                         color: themeProvider.darkTheme
+                             ? Color(0xff3671a4)
+                             : Color(0xff3671a4),
+                         fontSize: 18,
+                         fontWeight: FontWeight.w500),
+                         ),
+                         alignment: Alignment.center,
+                       ),
+                     ),
+                     SizedBox(
+                       height: 10,
+                     ),
+                     Padding(
+                       padding: const EdgeInsets.only(top:8),
+                       child: Align(
+                         child: Text(
+                         snapshot.data[index].data['domain'],
+                         style: GoogleFonts.zillaSlab(
                          
-                         itemBuilder: (BuildContext context, int index) {
-                           return Padding(
-                             padding: const EdgeInsets.only(left: 10, right: 10),
-                             child: new Container(
-                               decoration: BoxDecoration(
-                                 // color: themeProvider.darkTheme
-                                 //   ? Color(0xff3972CF)
-                                 // : Color(0xff3972CF),
-//                        border: Border(bottom: BorderSide(width: 1.0)),
-                                 borderRadius: BorderRadius.only(
-                                   topRight: Radius.circular(25.0),
-                                   topLeft: Radius.circular(25.0),
-                                   bottomRight: Radius.circular(0.0),
-                                   bottomLeft: Radius.circular(25.0),
+                         fontSize: 15,
+                         fontWeight: FontWeight.w500),
+                         ),
+                         alignment: Alignment.center,
+                       ),
+                     ),
+                   SizedBox(
+                       height: 25,
+                     ),
+                  
+                     Padding(
+                       padding: const EdgeInsets.only(top:8),
+                       child: Align(
+                         child: Text(
+                      'Tap to know more',
+                         style: GoogleFonts.zillaSlab(
+                         color: Color(0xff3671a4),
+                         fontSize: 15,
+                         fontWeight: FontWeight.w500),
+                         ),
+                         alignment: Alignment.bottomCenter,
+                       ),
+                     ),
+                     SizedBox(
+                       height: 10,
+                     ),
+                   ],
                                  ),
                                ),
-                               child: Padding(
-                                 padding: const EdgeInsets.all(15.0),
-                                 child: Container(
-                                   child:  FlipCard(front: 
-                                   Card(
-                                       clipBehavior: Clip.antiAlias,
-                                       elevation: 20,
-                                       // color: themeProvider.darkTheme
-                                       //   ? Colors.black
-                                       // : Colors.white,
-                                       child: Padding(
-                                         padding: const EdgeInsets.all(20.0),
-                                         child: Container(
-                                           child: Column(
-                       children: <Widget>[
-                         AspectRatio(
-                           aspectRatio: 65 / 70,
-                           child:  CachedNetworkImage(
-        imageUrl: snapshot.data[index].data['image'],
-        progressIndicatorBuilder: (context, url, downloadProgress) => 
-                CircularProgressIndicator(value: downloadProgress.progress),
-        errorWidget: (context, url, error) => Icon(Icons.error),
-        fit: BoxFit.fill,
+                             )),
+                         
+                          back: Card(
+                             clipBehavior: Clip.antiAlias,
+                             elevation: 20,
+                             // color: themeProvider.darkTheme
+                             //   ? Colors.black
+                             // : Colors.white,
+                             child: Padding(
+                               padding: const EdgeInsets.all(20.0),
+                               child: Container(
+                                 child: Column(
+                   children: <Widget>[
+                     AspectRatio(
+                       aspectRatio: 65 / 70,
+                       child: CachedNetworkImage(
+    imageUrl: snapshot.data[index].data['image'],
+    progressIndicatorBuilder: (context, url, downloadProgress) => 
+            CircularProgressIndicator(value: downloadProgress.progress),
+    errorWidget: (context, url, error) => Icon(Icons.error),
+    fit: BoxFit.fill,
      ),
+                     ),
+                     SizedBox(
+                       height: 15,
+                     ),
+                     Padding(
+                       padding: const EdgeInsets.only(top:8),
+                       child: Align(
+                         child: Text(
+                          snapshot.data[index].data['name'],
+                         style: GoogleFonts.zillaSlab(
+                         color: themeProvider.darkTheme
+                             ? Color(0xff3671a4)
+                             : Color(0xff3671a4),
+                         fontSize: 18,
+                         fontWeight: FontWeight.w500),
                          ),
-                         SizedBox(
-                           height: 15,
+                         alignment: Alignment.center,
+                       ),
+                     ),
+                     SizedBox(
+                       height: 10,
+                     ),
+                     Padding(
+                       padding: const EdgeInsets.only(top:8),
+                       child: Align(
+                         child: Text(
+                     snapshot.data[index].data['branch'],
+                         style: GoogleFonts.zillaSlab(
+        
+                         fontSize: 15,
+                         fontWeight: FontWeight.w500),
                          ),
-                         Padding(
-                           padding: const EdgeInsets.only(top:8),
-                           child: Align(
-                             child: Text(
-                              snapshot.data[index].data['name'],
-                               style: TextStyle(
-                                   color: themeProvider.darkTheme
-                                       ? Color(0xff3972CF)
-                                       : Color(0xff3972CF),
-                                   fontSize: 18,
-                                   fontWeight: FontWeight.w500),
-                             ),
-                             alignment: Alignment.center,
-                           ),
+                         alignment: Alignment.center,
+                       ),
+                     ),
+                     SizedBox(
+                       height: 25,
+                     ),
+                  
+                     Padding(
+                       padding: const EdgeInsets.only(top:8),
+                       child: Align(
+                         child: Text(
+                      'Tap to know more',
+                         style: GoogleFonts.zillaSlab(
+        color: Color(0xff3671a4),
+                         fontSize: 15,
+                         fontWeight: FontWeight.w500),
                          ),
-                         SizedBox(
-                           height: 10,
-                         ),
-                         Padding(
-                           padding: const EdgeInsets.only(top:8),
-                           child: Align(
-                             child: Text(
-                             snapshot.data[index].data['domain'],
-                               style: TextStyle(
-                                   
-                                   fontSize: 15,
-                                   fontWeight: FontWeight.w500),
-                             ),
-                             alignment: Alignment.center,
-                           ),
-                         ),
-                       SizedBox(
-                           height: 25,
-                         ),
-                      
-                         Padding(
-                           padding: const EdgeInsets.only(top:8),
-                           child: Align(
-                             child: Text(
-                          'Tap to know more',
-                               style: TextStyle(
-            
-                                   fontSize: 15,
-                                   fontWeight: FontWeight.w500),
-                             ),
-                             alignment: Alignment.bottomCenter,
-                           ),
-                         ),
-                         SizedBox(
-                           height: 10,
-                         ),
-                       ],
-                                           ),
-                                         ),
-                                       )),
-                                   
-                                    back: Card(
-                                       clipBehavior: Clip.antiAlias,
-                                       elevation: 20,
-                                       // color: themeProvider.darkTheme
-                                       //   ? Colors.black
-                                       // : Colors.white,
-                                       child: Padding(
-                                         padding: const EdgeInsets.all(20.0),
-                                         child: Container(
-                                           child: Column(
-                       children: <Widget>[
-                         AspectRatio(
-                           aspectRatio: 65 / 70,
-                           child: CachedNetworkImage(
-        imageUrl: snapshot.data[index].data['image'],
-        progressIndicatorBuilder: (context, url, downloadProgress) => 
-                CircularProgressIndicator(value: downloadProgress.progress),
-        errorWidget: (context, url, error) => Icon(Icons.error),
-        fit: BoxFit.fill,
-     ),
-                         ),
-                         SizedBox(
-                           height: 15,
-                         ),
-                         Padding(
-                           padding: const EdgeInsets.only(top:8),
-                           child: Align(
-                             child: Text(
-                              snapshot.data[index].data['name'],
-                               style: TextStyle(
-                                   color: themeProvider.darkTheme
-                                       ? Color(0xff3972CF)
-                                       : Color(0xff3972CF),
-                                   fontSize: 18,
-                                   fontWeight: FontWeight.w500),
-                             ),
-                             alignment: Alignment.center,
-                           ),
-                         ),
-                         SizedBox(
-                           height: 10,
-                         ),
-                         Padding(
-                           padding: const EdgeInsets.only(top:8),
-                           child: Align(
-                             child: Text(
-                         snapshot.data[index].data['branch'],
-                               style: TextStyle(
-            
-                                   fontSize: 15,
-                                   fontWeight: FontWeight.w500),
-                             ),
-                             alignment: Alignment.center,
-                           ),
-                         ),
-                         SizedBox(
-                           height: 25,
-                         ),
-                      
-                         Padding(
-                           padding: const EdgeInsets.only(top:8),
-                           child: Align(
-                             child: Text(
-                          'Tap to know more',
-                               style: TextStyle(
-            
-                                   fontSize: 15,
-                                   fontWeight: FontWeight.w500),
-                             ),
-                             alignment: Alignment.bottomCenter,
-                           ),
-                         ),
-                         SizedBox(
-                           height: 10,
-                         ),
-                       ],
-                                           ),
-                                         ),
-                                       )),)
+                         alignment: Alignment.bottomCenter,
+                       ),
+                     ),
+                     SizedBox(
+                       height: 10,
+                     ),
+                   ],
                                  ),
                                ),
-                             ),
-                           );
-                         },
-                         autoplay: true,
-                         itemCount: snapshot.data.length,
-                         scrollDirection: Axis.horizontal,
-                         //  pagination: new SwiperPagination(alignment: Alignment.centerRight),
-                         // control: new SwiperControl(),
-                 ),
-               ),
-                     ],
-                   );
-                }
-              }))));
+                             )),),
+                       );
+                     },
+                     autoplay: true,
+                     itemCount: snapshot.data.length,
+                     scrollDirection: Axis.horizontal,
+                     //  pagination: new SwiperPagination(alignment: Alignment.centerRight),
+                     // control: new SwiperControl(),
+             ),
+           ),
+                 ],
+               );
+            }
+          })));
 }

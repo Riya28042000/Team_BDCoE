@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:slimy_card/slimy_card.dart';
 
@@ -50,11 +51,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin {
     }
   }
 
-  @override
-  dispose() {
-    animationController.dispose(); // you need this
-    super.dispose();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -241,14 +238,14 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
           ? Align(
               child: Text(
                 'WHAT WE DO?',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                 'WHAT WE DO?',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),
@@ -303,7 +300,7 @@ Widget _description(
                               return Padding(
                                 padding: const EdgeInsets.all(10.0),
                                 child: SlimyCard(
-                                  color: themeProvider.darkTheme?Color(0xFF151515):Color(0xff3972CF),
+                                  color: themeProvider.darkTheme?Color(0xFF151515):Color(0xff3671a4),
                                   topCardHeight: 200,
                                   bottomCardHeight: 200,
                                   slimeEnabled: true,
@@ -344,7 +341,7 @@ Widget _description(
                                       SizedBox(height: 15),
                                       Text(
                                         snapshot.data[index].data['title'],
-                                        style: TextStyle(
+                                        style: GoogleFonts.zillaSlab(
                                           color: Colors.white,
                                             fontSize: 15,fontWeight: FontWeight.bold),
                                       ),
@@ -356,7 +353,7 @@ Widget _description(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
                                       snapshot.data[index].data['desc'],
-                                      style: TextStyle(
+                                      style: GoogleFonts.zillaSlab(
                                         color: Colors.white,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500,

@@ -1,7 +1,9 @@
 import 'package:bdcoe/chat/login.dart';
 import 'package:bdcoe/notifiers/dark.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -47,7 +49,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 @override
 dispose() {
-  animationController.dispose(); // you need this
+  animationController.dispose();
   super.dispose();
 }
   @override
@@ -74,9 +76,10 @@ Future <bool> _SaveAndBack(){
             style:AlertStyle(
       animationType: AnimationType.fromTop,
       isCloseButton: false,
+      
       backgroundColor: Theme.of(context).cardColor,
       isOverlayTapDismiss: false,
-      descStyle: TextStyle(fontSize: 18),
+      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -84,26 +87,27 @@ Future <bool> _SaveAndBack(){
          // color: Colors.grey,
         ),
       ),
-      titleStyle: TextStyle(
+      titleStyle: GoogleFonts.zillaSlab(
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
     ),
             desc: "Do you want to exit?",
+            
             buttons: [
               DialogButton(
-                color: Color(0xff3972CF),
+                color: Color(0xff3671a4),
                 child: Text(
                   "NO",
-                  style: TextStyle(fontSize: 20,color: Colors.white),
+                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () => Navigator.pop(context,false)
               ),
               DialogButton(
-                color: Color(0xff3972CF),
+                color: Color(0xff3671a4),
                 child: Text(
                   "YES",
-                  style: TextStyle(fontSize: 20,color: Colors.white),
+                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () => Navigator.pop(context,true)
               )
@@ -246,7 +250,7 @@ Future <bool> _SaveAndBack(){
                             bottomLeft: Radius.circular(30),
                             bottomRight: Radius.circular(30)),
                         shape: BoxShape.rectangle,
-                        color: Theme.of(context).hoverColor,
+                        color: themeProvider.darkTheme?Color(0xff3A3A3B):Color(0xff3671a4),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.only(
@@ -318,14 +322,14 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
           ? Align(
               child: Text(
                 'WELCOME',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                 'WELCOME',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),
@@ -343,7 +347,7 @@ Widget _description(
   return Container(
     child: Padding(
       padding: const EdgeInsets.only(left:15,right:15,top:20),
-      child: Card(
+      child: FlipCard(front: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         elevation: 2,
         // color: Colors.white,
@@ -357,7 +361,7 @@ Widget _description(
                 padding: const EdgeInsets.all(5.0),
                 child: Text(
                   'Welcome to',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  style: GoogleFonts.zillaSlab(fontSize: 18, fontWeight: FontWeight.w500),
                 ),
               ),
               Row(
@@ -365,17 +369,171 @@ Widget _description(
                 children: <Widget>[
                   Text(
                     'Big Data ',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    style: GoogleFonts.zillaSlab(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
                     width: size.width / 12 / 15,
                   ),
                   Text(
                     "Centre Of Excellence",
-                    style: TextStyle(
+                    style: GoogleFonts.zillaSlab(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xff3972CF)),
+                        color: Color(0xff3671a4)),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(3.0),
+                      child: Text(
+                  "Big Data Centre of excellence is the research and development centre. At BDCoE, we strive to stimulate interest in Big Data concept and related technologies among the students of the institution. We spear head at technologies like Big Data, Machine learning and Deep learning along with web development and app development. Our belief system includes hereditary learning and constant improvment. We aim at producing competent individuals and doing outsourced projects.",
+                maxLines: 12,
+                  overflow: TextOverflow.ellipsis,
+                //  textAlign: TextAlign.justify,
+                style: GoogleFonts.zillaSlab(),
+                ),
+                    )),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: ()  async{
+                    const url = 'https://www.instagram.com/bdcoe/?hl=en';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } 
+                    },
+                    child: Container(
+                        height: size.width / 12,
+                        width: size.width / 12,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(40),
+                            color: Theme.of(context).buttonColor),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset(
+                            "assets/ins.png",
+                          ),
+                        )),
+                  ),
+                           GestureDetector(
+                    onTap: ()  async{
+                    const url = 'https://www.linkedin.com/school/big-data-centre-of-excellence/about/';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } 
+                    },
+                    child: Container(
+                        height: size.width / 12,
+                        width: size.width / 12,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(40),
+                            color: Theme.of(context).buttonColor),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset(
+                            "assets/linkdin.png",
+                          ),
+                        )),
+                  ),
+                  GestureDetector(
+                    onTap: ()  async{
+                    const url = 'https://github.com/bdcoe';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } 
+                    },
+                    child: Container(
+                        height: size.width / 12,
+                        width: size.width / 12,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(40),
+                            color: Theme.of(context).buttonColor),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset("assets/github.png"),
+                        )),
+                  ),
+                  GestureDetector(
+                    onTap: ()  async{
+                    const url = 'https://www.facebook.com/bigdatacoe/';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } 
+                    },
+                    child: Container(
+                        height: size.width / 12,
+                        width: size.width / 12,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(40),
+                            color: Theme.of(context).buttonColor),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset("assets/facebook.png"),
+                        )),
+                  ),
+                  GestureDetector(
+                   onTap: ()  async{
+                    const url = 'https://www.youtube.com/channel/UCE-dW0xxvpZq_UWZ9B5jKUA';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } 
+                    },
+                    child: Container(
+                        height: size.width / 12,
+                        width: size.width / 12,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(40),
+                            color: Theme.of(context).buttonColor),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset(
+                            "assets/youtube.png",
+                          ),
+                        )),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ), back:Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        elevation: 2,
+        // color: Colors.white,
+        child: Container(
+          height: size.height / 1,
+          width: size.width / 1.1,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Text(
+                  'Welcome to',
+                  style: GoogleFonts.zillaSlab(fontSize: 18, fontWeight: FontWeight.w500),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Big Data ',
+                    style: GoogleFonts.zillaSlab(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(
+                    width: size.width / 12 / 15,
+                  ),
+                  Text(
+                    "Centre Of Excellence",
+                    style: GoogleFonts.zillaSlab(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xff3671a4)),
                   ),
                 ],
               ),
@@ -496,7 +654,7 @@ Widget _description(
             ],
           ),
         ),
-      ),
+      ),)
     ),
   );
 }
@@ -535,7 +693,7 @@ Widget _description(
 //                       ),
 //                       Text(
 //                         'Agenda',
-//                         style: TextStyle(fontSize: 11),
+//                         style: GoogleFonts.zillaSlab(fontSize: 11),
 //                       ),
 //                     ],
 //                   ),
@@ -559,7 +717,7 @@ Widget _description(
 //                         "assets/speaker.png",
 //                         height: size.height / 30,
 //                       ),
-//                       Text('Speakers', style: TextStyle(fontSize: 11)),
+//                       Text('Speakers', style: GoogleFonts.zillaSlab(fontSize: 11)),
 //                     ],
 //                   ),
 //                 ),
@@ -582,7 +740,7 @@ Widget _description(
 //                         "assets/sponsors.png",
 //                         height: size.height / 30,
 //                       ),
-//                       Text('Sponsors', style: TextStyle(fontSize: 11)),
+//                       Text('Sponsors', style: GoogleFonts.zillaSlab(fontSize: 11)),
 //                     ],
 //                   ),
 //                 ),
@@ -605,7 +763,7 @@ Widget _description(
 // //                        "assets/team.png",
 // //                        height: size.height / 30,
 // //                      ),
-// //                      Text('Team', style: TextStyle(fontSize: 11)),
+// //                      Text('Team', style: GoogleFonts.zillaSlab(fontSize: 11)),
 // //                    ],
 // //                  ),
 // //                ),
