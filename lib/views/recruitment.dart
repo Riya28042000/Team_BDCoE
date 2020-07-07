@@ -172,51 +172,7 @@ dispose() {
               ),
             ),
           ),
-            new Positioned(
-            right: MediaQuery.of(context).size.width / 1.18, //230.0,
-//              bottom: MediaQuery.of(context).size.width / 0.68, //40.0,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  cirAn = true;
-                });
-                themeProvider.darkTheme = !themeProvider.darkTheme;
-
-                if (animationController.status == AnimationStatus.forward ||
-                    animationController.status ==
-                        AnimationStatus.completed) {
-                  animationController.reset();
-                  animationController.forward();
-                } else {
-                  animationController.forward();
-                }
-              },
-              child: new Container(
-                height: MediaQuery.of(context).size.height / 5.5,
-                width: MediaQuery.of(context).size.height / 15,
-                decoration: new BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30)),
-                  shape: BoxShape.rectangle,
-                  color: themeProvider.darkTheme?Color(0xff3A3A3B):Color(0xff3671a4),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 14, right: 14, bottom: 28),
-                  child: themeProvider.darkTheme
-                      ? Image.asset(
-                          "assets/bulb_off.png",
-                          fit: BoxFit.fitHeight,
-                        )
-                      : Image.asset(
-                          "assets/bulb_on.png",
-                          fit: BoxFit.fitHeight,
-                        ),
-                ),
-              ),
-            ),
-          ),
+           
           new Positioned(
             right: MediaQuery.of(context).size.width / 1.2, //230.0,
             top: MediaQuery.of(context).size.width / 0.69, //40
