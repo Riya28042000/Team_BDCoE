@@ -104,7 +104,9 @@ setState(() {
                   "OK",
                   style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
                 ),
-                onPressed: () => Navigator.of(context).pop()
+                onPressed: () =>  Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => Register()),
+        (Route<dynamic> route) => false),
               )
             ],
           ).show();

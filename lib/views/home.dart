@@ -544,6 +544,7 @@ Widget _description(
                       padding: const EdgeInsets.all(3.0),
                       child: Text(
                   "Big Data Centre of excellence is the research and development centre. At BDCoE, we strive to stimulate interest in Big Data concept and related technologies among the students of the institution. We spear head at technologies like Big Data, Machine learning and Deep learning along with web development and app development. Our belief system includes hereditary learning and constant improvment. We aim at producing competent individuals and doing outsourced projects.",
+              style: GoogleFonts.zillaSlab(),
                 maxLines: 12,
                   overflow: TextOverflow.ellipsis,
                 //  textAlign: TextAlign.justify,
