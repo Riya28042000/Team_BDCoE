@@ -1,5 +1,6 @@
 import 'package:bdcoe/chat/login.dart';
 import 'package:bdcoe/notifiers/dark.dart';
+import 'package:bdcoe/views/recruitment.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
@@ -551,107 +552,22 @@ Widget _description(
                 ),
                     )),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: ()  async{
-                    const url = 'https://www.instagram.com/bdcoe/?hl=en';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } 
-                    },
-                    child: Container(
-                        height: size.width / 12,
-                        width: size.width / 12,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40),
-                            color: Theme.of(context).buttonColor),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(
-                            "assets/ins.png",
-                          ),
-                        )),
+          Padding(padding: EdgeInsets.all(12),
+ child: GestureDetector(
+   onTap: (){
+       Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => Recruitment()),
+        (Route<dynamic> route) => false);
+   },
+    child: Text(
+                    "Click Here to know more about recruitment process.",
+                style: GoogleFonts.zillaSlab( color: Color(0xff3671a4)),
+                 
+                    
+                  //  textAlign: TextAlign.justify,
                   ),
-                           GestureDetector(
-                    onTap: ()  async{
-                    const url = 'https://www.linkedin.com/school/big-data-centre-of-excellence/about/';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } 
-                    },
-                    child: Container(
-                        height: size.width / 12,
-                        width: size.width / 12,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40),
-                            color: Theme.of(context).buttonColor),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(
-                            "assets/linkdin.png",
-                          ),
-                        )),
-                  ),
-                  GestureDetector(
-                    onTap: ()  async{
-                    const url = 'https://github.com/bdcoe';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } 
-                    },
-                    child: Container(
-                        height: size.width / 12,
-                        width: size.width / 12,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40),
-                            color: Theme.of(context).buttonColor),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset("assets/github.png"),
-                        )),
-                  ),
-                  GestureDetector(
-                    onTap: ()  async{
-                    const url = 'https://www.facebook.com/bigdatacoe/';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } 
-                    },
-                    child: Container(
-                        height: size.width / 12,
-                        width: size.width / 12,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40),
-                            color: Theme.of(context).buttonColor),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset("assets/facebook.png"),
-                        )),
-                  ),
-                  GestureDetector(
-                   onTap: ()  async{
-                    const url = 'https://www.youtube.com/channel/UCE-dW0xxvpZq_UWZ9B5jKUA';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } 
-                    },
-                    child: Container(
-                        height: size.width / 12,
-                        width: size.width / 12,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40),
-                            color: Theme.of(context).buttonColor),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(
-                            "assets/youtube.png",
-                          ),
-                        )),
-                  ),
-                ],
-              )
+ ),
+          )
             ],
           ),
         ),

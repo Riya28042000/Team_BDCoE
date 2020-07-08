@@ -33,7 +33,10 @@ dependencies:
   slimy_card:
   firebase_auth:
   rflutter_alert:
-  flutter_screenutil:
+  dio:
+  path_provider:
+  file_utils:
+  http:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
@@ -64,7 +67,9 @@ flutter:
   - assets/youtube.png
   - assets/linkdin.png
   - assets/logo.png
-    #  - images/a_dot_ham.jpeg
+  - assets/pdfblack.jpg
+
+  #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

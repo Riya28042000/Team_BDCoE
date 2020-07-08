@@ -296,6 +296,7 @@ Widget _description(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 10),
                           child: new Swiper(
+                            autoplayDelay: 9099,
                             itemBuilder: (BuildContext context, int index) {
                               return Padding(
                                 padding: const EdgeInsets.all(10.0),

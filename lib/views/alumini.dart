@@ -253,7 +253,7 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
 Widget _description(context, DarkThemeProvider themeProvider) {
 Future gettoDo() async{
        var firestore= Firestore.instance;
-       QuerySnapshot qn=  await firestore.collection("fourthyr").getDocuments();
+       QuerySnapshot qn=  await firestore.collection("alumni").getDocuments();
        return qn.documents;
     }
   var size = MediaQuery.of(context).size;

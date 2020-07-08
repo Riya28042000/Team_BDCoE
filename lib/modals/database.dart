@@ -41,4 +41,5 @@ getUserByEmail(String email) async {
    return await Firestore.instance.collection("users").snapshots();
   }
 
+
 }
