@@ -127,13 +127,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.2.1"
-  file_utils:
-    dependency: "direct main"
-    description:
-      name: file_utils
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.4"
   firebase:
     dependency: transitive
     description:
@@ -247,13 +240,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  globbing:
-    dependency: transitive
-    description:
-      name: globbing
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.1"
   google_fonts:
     dependency: "direct main"
     description:
@@ -262,7 +248,7 @@ packages:
     source: hosted
     version: "1.0.0"
   http:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: http
       url: "https://pub.dartlang.org"
@@ -296,6 +282,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.2"
+  liquid_progress_indicator:
+    dependency: "direct main"
+    description:
+      name: liquid_progress_indicator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.2"
   matcher:
     dependency: transitive
     description:

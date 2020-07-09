@@ -6,11 +6,12 @@ import 'package:bdcoe/notifiers/dark.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:file_utils/file_utils.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -29,7 +30,7 @@ Future gettoDo() async {
   
 
     AnimationController animationController;
-String progressString;
+String progressString="0%" ;
   Animation<double> animation;
   bool cirAn = false;
 bool downloading =false; 
@@ -103,31 +104,169 @@ Future<bool> MoveToLastScreen() {
         MaterialPageRoute(builder: (context) => BottomNavBar()),
         (Route<dynamic> route) => false);
   }
+  Future<bool> MoveTo() {
+ 
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => Recruitment()),
+        (Route<dynamic> route) => false);
+        
+  }
   Widget homeBody(DarkThemeProvider themeProvider,context) {
      var size = MediaQuery.of(context).size;
- return   downloading? Center(
-   child:  Container(
-     color: Theme.of(context).backgroundColor,
-                    height: 120.0,
-                    width: 200.0,
-                    child: Card(
-                      color: Theme.of(context).cardColor,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          CircularProgressIndicator(),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          Text(
-                            'Downloading File: $progressString',
-                            style: TextStyle(color: Theme.of(context).textSelectionColor),
-                          ),
-                        ],
+     print('$progressString');
+ return   downloading? WillPopScope(
+   onWillPop: MoveTo,
+    child: Container(
+      color:Theme.of(context).primaryColor,
+      child: SafeArea(
+              child: Scaffold(
+        backgroundColor: Theme.of(context).backgroundColor,
+         body:Stack(
+           children: <Widget>[
+                new Positioned(
+                  left: MediaQuery.of(context).size.width / 1.15, //230.0,
+                  bottom: MediaQuery.of(context).size.width / 1,
+
+                  child: new Container(
+                    height: MediaQuery.of(context).size.height / 8,
+                    width: MediaQuery.of(context).size.height / 5,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).indicatorColor,
+                    ),
+                  ),
+                ),
+                new Positioned(
+                  right: MediaQuery.of(context).size.width / 1.2, //230.0,
+                  bottom: MediaQuery.of(context).size.width / 0.69, //40
+                  child: new Container(
+                    height: MediaQuery.of(context).size.height / 8,
+                    width: MediaQuery.of(context).size.height / 5,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).hintColor,
+                    ),
+                  ),
+                ),
+                new Positioned(
+                  left: MediaQuery.of(context).size.width / 1.1, //230.0,
+                  top: MediaQuery.of(context).size.width / 0.8, //40.0,
+                  child: new Container(
+                    height: MediaQuery.of(context).size.height / 4,
+                    width: MediaQuery.of(context).size.height / 4,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).highlightColor,
+                    ),
+                  ),
+                ),
+                new Positioned(
+                  right: MediaQuery.of(context).size.width / 1.05, //230.0,
+                  bottom: MediaQuery.of(context).size.width / 1.3, //40.0,
+                  child: new Container(
+                    height: MediaQuery.of(context).size.height / 8,
+                    width: MediaQuery.of(context).size.height / 8,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).focusColor,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Container(
+                        decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).backgroundColor,
+                        ),
                       ),
                     ),
-                  )
-   ) :WillPopScope(
+                  ),
+                ),
+                new Positioned(
+                  left: MediaQuery.of(context).size.width / 1.1, //230.0,
+                  bottom: MediaQuery.of(context).size.width / 0.7, //40.0,
+                  child: new Container(
+                    height: MediaQuery.of(context).size.height / 8,
+                    width: MediaQuery.of(context).size.height / 8,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).hintColor,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Container(
+                        decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).backgroundColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                new Positioned(
+                  right: MediaQuery.of(context).size.width / 1.2, //230.0,
+                  top: MediaQuery.of(context).size.width / 2.5, //40.0,
+                  child: new Container(
+                    height: MediaQuery.of(context).size.height / 12,
+                    width: MediaQuery.of(context).size.height / 12,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).indicatorColor,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Container(
+                        decoration: new BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).backgroundColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                new Positioned(
+                  right: MediaQuery.of(context).size.width / 1.2, //230.0,
+                  top: MediaQuery.of(context).size.width / 0.69, //40
+                  child: new Container(
+                    height: MediaQuery.of(context).size.height / 8,
+                    width: MediaQuery.of(context).size.height / 5,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).indicatorColor,
+                    ),
+                  ),
+                ),
+                new Column(
+                  children: <Widget>[
+                   Flexible(
+                     flex:12,
+                                        child: Center(
+     child: Container(
+       child: SizedBox(
+         width: 100,
+         height: 100,
+        
+         child: LiquidCircularProgressIndicator(
+       value: 0.25, 
+       valueColor: AlwaysStoppedAnimation(Color(0xff3671a4)),
+       backgroundColor: Theme.of(context).cardColor,
+       direction: Axis.vertical, 
+       
+       center:  Text('$progressString',
+                                style: TextStyle(color: Theme.of(context).textSelectionColor),
+                              ),
+),
+       ),
+     ),
+),
+                   ),
+                  ],
+                ),
+              ],
+         )
+         ),
+      ),
+    ),
+ ) :WillPopScope(
        onWillPop: MoveToLastScreen,
           child: Container(
           color:Theme.of(context).primaryColor,
@@ -330,10 +469,8 @@ Future<bool> MoveToLastScreen() {
           });
           print("riyaa");
           print(dir.path.toString());
-  dio.download(url ,"${dir.path.toString()}" + "/BDCOEE" + "Sample Synopsis.pdf", onReceiveProgress: (rec, total){
-  setState(() {
-   
-      });
+  dio.download(url ,"${dir.path.toString()}" + "/BDCOE" + "Sample Synopsis.pdf", onReceiveProgress: (rec, total){
+ 
 
         print("rec:${rec}");
       print("total:${total}");
@@ -343,12 +480,16 @@ Future<bool> MoveToLastScreen() {
         progressString = ((rec / total) * 100).toStringAsFixed(0) + "%";
         print(progressString);
   // });
+  setState(() {
+    
+  });
           
   }
   ).then((onValue){
   
-     print('hiiiii');
-  Alert(
+  if(onValue.statusCode==200){
+    progressString="0%";
+     Alert(
             context: context,
             
             type: AlertType.success,
@@ -380,13 +521,63 @@ Future<bool> MoveToLastScreen() {
                   style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () {
-                  downloading =false;
+                   setState(() {
+     downloading =false;
+      });
+                
                   Navigator.of(context).pop();
                 }
               )
             ],
           ).show();
-  });
+  }else{
+    progressString="0%";
+       Alert(
+            context: context,
+            
+            type: AlertType.error,
+            title: "ERROR",
+            style:AlertStyle(
+              backgroundColor: Theme.of(context).cardColor,
+      animationType: AnimationType.fromTop,
+      isCloseButton: false,
+      isOverlayTapDismiss: false,
+      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
+      animationDuration: Duration(milliseconds: 400),
+      alertBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0.0),
+        side: BorderSide(
+         // color: Colors.grey,
+        ),
+      ),
+      titleStyle: GoogleFonts.zillaSlab(
+        fontWeight: FontWeight.bold,
+       color: Theme.of(context).textSelectionColor
+      ),
+    ),
+            desc: "Some error occured. Try Again!",
+            buttons: [
+              DialogButton(
+                color: Color(0xff3671a4),
+                child: Text(
+                  "OK",
+                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
+                ),
+                onPressed: () {
+                   setState(() {
+     downloading =false;
+      });
+                
+                  Navigator.of(context).pop();
+                }
+              )
+            ],
+          ).show();
+  }
+ 
+  }
+  
+  );
   
             // setState(() {
             //  progressindicatorvariable=false; 
@@ -402,7 +593,7 @@ Future<bool> MoveToLastScreen() {
                                   top: 8, left: 10, right: 10, bottom: 10),
                               child: Align(
                                 child: Text(
-                                  'Click Here to check previous year sample papers.',
+                                  'Click here to download previous year sample paper.',
                                   style: GoogleFonts.zillaSlab(
                                       fontSize: 15,
                                        color: Color(0xff3671a4),
