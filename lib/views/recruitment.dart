@@ -9,6 +9,7 @@ import 'package:dio/dio.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
@@ -27,14 +28,14 @@ Future gettoDo() async {
     QuerySnapshot qn = await firestore.collection("recruitment").getDocuments();
     return qn.documents;
   }
-  
-
+   double progres=0;
     AnimationController animationController;
 String progressString="0%" ;
   Animation<double> animation;
   bool cirAn = false;
 bool downloading =false; 
        bool  logic=true;
+      
    @override
   void initState() {
     getUrl();
@@ -114,7 +115,40 @@ Future<bool> MoveToLastScreen() {
   Widget homeBody(DarkThemeProvider themeProvider,context) {
      var size = MediaQuery.of(context).size;
      print('$progressString');
- return   downloading? WillPopScope(
+ return   OfflineBuilder(
+
+        debounceDuration: Duration.zero,
+        connectivityBuilder: (
+            BuildContext context,
+            ConnectivityResult connectivity,
+            Widget child,
+            ) {
+          if (connectivity == ConnectivityResult.none) {
+
+            return  WillPopScope(
+               onWillPop: MoveToLastScreen,
+                          child: Scaffold(
+                backgroundColor: Color(0xff3f51b6),
+                body: Center(child:Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Center(child: Image.asset("assets/offf.png")),
+                      SizedBox(height:10),
+                      Text("Check you Internet Connection!",style: GoogleFonts.zillaSlab(color:Colors.white,fontSize: 20),)
+                    ],
+                ) ,)
+              ),
+            );
+          }
+          return child;
+        },
+    
+    
+  child:
+ 
+ 
+  downloading? WillPopScope(
    onWillPop: MoveTo,
     child: Container(
       color:Theme.of(context).primaryColor,
@@ -246,13 +280,14 @@ Future<bool> MoveToLastScreen() {
          height: 100,
         
          child: LiquidCircularProgressIndicator(
-       value: 0.25, 
+       value: progres, 
        valueColor: AlwaysStoppedAnimation(Color(0xff3671a4)),
        backgroundColor: Theme.of(context).cardColor,
        direction: Axis.vertical, 
        
        center:  Text('$progressString',
-                                style: TextStyle(color: Theme.of(context).textSelectionColor),
+                                style: TextStyle(color: themeProvider.darkTheme?Colors.white:
+                                Colors.blue[200]),
                               ),
 ),
        ),
@@ -479,6 +514,7 @@ Future<bool> MoveToLastScreen() {
   //    //   downloading = true;
         progressString = ((rec / total) * 100).toStringAsFixed(0) + "%";
         print(progressString);
+        progres= (rec / total);
   // });
   setState(() {
     
@@ -489,6 +525,7 @@ Future<bool> MoveToLastScreen() {
   
   if(onValue.statusCode==200){
     progressString="0%";
+    progres=0.0;
      Alert(
             context: context,
             
@@ -532,6 +569,8 @@ Future<bool> MoveToLastScreen() {
           ).show();
   }else{
     progressString="0%";
+    
+progres=0.0;
        Alert(
             context: context,
             
@@ -575,9 +614,53 @@ Future<bool> MoveToLastScreen() {
           ).show();
   }
  
-  }
-  
-  );
+  } 
+  ).catchError((onError){
+ progressString="0%";
+ progres=0;
+       Alert(
+            context: context,
+            
+            type: AlertType.error,
+            title: "ERROR",
+            style:AlertStyle(
+              backgroundColor: Theme.of(context).cardColor,
+      animationType: AnimationType.fromTop,
+      isCloseButton: false,
+      isOverlayTapDismiss: false,
+      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
+      animationDuration: Duration(milliseconds: 400),
+      alertBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0.0),
+        side: BorderSide(
+         // color: Colors.grey,
+        ),
+      ),
+      titleStyle: GoogleFonts.zillaSlab(
+        fontWeight: FontWeight.bold,
+       color: Theme.of(context).textSelectionColor
+      ),
+    ),
+            desc: "Check Your Internet Connection!",
+            buttons: [
+              DialogButton(
+                color: Color(0xff3671a4),
+                child: Text(
+                  "OK",
+                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
+                ),
+                onPressed: () {
+                   setState(() {
+     downloading =false;
+      });
+          Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => Recruitment()),
+        (Route<dynamic> route) => false);
+                }
+              )
+            ],
+          ).show();
+  });
   
             // setState(() {
             //  progressindicatorvariable=false; 
@@ -698,7 +781,8 @@ Future<bool> MoveToLastScreen() {
       ),
           ),
         ),
-    );
+    )
+ );
   }
   
 }

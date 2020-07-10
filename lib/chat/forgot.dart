@@ -21,7 +21,6 @@ final _scaffoldKey = GlobalKey<ScaffoldState>();
 class _Forgot extends State<Forgot> with TickerProviderStateMixin {
 bool isLoading=false;
   AuthMethods authMethods= AuthMethods();
-
 reset(String email) async {
   
 setState(() {
@@ -30,7 +29,6 @@ setState(() {
    if (validatekey.currentState.validate()) {
    validatekey.currentState.reset();
       await authMethods.resetPass(email).then((onValue){
-   
          setState(() {
       isLoading=false;
     });
@@ -73,6 +71,8 @@ setState(() {
           ).show();
        print('email sent');
       }).catchError((onError){
+        switch(onError.toString()){
+   case 'PlatformException(ERROR_USER_NOT_FOUND, There is no user record corresponding to this identifier. The user may have been deleted., null)':{
       Alert(
             context: context,
             
@@ -96,7 +96,7 @@ setState(() {
        color: Theme.of(context).textSelectionColor
       ),
     ),
-            desc: "Please Register Yourself",
+            desc: "Please Register Yourself!",
             buttons: [
               DialogButton(
                 color: Color(0xff3671a4),
@@ -113,6 +113,93 @@ setState(() {
         setState(() {
           isLoading=false;
         });
+   }
+   break;
+   case 'PlatformException(ERROR_NETWORK_REQUEST_FAILED, A network error (such as timeout, interrupted connection or unreachable host) has occurred., null)':{
+           Alert(
+            context: context,
+            
+            type: AlertType.error,
+            title: "ERROR",
+            style:AlertStyle(
+      animationType: AnimationType.fromTop,
+      backgroundColor: Theme.of(context).cardColor,
+      isCloseButton: false,
+      isOverlayTapDismiss: false,
+      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
+      animationDuration: Duration(milliseconds: 400),
+      alertBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0.0),
+        side: BorderSide(
+         // color: Colors.grey,
+        ),
+      ),
+      titleStyle: GoogleFonts.zillaSlab(
+        fontWeight: FontWeight.bold,
+       color: Theme.of(context).textSelectionColor
+      ),
+    ),
+            desc: "Check your connection!",
+            buttons: [
+              DialogButton(
+                color: Color(0xff3671a4),
+                child: Text(
+                  "OK",
+                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
+                ),
+                onPressed: () =>  Navigator.of(context).pop()
+              )
+            ],
+          ).show();
+        setState(() {
+          isLoading=false;
+        });
+   }
+        break;
+        default:{
+                Alert(
+            context: context,
+            
+            type: AlertType.error,
+            title: "ERROR",
+            style:AlertStyle(
+      animationType: AnimationType.fromTop,
+      backgroundColor: Theme.of(context).cardColor,
+      isCloseButton: false,
+      isOverlayTapDismiss: false,
+      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
+      animationDuration: Duration(milliseconds: 400),
+      alertBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0.0),
+        side: BorderSide(
+         // color: Colors.grey,
+        ),
+      ),
+      titleStyle: GoogleFonts.zillaSlab(
+        fontWeight: FontWeight.bold,
+       color: Theme.of(context).textSelectionColor
+      ),
+    ),
+            desc: "Someting went wrong!",
+            buttons: [
+              DialogButton(
+                color: Color(0xff3671a4),
+                child: Text(
+                  "OK",
+                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
+                ),
+                onPressed: () =>  Navigator.of(context).pop()
+              )
+            ],
+          ).show();
+        setState(() {
+          isLoading=false;
+        });
+        }
+        
+        }
+                print(onError);
+     
       });
    }
    

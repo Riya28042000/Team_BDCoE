@@ -18,7 +18,7 @@ class Register extends StatefulWidget {
 GlobalKey<FormState> validatekey = GlobalKey<FormState>();
 final _scaffoldKey = GlobalKey<ScaffoldState>();
 AuthMethods authMethods= AuthMethods();
-  
+  String val;
    final databaseReference = Firestore.instance;
 class _Register extends State<Register> with TickerProviderStateMixin {
   bool validateAndSave() {
@@ -91,16 +91,22 @@ bool isLoading= false;
               )
             ],
           ).show();
-        }).catchError((onError){
-          
         });
-    //print(ref.documentID);
-      
-    //  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>UserAd()));
-     
      }
-     else{
-           Alert(
+     
+    }).catchError((onError){
+          print(onError);
+          switch(onError.toString()){
+   case 'PlatformException(ERROR_NETWORK_REQUEST_FAILED, A network error (such as timeout, interrupted connection or unreachable host) has occurred., null)':
+       val= "Check your connection!";
+       break;
+    case 'PlatformException(ERROR_EMAIL_ALREADY_IN_USE, The email address is already in use by another account., null)':  
+       val="User already registered!";
+       break;
+    default: val= "Something went wrong!";
+          }
+
+      Alert(
             context: context,
             
             type: AlertType.error,
@@ -123,7 +129,7 @@ bool isLoading= false;
        color: Theme.of(context).textSelectionColor
       ),
     ),
-            desc: "Already Registered!",
+            desc: val,
             buttons: [
               DialogButton(
                 color: Color(0xff3671a4),
@@ -138,8 +144,6 @@ bool isLoading= false;
 setState(() {
       isLoading=false;
     });
-     }
-     
     });
 
 

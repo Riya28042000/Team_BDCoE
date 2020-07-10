@@ -18,15 +18,12 @@ Future signInwithEmailAndPassword(String email, String pass) async{
 
 }
 Future signUpwithEmailAndPassword(String email, String pass)async{
-  try{
+
        AuthResult result= await _auth.createUserWithEmailAndPassword(email: email, password: pass);
        FirebaseUser firebaseUser = result.user;
        return _userFromFirebaseUser(firebaseUser);
        
-  }catch(e){
-  
-    print(e.toString());
-  }
+
 }
 Future resetPass(String email) async{
  

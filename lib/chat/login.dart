@@ -23,7 +23,7 @@ class Login extends StatefulWidget {
 
 GlobalKey<FormState> validatekey = GlobalKey<FormState>();
 final _scaffoldKey = GlobalKey<ScaffoldState>();
-
+String val;
 class _LoginState extends State<Login> with TickerProviderStateMixin {
   getchatroomid(String a, String b) {
     if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
@@ -101,7 +101,16 @@ databaseMethods.getUserByEmail(email).then((uservalue){
 
 
       }).catchError((onError){
-         print('error');
+   
+       print(onError);
+        switch(onError.toString()){
+          case 'PlatformException(ERROR_USER_NOT_FOUND, There is no user record corresponding to this identifier. The user may have been deleted., null)': val="User Not Found!";
+                                        break;
+        case 'PlatformException(ERROR_NETWORK_REQUEST_FAILED, A network error (such as timeout, interrupted connection or unreachable host) has occurred., null)': val="Check your connection!";
+                                                     break;
+          default: val="Something went wrong!";
+                        break;                          
+        }
             Alert(
             context: context,
             
@@ -125,7 +134,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
        color: Theme.of(context).textSelectionColor
       ),
     ),
-            desc: "User Not Found",
+            desc: val,
             buttons: [
               DialogButton(
                 color: Color(0xff3671a4),
@@ -141,6 +150,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
         setState(() {
           isLoading = false;
         });
+
       });
     }
   }

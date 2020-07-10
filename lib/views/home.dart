@@ -552,7 +552,7 @@ Widget _description(
                 ),
                     )),
               ),
-          Padding(padding: EdgeInsets.all(12),
+          Padding(padding: EdgeInsets.only(left:15,right:15,top:15,bottom:10),
  child: GestureDetector(
    onTap: (){
        Navigator.of(context).pushAndRemoveUntil(
@@ -560,7 +560,7 @@ Widget _description(
         (Route<dynamic> route) => false);
    },
     child: Text(
-                    "Click Here to know more about recruitment process.",
+                    "Click Here to know about recruitment process.",
                 style: GoogleFonts.zillaSlab( color: Color(0xff3671a4)),
                  
                     

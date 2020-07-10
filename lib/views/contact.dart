@@ -7,9 +7,11 @@ import 'package:bdcoe/notifiers/dark.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Contact extends StatefulWidget {
@@ -108,7 +110,37 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
   }
 
   Widget homeBody(DarkThemeProvider themeProvider) {
-    return WillPopScope(
+    return  OfflineBuilder(
+
+        debounceDuration: Duration.zero,
+        connectivityBuilder: (
+            BuildContext context,
+            ConnectivityResult connectivity,
+            Widget child,
+            ) {
+          if (connectivity == ConnectivityResult.none) {
+
+            return  WillPopScope(
+               onWillPop: MoveToLastScreen,
+                          child: Scaffold(
+                backgroundColor: Color(0xff3f51b6),
+                body: Center(child:Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Center(child: Image.asset("assets/offf.png")),
+                      SizedBox(height:10),
+                      Text("Check you Internet Connection!",style: GoogleFonts.zillaSlab(color:Colors.white,fontSize: 20),)
+                    ],
+                ) ,)
+              ),
+            );
+          }
+          return child;
+        },
+    
+    
+  child:  WillPopScope(
       onWillPop: MoveToLastScreen,
       child: Container(
         color: Theme.of(context).primaryColor,
@@ -285,6 +317,7 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
           ),
         ),
       ),
+    )
     );
   }
 }
