@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class Details extends StatefulWidget {
@@ -27,6 +26,7 @@ class _DetailsState extends State<Details> with TickerProviderStateMixin {
   bool cirAn = false;
   @override
   void initState() {
+    gettoDo();
     super.initState();
 
 
@@ -99,13 +99,13 @@ class _DetailsState extends State<Details> with TickerProviderStateMixin {
                     children: <Widget>[
                       Center(child: Image.asset("assets/offf.png")),
                       SizedBox(height:10),
-                      Text("Check you Internet Connection!",style: GoogleFonts.zillaSlab(color:Colors.white,fontSize: 20),)
+                      Text("Check your Internet Connection!",style: TextStyle(fontFamily:'Zilla Slab',color:Colors.white,fontSize: 20),)
                     ],
                 ) ,)
               ),
             );
-          }
-          return child;
+          }else
+         { return child;}
         },
     
     
@@ -246,6 +246,7 @@ class _DetailsState extends State<Details> with TickerProviderStateMixin {
                     ),
                     Container(
                         height: 471,
+                      //  color: Theme.of(context).backgroundColor,
                         child: _description(
                           context,
                           themeProvider,
@@ -274,27 +275,27 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
           ? Align(
               child: Text(
                 'TEAM BDCoE',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                 'TEAM BDCoE',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),
     ),
   );
 }
-
-Widget _description(context, DarkThemeProvider themeProvider) {
   Future gettoDo() async {
     var firestore = Firestore.instance;
     QuerySnapshot qn = await firestore.collection("domains").getDocuments();
     return qn.documents;
   }
+Widget _description(context, DarkThemeProvider themeProvider) {
+
 
   var size = MediaQuery.of(context).size;
 
@@ -306,7 +307,7 @@ Widget _description(context, DarkThemeProvider themeProvider) {
           child: FutureBuilder(
               future: gettoDo(),
               builder: (_, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
+                if (snapshot.connectionState==ConnectionState.none||snapshot.connectionState==ConnectionState.waiting ||!snapshot.hasData || snapshot.data.isEmpty) {
                   return Center(
                     child: SpinKitChasingDots(
                       itemBuilder: (BuildContext context, int index) {
@@ -411,7 +412,7 @@ Widget _description(context, DarkThemeProvider themeProvider) {
                                                       child: Text(
                                                         snapshot.data[index]
                                                             .data['staff'],
-                                                        style: GoogleFonts.zillaSlab(
+                                                        style: TextStyle(fontFamily:'Zilla Slab',
                                                             color: themeProvider
                                                                     .darkTheme
                                                                 ? Color(0xff3671a4)
@@ -438,7 +439,7 @@ Widget _description(context, DarkThemeProvider themeProvider) {
                                                     child: Align(
                                                       child: Text(
                                                         'Tap to know more',
-                                                        style: GoogleFonts.zillaSlab(
+                                                        style: TextStyle(fontFamily:'Zilla Slab',
                                                             fontSize: 15,
                                                             color: Color(0xff3671a4),
                                                             fontWeight:

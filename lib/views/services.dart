@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:slimy_card/slimy_card.dart';
 
@@ -97,7 +96,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin {
                     children: <Widget>[
                       Center(child: Image.asset("assets/offf.png")),
                       SizedBox(height:10),
-                      Text("Check you Internet Connection!",style: GoogleFonts.zillaSlab(color:Colors.white,fontSize: 20),)
+                      Text("Check your Internet Connection!",style: TextStyle(fontFamily:'Zilla Slab',color:Colors.white,fontSize: 20),)
                     ],
                 ) ,)
               ),
@@ -244,6 +243,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin {
                     ),
                     Flexible(
                         flex: 11,
+                       
                         child: _description(
                           themeProvider,
                           context,
@@ -264,6 +264,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin {
 Widget _logo(DarkThemeProvider themeChangeProvider, context) {
   var size = MediaQuery.of(context).size;
   return Container(
+
     child: Container(
       margin: EdgeInsets.only(top: 25, bottom: 0.0, left: 25.0, right: 25.0),
       height: size.height / 8,
@@ -272,14 +273,14 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
           ? Align(
               child: Text(
                 'WHAT WE DO?',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                 'WHAT WE DO?',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),
@@ -300,6 +301,7 @@ Widget _description(
   var size = MediaQuery.of(context).size;
 
   return Container(
+ //      color: Theme.of(context).backgroundColor,
     child: Padding(
       padding: const EdgeInsets.only(left: 15, right: 15),
       child: Container(
@@ -308,7 +310,7 @@ Widget _description(
           child: FutureBuilder(
               future: what(),
               builder: (_, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
+                if (snapshot.connectionState==ConnectionState.none||snapshot.connectionState==ConnectionState.waiting ||!snapshot.hasData || snapshot.data.isEmpty) {
                   return Center(
                     child: SpinKitChasingDots(
                       itemBuilder: (BuildContext context, int index) {
@@ -376,7 +378,7 @@ Widget _description(
                                       SizedBox(height: 15),
                                       Text(
                                         snapshot.data[index].data['title'],
-                                        style: GoogleFonts.zillaSlab(
+                                        style: TextStyle(fontFamily:'Zilla Slab',
                                           color: Colors.white,
                                             fontSize: 15,fontWeight: FontWeight.bold),
                                       ),
@@ -388,7 +390,7 @@ Widget _description(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
                                       snapshot.data[index].data['desc'],
-                                      style: GoogleFonts.zillaSlab(
+                                      style: TextStyle(fontFamily:'Zilla Slab',
                                         color: Colors.white,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500,

@@ -2,11 +2,9 @@ import 'package:bdcoe/chat/authorize.dart';
 import 'package:bdcoe/chat/login.dart';
 import 'package:bdcoe/chat/register.dart';
 import 'package:bdcoe/notifiers/dark.dart';
-import 'package:bdcoe/views/contact.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -42,7 +40,7 @@ setState(() {
       animationType: AnimationType.fromTop,
       isCloseButton: false,
       isOverlayTapDismiss: false,
-      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
+      descStyle: TextStyle(fontFamily:'Zilla Slab',fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -50,7 +48,7 @@ setState(() {
          // color: Colors.grey,
         ),
       ),
-      titleStyle: GoogleFonts.zillaSlab(
+      titleStyle: TextStyle(fontFamily:'Zilla Slab',
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
@@ -61,7 +59,7 @@ setState(() {
                 color: Color(0xff3671a4),
                 child: Text(
                   "OK",
-                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
+                  style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () => Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => Login()),
@@ -83,7 +81,7 @@ setState(() {
       backgroundColor: Theme.of(context).cardColor,
       isCloseButton: false,
       isOverlayTapDismiss: false,
-      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
+      descStyle: TextStyle(fontFamily:'Zilla Slab',fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -91,7 +89,7 @@ setState(() {
          // color: Colors.grey,
         ),
       ),
-      titleStyle: GoogleFonts.zillaSlab(
+      titleStyle: TextStyle(fontFamily:'Zilla Slab',
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
@@ -102,7 +100,7 @@ setState(() {
                 color: Color(0xff3671a4),
                 child: Text(
                   "OK",
-                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
+                  style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () =>  Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => Register()),
@@ -126,7 +124,7 @@ setState(() {
       backgroundColor: Theme.of(context).cardColor,
       isCloseButton: false,
       isOverlayTapDismiss: false,
-      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
+      descStyle: TextStyle(fontFamily:'Zilla Slab',fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -134,7 +132,7 @@ setState(() {
          // color: Colors.grey,
         ),
       ),
-      titleStyle: GoogleFonts.zillaSlab(
+      titleStyle: TextStyle(fontFamily:'Zilla Slab',
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
@@ -145,7 +143,7 @@ setState(() {
                 color: Color(0xff3671a4),
                 child: Text(
                   "OK",
-                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
+                  style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () =>  Navigator.of(context).pop()
               )
@@ -167,7 +165,7 @@ setState(() {
       backgroundColor: Theme.of(context).cardColor,
       isCloseButton: false,
       isOverlayTapDismiss: false,
-      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
+      descStyle: TextStyle(fontFamily:'Zilla Slab',fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -175,7 +173,7 @@ setState(() {
          // color: Colors.grey,
         ),
       ),
-      titleStyle: GoogleFonts.zillaSlab(
+      titleStyle: TextStyle(fontFamily:'Zilla Slab',
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
@@ -186,7 +184,7 @@ setState(() {
                 color: Color(0xff3671a4),
                 child: Text(
                   "OK",
-                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
+                  style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () =>  Navigator.of(context).pop()
               )
@@ -419,7 +417,7 @@ setState(() {
 
     _displaySnackBar(BuildContext context, String a) {
       final snackBar = SnackBar(
-        content: Text(a,style: GoogleFonts.zillaSlab(color:themeProvider.darkTheme
+        content: Text(a,style: TextStyle(fontFamily:'Zilla Slab',color:themeProvider.darkTheme
                                     ? Colors.black
                                     : Colors.white,fontWeight: FontWeight.bold) ,textAlign: TextAlign.center),
         backgroundColor: themeProvider.darkTheme
@@ -458,14 +456,14 @@ setState(() {
           ? Align(
               child: Text(
                 'RESET PASSWORD',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                 'RESET PASSWORD',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),
@@ -474,7 +472,7 @@ setState(() {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: TextFormField(
-                        style: GoogleFonts.zillaSlab(
+                        style: TextStyle(fontFamily:'Zilla Slab',
                             //  color: Colors.white,
                             ),
                         validator: (value) {
@@ -493,11 +491,11 @@ setState(() {
                           hintText: "Email",
                           alignLabelWithHint: true,
                           labelText: "Email",
-                          hintStyle: GoogleFonts.zillaSlab(
+                          hintStyle: TextStyle(fontFamily:'Zilla Slab',
                               color: themeProvider.darkTheme
                                   ? Colors.white
                                   : Colors.black,fontWeight: FontWeight.bold),
-                          labelStyle: GoogleFonts.zillaSlab(
+                          labelStyle: TextStyle(fontFamily:'Zilla Slab',
                               color: themeProvider.darkTheme
                                   ?Color(0xff3671a4)
                                   : Color(0xff3671a4),fontWeight: FontWeight.bold),
@@ -562,7 +560,7 @@ setState(() {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         "Change Password",
-                                        style: GoogleFonts.zillaSlab(
+                                        style: TextStyle(fontFamily:'Zilla Slab',
                                           color: Colors.white,
                                             fontWeight: FontWeight.bold),
                                       ),

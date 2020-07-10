@@ -1,10 +1,8 @@
-import 'package:bdcoe/chat/login.dart';
 import 'package:bdcoe/notifiers/dark.dart';
 import 'package:bdcoe/views/recruitment.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -80,7 +78,7 @@ Future <bool> _SaveAndBack(){
       
       backgroundColor: Theme.of(context).cardColor,
       isOverlayTapDismiss: false,
-      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
+      descStyle: TextStyle(fontFamily:'Zilla Slab',fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -88,7 +86,7 @@ Future <bool> _SaveAndBack(){
          // color: Colors.grey,
         ),
       ),
-      titleStyle: GoogleFonts.zillaSlab(
+      titleStyle: TextStyle(fontFamily:'Zilla Slab',
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
@@ -100,7 +98,7 @@ Future <bool> _SaveAndBack(){
                 color: Color(0xff3671a4),
                 child: Text(
                   "NO",
-                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
+                  style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () => Navigator.pop(context,false)
               ),
@@ -108,7 +106,7 @@ Future <bool> _SaveAndBack(){
                 color: Color(0xff3671a4),
                 child: Text(
                   "YES",
-                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
+                  style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () => Navigator.pop(context,true)
               )
@@ -323,14 +321,14 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
           ? Align(
               child: Text(
                 'WELCOME',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                 'WELCOME',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),
@@ -362,7 +360,7 @@ Widget _description(
                 padding: const EdgeInsets.all(5.0),
                 child: Text(
                   'Welcome to',
-                  style: GoogleFonts.zillaSlab(fontSize: 18, fontWeight: FontWeight.w500),
+                  style: TextStyle(fontFamily:'Zilla Slab',fontSize: 18, fontWeight: FontWeight.w500),
                 ),
               ),
               Row(
@@ -370,14 +368,14 @@ Widget _description(
                 children: <Widget>[
                   Text(
                     'Big Data ',
-                    style: GoogleFonts.zillaSlab(fontSize: 18, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontFamily:'Zilla Slab',fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
                     width: size.width / 12 / 15,
                   ),
                   Text(
                     "Centre Of Excellence",
-                    style: GoogleFonts.zillaSlab(
+                    style: TextStyle(fontFamily:'Zilla Slab',
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                         color: Color(0xff3671a4)),
@@ -394,7 +392,7 @@ Widget _description(
                 maxLines: 12,
                   overflow: TextOverflow.ellipsis,
                 //  textAlign: TextAlign.justify,
-                style: GoogleFonts.zillaSlab(),
+                style: TextStyle(fontFamily:'Zilla Slab',),
                 ),
                     )),
               ),
@@ -516,7 +514,7 @@ Widget _description(
                 padding: const EdgeInsets.all(5.0),
                 child: Text(
                   'Welcome to',
-                  style: GoogleFonts.zillaSlab(fontSize: 18, fontWeight: FontWeight.w500),
+                  style: TextStyle(fontFamily:'Zilla Slab',fontSize: 18, fontWeight: FontWeight.w500),
                 ),
               ),
               Row(
@@ -524,14 +522,14 @@ Widget _description(
                 children: <Widget>[
                   Text(
                     'Big Data ',
-                    style: GoogleFonts.zillaSlab(fontSize: 18, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontFamily:'Zilla Slab',fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
                     width: size.width / 12 / 15,
                   ),
                   Text(
                     "Centre Of Excellence",
-                    style: GoogleFonts.zillaSlab(
+                    style: TextStyle(fontFamily:'Zilla Slab',
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                         color: Color(0xff3671a4)),
@@ -545,14 +543,14 @@ Widget _description(
                       padding: const EdgeInsets.all(3.0),
                       child: Text(
                   "Big Data Centre of excellence is the research and development centre. At BDCoE, we strive to stimulate interest in Big Data concept and related technologies among the students of the institution. We spear head at technologies like Big Data, Machine learning and Deep learning along with web development and app development. Our belief system includes hereditary learning and constant improvment. We aim at producing competent individuals and doing outsourced projects.",
-              style: GoogleFonts.zillaSlab(),
+              style: TextStyle(fontFamily:'Zilla Slab',),
                 maxLines: 12,
                   overflow: TextOverflow.ellipsis,
                 //  textAlign: TextAlign.justify,
                 ),
                     )),
               ),
-          Padding(padding: EdgeInsets.only(left:15,right:15,top:15,bottom:10),
+          Padding(padding: EdgeInsets.only(left:10,right:10,top:5,bottom:10),
  child: GestureDetector(
    onTap: (){
        Navigator.of(context).pushAndRemoveUntil(
@@ -561,7 +559,7 @@ Widget _description(
    },
     child: Text(
                     "Click Here to know about recruitment process.",
-                style: GoogleFonts.zillaSlab( color: Color(0xff3671a4)),
+                style: TextStyle(fontFamily:'Zilla Slab', color: Color(0xff3671a4)),
                  
                     
                   //  textAlign: TextAlign.justify,
@@ -610,7 +608,7 @@ Widget _description(
 //                       ),
 //                       Text(
 //                         'Agenda',
-//                         style: GoogleFonts.zillaSlab(fontSize: 11),
+//                         style: TextStyle(fontFamily:'Zilla Slab',fontSize: 11),
 //                       ),
 //                     ],
 //                   ),
@@ -634,7 +632,7 @@ Widget _description(
 //                         "assets/speaker.png",
 //                         height: size.height / 30,
 //                       ),
-//                       Text('Speakers', style: GoogleFonts.zillaSlab(fontSize: 11)),
+//                       Text('Speakers', style: TextStyle(fontFamily:'Zilla Slab',fontSize: 11)),
 //                     ],
 //                   ),
 //                 ),
@@ -657,7 +655,7 @@ Widget _description(
 //                         "assets/sponsors.png",
 //                         height: size.height / 30,
 //                       ),
-//                       Text('Sponsors', style: GoogleFonts.zillaSlab(fontSize: 11)),
+//                       Text('Sponsors', style: TextStyle(fontFamily:'Zilla Slab',fontSize: 11)),
 //                     ],
 //                   ),
 //                 ),
@@ -680,7 +678,7 @@ Widget _description(
 // //                        "assets/team.png",
 // //                        height: size.height / 30,
 // //                      ),
-// //                      Text('Team', style: GoogleFonts.zillaSlab(fontSize: 11)),
+// //                      Text('Team', style: TextStyle(fontFamily:'Zilla Slab',fontSize: 11)),
 // //                    ],
 // //                  ),
 // //                ),

@@ -1,17 +1,12 @@
 import 'dart:io';
-import 'dart:math';
-
 import 'package:bdcoe/navigation/navigation.dart';
 import 'package:bdcoe/notifiers/dark.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -115,7 +110,7 @@ Future<bool> MoveToLastScreen() {
   Widget homeBody(DarkThemeProvider themeProvider,context) {
      var size = MediaQuery.of(context).size;
      print('$progressString');
- return   OfflineBuilder(
+ return  OfflineBuilder(
 
         debounceDuration: Duration.zero,
         connectivityBuilder: (
@@ -135,7 +130,7 @@ Future<bool> MoveToLastScreen() {
                     children: <Widget>[
                       Center(child: Image.asset("assets/offf.png")),
                       SizedBox(height:10),
-                      Text("Check you Internet Connection!",style: GoogleFonts.zillaSlab(color:Colors.white,fontSize: 20),)
+                      Text("Check your Internet Connection!",style: TextStyle(fontFamily:'Zilla Slab',color:Colors.white,fontSize: 20),)
                     ],
                 ) ,)
               ),
@@ -145,10 +140,7 @@ Future<bool> MoveToLastScreen() {
         },
     
     
-  child:
- 
- 
-  downloading? WillPopScope(
+  child:  downloading? WillPopScope(
    onWillPop: MoveTo,
     child: Container(
       color:Theme.of(context).primaryColor,
@@ -433,15 +425,17 @@ Future<bool> MoveToLastScreen() {
                       Flexible(
                           flex: 12,
                           child: Container(
+                            
     child: Padding(
       padding: const EdgeInsets.only(left: 15, right: 15),
       child: Container(
+        
           height: size.height / 1,
           width: size.width / 1.1,
           child: FutureBuilder(
               future: gettoDo(),
               builder: (_, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
+                if (snapshot.connectionState==ConnectionState.none||snapshot.connectionState==ConnectionState.waiting ||!snapshot.hasData || snapshot.data.isEmpty) {
                   return Center(
                     child: SpinKitChasingDots(
                       itemBuilder: (BuildContext context, int index) {
@@ -466,7 +460,7 @@ Future<bool> MoveToLastScreen() {
                           child: Align(
                             child: Text(
                               'PHASE-1',
-                              style: GoogleFonts.zillaSlab(
+                              style: TextStyle(fontFamily:'Zilla Slab',
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xff3671a4)),
@@ -482,7 +476,7 @@ Future<bool> MoveToLastScreen() {
                               child: Align(
                                 child: Text(
                     snapshot.data[0].data['Phase1'],
-                                  style: GoogleFonts.zillaSlab(
+                                  style: TextStyle(fontFamily:'Zilla Slab',
                                       fontSize: 15, fontWeight: FontWeight.w500),
                                 ),
                                 alignment: Alignment.topLeft,
@@ -536,7 +530,7 @@ Future<bool> MoveToLastScreen() {
       animationType: AnimationType.fromTop,
       isCloseButton: false,
       isOverlayTapDismiss: false,
-      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
+      descStyle: TextStyle(fontFamily:'Zilla Slab',fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -544,7 +538,7 @@ Future<bool> MoveToLastScreen() {
          // color: Colors.grey,
         ),
       ),
-      titleStyle: GoogleFonts.zillaSlab(
+      titleStyle: TextStyle(fontFamily:'Zilla Slab',
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
@@ -555,7 +549,7 @@ Future<bool> MoveToLastScreen() {
                 color: Color(0xff3671a4),
                 child: Text(
                   "OK",
-                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
+                  style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () {
                    setState(() {
@@ -581,7 +575,7 @@ progres=0.0;
       animationType: AnimationType.fromTop,
       isCloseButton: false,
       isOverlayTapDismiss: false,
-      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
+      descStyle: TextStyle(fontFamily:'Zilla Slab',fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -589,7 +583,7 @@ progres=0.0;
          // color: Colors.grey,
         ),
       ),
-      titleStyle: GoogleFonts.zillaSlab(
+      titleStyle: TextStyle(fontFamily:'Zilla Slab',
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
@@ -600,7 +594,7 @@ progres=0.0;
                 color: Color(0xff3671a4),
                 child: Text(
                   "OK",
-                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
+                  style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () {
                    setState(() {
@@ -628,7 +622,7 @@ progres=0.0;
       animationType: AnimationType.fromTop,
       isCloseButton: false,
       isOverlayTapDismiss: false,
-      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
+      descStyle: TextStyle(fontFamily:'Zilla Slab',fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -636,7 +630,7 @@ progres=0.0;
          // color: Colors.grey,
         ),
       ),
-      titleStyle: GoogleFonts.zillaSlab(
+      titleStyle: TextStyle(fontFamily:'Zilla Slab',
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
@@ -647,7 +641,7 @@ progres=0.0;
                 color: Color(0xff3671a4),
                 child: Text(
                   "OK",
-                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
+                  style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () {
                    setState(() {
@@ -677,7 +671,7 @@ progres=0.0;
                               child: Align(
                                 child: Text(
                                   'Click here to download previous year sample paper.',
-                                  style: GoogleFonts.zillaSlab(
+                                  style: TextStyle(fontFamily:'Zilla Slab',
                                       fontSize: 15,
                                        color: Color(0xff3671a4),
                                       fontWeight: FontWeight.w500),
@@ -694,7 +688,7 @@ progres=0.0;
                           child: Align(
                             child: Text(
                               'PHASE-2',
-                              style: GoogleFonts.zillaSlab(
+                              style: TextStyle(fontFamily:'Zilla Slab',
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xff3671a4)),
@@ -707,7 +701,7 @@ progres=0.0;
                           child: Align(
                             child: Text(
                                snapshot.data[0].data['Phase2'],
-                              style: GoogleFonts.zillaSlab(
+                              style: TextStyle(fontFamily:'Zilla Slab',
                                   fontSize: 15, fontWeight: FontWeight.w500),
                             ),
                             alignment: Alignment.topLeft,
@@ -719,7 +713,7 @@ progres=0.0;
                           child: Align(
                             child: Text(
                               'PHASE-3',
-                              style: GoogleFonts.zillaSlab(
+                              style: TextStyle(fontFamily:'Zilla Slab',
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xff3671a4)),
@@ -732,7 +726,7 @@ progres=0.0;
                           child: Align(
                             child: Text(
                                snapshot.data[0].data['Phase3'],
-                              style: GoogleFonts.zillaSlab(
+                              style: TextStyle(fontFamily:'Zilla Slab',
                                   fontSize: 15, fontWeight: FontWeight.w500),
                             ),
                             alignment: Alignment.topLeft,
@@ -744,7 +738,7 @@ progres=0.0;
                           child: Align(
                             child: Text(
                               'PHASE-4',
-                              style: GoogleFonts.zillaSlab(
+                              style: TextStyle(fontFamily:'Zilla Slab',
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xff3671a4)),
@@ -757,7 +751,7 @@ progres=0.0;
                           child: Align(
                             child: Text(
                                snapshot.data[0].data['Phase4'],
-                              style: GoogleFonts.zillaSlab(
+                              style: TextStyle(fontFamily:'Zilla Slab',
                                   fontSize: 15, fontWeight: FontWeight.w500),
                             ),
                             alignment: Alignment.topLeft,
@@ -797,14 +791,14 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
           ? Align(
               child: Text(
                 'RECRUITMENTS',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                 'RECRUITMENTS',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),

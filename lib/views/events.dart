@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -96,7 +95,7 @@ class _EventsState extends State<Events> with TickerProviderStateMixin {
                     children: <Widget>[
                       Center(child: Image.asset("assets/offf.png")),
                       SizedBox(height:10),
-                      Text("Check you Internet Connection!",style: GoogleFonts.zillaSlab(color:Colors.white,fontSize: 20),)
+                      Text("Check your Internet Connection!",style: TextStyle(fontFamily:'Zilla Slab',color:Colors.white,fontSize: 20),)
                     ],
                 ) ,)
               ),
@@ -242,6 +241,7 @@ class _EventsState extends State<Events> with TickerProviderStateMixin {
                       flex: 2,
                     ),
                     Container(
+                        // color: Theme.of(context).backgroundColor,
                         height:501, child: _description(context, themeProvider)),
                   ],
                 ),
@@ -267,14 +267,14 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
           ? Align(
               child: Text(
                 'OUR EVENTS',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                 'OUR EVENTS',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),
@@ -298,7 +298,7 @@ Future gettoDo() async{
             child: FutureBuilder(
       future: gettoDo(),
       builder:( _, snapshot){
-      if(snapshot.connectionState== ConnectionState.waiting){
+      if(snapshot.connectionState==ConnectionState.none||snapshot.connectionState==ConnectionState.waiting ||!snapshot.hasData || snapshot.data.isEmpty){
         return  Center(child: SpinKitChasingDots(
   itemBuilder: (BuildContext context, int index) {
     return DecoratedBox(
@@ -376,7 +376,7 @@ Future gettoDo() async{
                  child: Align(
                    child: Text(
                     snapshot.data[index].data['head'],
-                     style: GoogleFonts.zillaSlab(
+                     style: TextStyle(fontFamily:'Zilla Slab',
                          color: themeProvider.darkTheme
                              ? Color(0xff3671a4)
                              : Color(0xff3671a4),
@@ -392,7 +392,7 @@ Future gettoDo() async{
                Align(
                  child: Text(
                   snapshot.data[index].data['value'],
-                   style: GoogleFonts.zillaSlab(
+                   style: TextStyle(fontFamily:'Zilla Slab',
                        fontSize: 15,
                        fontWeight: FontWeight.w500),
                  ),
@@ -409,7 +409,7 @@ Future gettoDo() async{
                      child: Align(
                        child: Text(
                          'Tap to register yourself',
-                         style: GoogleFonts.zillaSlab(
+                         style: TextStyle(fontFamily:'Zilla Slab',
                              fontSize: 15,
                              fontWeight:
                                  FontWeight.w500,

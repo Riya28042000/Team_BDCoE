@@ -7,12 +7,10 @@ import 'package:bdcoe/modals/database.dart';
 import 'package:bdcoe/modals/user.dart';
 import 'package:bdcoe/navigation/navigation.dart';
 import 'package:bdcoe/notifiers/dark.dart';
-import 'package:bdcoe/views/contact.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -121,7 +119,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
       animationType: AnimationType.fromTop,
       isCloseButton: false,
       isOverlayTapDismiss: false,
-      descStyle: GoogleFonts.zillaSlab(fontSize: 18),
+      descStyle: TextStyle(fontFamily:'Zilla Slab',fontSize: 18),
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(0.0),
@@ -129,7 +127,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
          // color: Colors.grey,
         ),
       ),
-      titleStyle: GoogleFonts.zillaSlab(
+      titleStyle: TextStyle(fontFamily:'Zilla Slab',
         fontWeight: FontWeight.bold,
        color: Theme.of(context).textSelectionColor
       ),
@@ -140,7 +138,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
                 color: Color(0xff3671a4),
                 child: Text(
                   "OK",
-                  style: GoogleFonts.zillaSlab(fontSize: 20,color: Colors.white),
+                  style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20,color: Colors.white),
                 ),
                 onPressed: () => Navigator.of(context).pop()
               )
@@ -377,7 +375,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
     _displaySnackBar(BuildContext context, String a) {
       final snackBar = SnackBar(
         content: Text(a,
-            style: GoogleFonts.zillaSlab(
+            style: TextStyle(fontFamily:'Zilla Slab',
                 color: themeProvider.darkTheme ? Colors.black : Colors.white,
                 fontWeight: FontWeight.bold),
             textAlign: TextAlign.center),
@@ -414,7 +412,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
                             ? Align(
                                 child: Text(
                                   'LOGIN',
-                                  style: GoogleFonts.zillaSlab(
+                                  style: TextStyle(fontFamily:'Zilla Slab',
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -423,7 +421,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
                             : Align(
                                 child: Text(
                                   'LOGIN',
-                                  style: GoogleFonts.zillaSlab(
+                                  style: TextStyle(fontFamily:'Zilla Slab',
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -434,7 +432,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: TextFormField(
-                        style: GoogleFonts.zillaSlab(
+                        style: TextStyle(fontFamily:'Zilla Slab',
                             //  color: Colors.white,
                             ),
                         validator: (value) {
@@ -453,12 +451,12 @@ databaseMethods.getUserByEmail(email).then((uservalue){
                           hintText: "Email",
                           alignLabelWithHint: true,
                           labelText: "Email",
-                          hintStyle: GoogleFonts.zillaSlab(
+                          hintStyle: TextStyle(fontFamily:'Zilla Slab',
                               color: themeProvider.darkTheme
                                   ? Colors.white
                                   : Colors.black,
                               fontWeight: FontWeight.bold),
-                          labelStyle: GoogleFonts.zillaSlab(
+                          labelStyle: TextStyle(fontFamily:'Zilla Slab',
                               color: themeProvider.darkTheme
                                   ? Color(0xff3671a4)
                                   : Color(0xff3671a4),
@@ -491,7 +489,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: TextFormField(
-                        style: GoogleFonts.zillaSlab(
+                        style: TextStyle(fontFamily:'Zilla Slab',
                             //color: Colors.white,
                             ),
                         validator: (value) {
@@ -519,12 +517,12 @@ databaseMethods.getUserByEmail(email).then((uservalue){
                           hintText: "Password",
                           alignLabelWithHint: true,
                           labelText: "Password",
-                          hintStyle: GoogleFonts.zillaSlab(
+                          hintStyle: TextStyle(fontFamily:'Zilla Slab',
                               color: themeProvider.darkTheme
                                   ? Colors.white
                                   : Colors.black,
                               fontWeight: FontWeight.bold),
-                          labelStyle: GoogleFonts.zillaSlab(
+                          labelStyle: TextStyle(fontFamily:'Zilla Slab',
                               color: themeProvider.darkTheme
                                   ? Color(0xff3671a4)
                                   : Color(0xff3671a4),
@@ -548,7 +546,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
                               });
                             },
                           ),
-                          //labelStyle: GoogleFonts.zillaSlab(color:Colors.white),
+                          //labelStyle: TextStyle(fontFamily:'Zilla Slab',color:Colors.white),
 
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -576,7 +574,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child: Text('Forgot Password?',
-                                style: GoogleFonts.zillaSlab(fontWeight: FontWeight.bold)),
+                                style: TextStyle(fontFamily:'Zilla Slab',fontWeight: FontWeight.bold)),
                           ),
                         )),
                     SizedBox(
@@ -620,7 +618,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         "Login",
-                                        style: GoogleFonts.zillaSlab(
+                                        style: TextStyle(fontFamily:'Zilla Slab',
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -649,7 +647,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child: Text('Don\'t have an account?',
-                                style: GoogleFonts.zillaSlab(fontWeight: FontWeight.bold)),
+                                style: TextStyle(fontFamily:'Zilla Slab',fontWeight: FontWeight.bold)),
                           ),
                         ),
                         GestureDetector(
@@ -664,7 +662,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: Text(' Click Here',
-                                  style: GoogleFonts.zillaSlab(
+                                  style: TextStyle(fontFamily:'Zilla Slab',
                                       fontWeight: FontWeight.bold,
                                       color: Color(0xff3671a4))),
                             ),

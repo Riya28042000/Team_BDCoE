@@ -9,9 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Contact extends StatefulWidget {
@@ -25,6 +23,7 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
   String name;
   String chatroomid;
   UserInfo userInfo =UserInfo();
+  bool load;
 
   AnimationController animationController;
 
@@ -35,7 +34,9 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
     getLoggedInState();
     super.initState();
 //    upcomingEventBloc.loadScreenScreen();
-
+setState(() {
+  load=true;
+});
     animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 500),
@@ -130,7 +131,7 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
                     children: <Widget>[
                       Center(child: Image.asset("assets/offf.png")),
                       SizedBox(height:10),
-                      Text("Check you Internet Connection!",style: GoogleFonts.zillaSlab(color:Colors.white,fontSize: 20),)
+                      Text("Check your Internet Connection!",style: TextStyle(fontFamily:'Zilla Slab',color:Colors.white,fontSize: 20),)
                     ],
                 ) ,)
               ),
@@ -310,7 +311,7 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
                 ),
                 label: Text(
                   "Talk Now",
-                  style: GoogleFonts.zillaSlab(color: Colors.white),
+                  style: TextStyle(fontFamily:'Zilla Slab',color: Colors.white),
                 ),
               ),
             ),
@@ -325,6 +326,7 @@ class _ContactState extends State<Contact> with TickerProviderStateMixin {
 Widget _logo(DarkThemeProvider themeChangeProvider, context) {
   var size = MediaQuery.of(context).size;
   return Container(
+       color: Theme.of(context).backgroundColor,
     child: Container(
       margin: EdgeInsets.only(top: 25, bottom: 0.0, left: 25.0, right: 25.0),
       height: size.height / 8,
@@ -333,14 +335,14 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
           ? Align(
               child: Text(
                 'GET IN TOUCH!',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                 'GET IN TOUCH!',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),
@@ -363,6 +365,7 @@ Widget _description(
   }
 
   return Container(
+        
     child: Padding(
       padding: const EdgeInsets.only(left: 15, right: 15),
       child: Container(
@@ -371,7 +374,7 @@ Widget _description(
           child: FutureBuilder(
               future: gettoDo(),
               builder: (_, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
+                if (snapshot.connectionState==ConnectionState.none||snapshot.connectionState==ConnectionState.waiting ||!snapshot.hasData || snapshot.data.isEmpty) {
                   return Center(
                     child: SpinKitChasingDots(
                       itemBuilder: (BuildContext context, int index) {
@@ -385,7 +388,9 @@ Widget _description(
                       },
                     ),
                   );
-                } else {
+                } else 
+     
+                {
                   return Column(
                     //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
@@ -395,7 +400,7 @@ Widget _description(
                         child: Align(
                           child: Text(
                             'ADDRESS',
-                            style: GoogleFonts.zillaSlab(
+                            style: TextStyle(fontFamily:'Zilla Slab',
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                                 color: Color(0xff3671a4)),
@@ -408,7 +413,7 @@ Widget _description(
                         child: Align(
                           child: Text(
                             'Research & Development Department, Ajay Kumar Garg Engineering College, Delhi Hapur Bypass, Adhyatmik Nagar, Ghaziabad, Uttar Pradesh 201009',
-                            style: GoogleFonts.zillaSlab(
+                            style: TextStyle(fontFamily:'Zilla Slab',
                                 fontSize: 15, fontWeight: FontWeight.w500),
                           ),
                           alignment: Alignment.topLeft,
@@ -420,7 +425,7 @@ Widget _description(
                         child: Align(
                           child: Text(
                             'EMAIL',
-                            style: GoogleFonts.zillaSlab(
+                            style: TextStyle(fontFamily:'Zilla Slab',
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                                 color: Color(0xff3671a4)),
@@ -441,7 +446,7 @@ Widget _description(
                             },
                             child: Text(
                               'contact@bdcoe.co.in',
-                              style: GoogleFonts.zillaSlab(
+                              style: TextStyle(fontFamily:'Zilla Slab',
                                   fontSize: 15, fontWeight: FontWeight.w500),
                             ),
                           ),
@@ -454,7 +459,7 @@ Widget _description(
                         child: Align(
                           child: Text(
                             'CALL US ON',
-                            style: GoogleFonts.zillaSlab(
+                            style: TextStyle(fontFamily:'Zilla Slab',
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                                 color: Color(0xff3671a4)),
@@ -474,7 +479,7 @@ Widget _description(
                                 },
                                 child: Text(
                                   snapshot.data[0].data['phone1'],
-                                  style: GoogleFonts.zillaSlab(
+                                  style: TextStyle(fontFamily:'Zilla Slab',
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500),
                                 ),
@@ -492,7 +497,7 @@ Widget _description(
                                 },
                                 child: Text(
                                   snapshot.data[0].data['phone2'],
-                                  style: GoogleFonts.zillaSlab(
+                                  style: TextStyle(fontFamily:'Zilla Slab',
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500),
                                 ),
@@ -508,7 +513,7 @@ Widget _description(
                         child: Align(
                           child: Text(
                             'WEBSITE',
-                            style: GoogleFonts.zillaSlab(
+                            style: TextStyle(fontFamily:'Zilla Slab',
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
                                 color: Color(0xff3671a4)),
@@ -530,7 +535,7 @@ Widget _description(
                                 },
                                 child: Text(
                                   'bdcoe.co.in',
-                                  style: GoogleFonts.zillaSlab(
+                                  style: TextStyle(fontFamily:'Zilla Slab',
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500),
                                 ),

@@ -1,6 +1,4 @@
-import 'package:bdcoe/navigation/navigation.dart';
 import 'package:bdcoe/notifiers/dark.dart';
-import 'package:bdcoe/views/details.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,7 +6,6 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class Second extends StatefulWidget {
@@ -235,14 +232,14 @@ Widget _logo(DarkThemeProvider themeChangeProvider, context) {
           ? Align(
               child: Text(
                 'SECOND YEAR',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             )
           : Align(
               child: Text(
                 'SECOND YEAR',
-                style: GoogleFonts.zillaSlab(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontFamily:'Zilla Slab',fontSize: 20, fontWeight: FontWeight.bold),
               ),
               alignment: Alignment.center,
             ),
@@ -266,7 +263,7 @@ Future gettoDo() async{
           child: FutureBuilder(
             future: gettoDo(),
             builder:( _, snapshot){
-            if(snapshot.connectionState== ConnectionState.waiting){
+            if(snapshot.connectionState==ConnectionState.none||snapshot.connectionState==ConnectionState.waiting ||!snapshot.hasData || snapshot.data.isEmpty){
               return  Center(child: SpinKitChasingDots(
   itemBuilder: (BuildContext context, int index) {
     return DecoratedBox(
@@ -318,7 +315,7 @@ Future gettoDo() async{
                        child: Align(
                          child: Text(
                           snapshot.data[index].data['name'],
-                         style: GoogleFonts.zillaSlab(
+                         style: TextStyle(fontFamily:'Zilla Slab',
                          color: themeProvider.darkTheme
                              ? Color(0xff3671a4)
                              : Color(0xff3671a4),
@@ -336,7 +333,7 @@ Future gettoDo() async{
                        child: Align(
                          child: Text(
                          snapshot.data[index].data['domain'],
-                         style: GoogleFonts.zillaSlab(
+                         style: TextStyle(fontFamily:'Zilla Slab',
                          
                          fontSize: 15,
                          fontWeight: FontWeight.w500),
@@ -353,7 +350,7 @@ Future gettoDo() async{
                        child: Align(
                          child: Text(
                       'Tap to know more',
-                         style: GoogleFonts.zillaSlab(
+                         style: TextStyle(fontFamily:'Zilla Slab',
         color: Color(0xff3671a4),
                          fontSize: 15,
                          fontWeight: FontWeight.w500),
@@ -398,7 +395,7 @@ Future gettoDo() async{
                        child: Align(
                          child: Text(
                           snapshot.data[index].data['name'],
-                         style: GoogleFonts.zillaSlab(
+                         style: TextStyle(fontFamily:'Zilla Slab',
                          color: themeProvider.darkTheme
                              ? Color(0xff3671a4)
                              : Color(0xff3671a4),
@@ -416,7 +413,7 @@ Future gettoDo() async{
                        child: Align(
                          child: Text(
                      snapshot.data[index].data['branch'],
-                         style: GoogleFonts.zillaSlab(
+                         style: TextStyle(fontFamily:'Zilla Slab',
         
                          fontSize: 15,
                          fontWeight: FontWeight.w500),
@@ -433,7 +430,7 @@ Future gettoDo() async{
                        child: Align(
                          child: Text(
                       'Tap to know more',
-                         style: GoogleFonts.zillaSlab(
+                         style: TextStyle(fontFamily:'Zilla Slab',
          color: Color(0xff3671a4),
                          fontSize: 15,
                          fontWeight: FontWeight.w500),

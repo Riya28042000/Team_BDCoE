@@ -2,15 +2,10 @@ import 'dart:async';
 import 'package:bdcoe/chat/login.dart';
 import 'package:bdcoe/chat/preference.dart';
 import 'package:bdcoe/modals/database.dart';
-import 'package:bdcoe/modals/user.dart';
 import 'package:bdcoe/navigation/navigation.dart';
 import 'package:bdcoe/notifiers/dark.dart';
-import 'package:bdcoe/views/contact.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class Chatting extends StatefulWidget {
@@ -180,14 +175,14 @@ Widget chat(DarkThemeProvider themeProvider){
                   child: TextField(
                        keyboardType: TextInputType.multiline,
                      maxLines: null,
-                      style: GoogleFonts.zillaSlab(color: themeProvider.darkTheme?Colors.white:Colors.black,),
+                      style: TextStyle(fontFamily:'Zilla Slab',color: themeProvider.darkTheme?Colors.white:Colors.black,),
                      controller: messageEditingController,
                            cursorColor: themeProvider.darkTheme?Colors.white:Color(0xff00a1e2),
                            textCapitalization: TextCapitalization.sentences,
                            
                     decoration: InputDecoration(
                         hintText: "Type a message...",
-                        hintStyle: GoogleFonts.zillaSlab(
+                        hintStyle: TextStyle(fontFamily:'Zilla Slab',
                                   color:  themeProvider.darkTheme?Colors.white:Colors.black,
                                   fontSize: 16,
                                 ),
@@ -225,7 +220,7 @@ Widget chat(DarkThemeProvider themeProvider){
 
           appBar: AppBar(
             elevation: 10,
-    title: Text('LET\'S CHAT',style: GoogleFonts.zillaSlab(
+    title: Text('LET\'S CHAT',style: TextStyle(fontFamily:'Zilla Slab',
         fontSize: 18,
         color:themeProvider.darkTheme?Colors.white:Colors.white,
        
@@ -440,7 +435,7 @@ class MessageTile extends StatelessWidget {
         ),
         child: Text(message,
             textAlign: TextAlign.start,
-            style: GoogleFonts.zillaSlab(
+            style: TextStyle(fontFamily:'Zilla Slab',
             color: sendByMe?(themeProvider.darkTheme?Colors.white:Colors.white):(themeProvider.darkTheme?Colors.white:Colors.black),
             fontSize: 16,
           //  fontWeight: FontWeight.bold
