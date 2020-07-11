@@ -23,7 +23,7 @@ final String chatroomid;
 
 
 class _ChattingState extends State<Chatting> with TickerProviderStateMixin {
-  
+ 
 Database databaseMethods = Database();
   Stream chatmessagestream;
  ScrollController _scrollController;
@@ -93,7 +93,12 @@ Database databaseMethods = Database();
                         message: snapshot.data.documents[index].data["message"],
                         sendByMe:
                             snapshot.data.documents[index].data["sendBy"] ==
-                                widget.name);
+                                widget.name,
+                          time:  snapshot.data.documents[index].data["time"],
+                          hours: snapshot.data.documents[index].data["hours"],
+                          min:  snapshot.data.documents[index].data["min"],
+
+                                );
                   })
               : Container();
         });
@@ -106,10 +111,14 @@ Database databaseMethods = Database();
             duration: const Duration(milliseconds: 300),
           );
     if (messageEditingController.text.isNotEmpty) {
+       
+      
       Map<String, dynamic> messagemap = {
         "message": messageEditingController.text,
         "sendBy": widget.name,
-        "time": DateTime.now().millisecondsSinceEpoch
+        "time": DateTime.now().millisecondsSinceEpoch,
+        "hours":DateTime.now().hour,
+        "min": DateTime.now().minute,
       };
       databaseMethods.addConversationMessages(widget.chatroomid, messagemap);
       messageEditingController.text = "";
@@ -398,12 +407,17 @@ Widget chat(DarkThemeProvider themeProvider){
 class MessageTile extends StatelessWidget {
   final String message;
   final bool sendByMe;
-
-  MessageTile({@required this.message, @required this.sendByMe});
+  final int time;
+  final int hours;
+  final int min;
+  MessageTile({@required this.message, @required this.sendByMe,@required this.time,@required this.hours,@required this.min});
 
 
   @override
   Widget build(BuildContext context) {
+    String len= '$min';
+    len=len.length==1?"0"+"$len":len;
+    print(len);
     final themeProvider = Provider.of<DarkThemeProvider>(context);
     return Container(
       padding: EdgeInsets.only(
@@ -433,13 +447,24 @@ class MessageTile extends StatelessWidget {
           ),
        color: sendByMe?(themeProvider.darkTheme?Color(0xff1f1f1f):Color(0xff2479a7)):(themeProvider.darkTheme?Color(0xff3671a4):Color(0xffdbdede)),
         ),
-        child: Text(message,
-            textAlign: TextAlign.start,
-            style: TextStyle(fontFamily:'Zilla Slab',
-            color: sendByMe?(themeProvider.darkTheme?Colors.white:Colors.white):(themeProvider.darkTheme?Colors.white:Colors.black),
-            fontSize: 16,
-          //  fontWeight: FontWeight.bold
-            )),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Text(message,
+                textAlign: TextAlign.start,
+                style: TextStyle(fontFamily:'Zilla Slab',
+                color: sendByMe?(themeProvider.darkTheme?Colors.white:Colors.white):(themeProvider.darkTheme?Colors.white:Colors.black),
+                fontSize: 16,
+              //  fontWeight: FontWeight.bold
+                )),
+                Padding(
+                  padding: const EdgeInsets.only(top:2),
+                  child: Text('$hours:$len',textAlign: TextAlign.right, style: TextStyle(fontFamily:'Zilla Slab',
+                color: sendByMe?(themeProvider.darkTheme?Colors.white:Colors.white):(themeProvider.darkTheme?Colors.white:Colors.black),
+                fontSize: 11,)),
+                )
+          ],
+        ),
       ),
     );
   }

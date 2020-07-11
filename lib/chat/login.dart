@@ -106,7 +106,7 @@ databaseMethods.getUserByEmail(email).then((uservalue){
                                         break;
         case 'PlatformException(ERROR_NETWORK_REQUEST_FAILED, A network error (such as timeout, interrupted connection or unreachable host) has occurred., null)': val="Check your connection!";
                                                      break;
-          default: val="Something went wrong!";
+          default: val="Check your details!";
                         break;                          
         }
             Alert(
