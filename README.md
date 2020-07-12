@@ -1,6 +1,6 @@
 # BDCoE
 
-App related to college's society(Big Data Centre of Excellence).
+App related to college's society (Big Data Centre of Excellence).
 
 
 
